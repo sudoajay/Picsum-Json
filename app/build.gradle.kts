@@ -18,13 +18,13 @@ android {
         versionCode = AppConfig.versionCode
         versionName = AppConfig.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
     }
 
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
             isShrinkResources = false
-            isDebuggable = false
             proguardFiles(
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
@@ -52,9 +52,9 @@ android {
 }
 
 dependencies {
-    implementation("com.google.firebase:firebase-database-ktx:20.0.1")
     implementBasicAndroid()
     implementAndroidX()
+    implementNetwork()
     implementTest()
     implementAndroidTest()
 }

@@ -12,6 +12,7 @@ class Item(
     @ColumnInfo(name = "height") val height: Int,
     @ColumnInfo(name = "url") val url: String,
     @ColumnInfo(name = "download_url") val download_url: String,
+    @ColumnInfo(name = "value") val value: Boolean
 
 
 

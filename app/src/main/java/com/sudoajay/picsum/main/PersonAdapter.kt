@@ -29,7 +29,9 @@ class PersonAdapter @Inject constructor() :
     inner class PersonViewHolder(private val binding: LayoutPersonBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+
         fun bind(person: Person) = with(binding) {
+            binding.person = person
 
         }
     }
@@ -37,7 +39,7 @@ class PersonAdapter @Inject constructor() :
     companion object {
         private val Person_COMPARATOR = object : DiffUtil.ItemCallback<Person>() {
             override fun areItemsTheSame(oldItem: Person, newItem: Person): Boolean =
-                oldItem.authorName == newItem.authorName
+                oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: Person, newItem: Person): Boolean =
                 oldItem == newItem

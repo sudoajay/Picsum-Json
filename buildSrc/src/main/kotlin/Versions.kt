@@ -5,7 +5,7 @@ object Versions {
      */
     object Project {
         const val kotlin_version = "1.5.21"
-        const val Android_Gradle_Plugin_version = "7.0.1"
+        const val Android_Gradle_Plugin_version = "7.0.2"
     }
     /**
      * Versions of android main library
@@ -36,6 +36,9 @@ object Versions {
         const val Android_Hilt = "1.0.0-alpha03"
         const val Retrofit = "2.9.0"
         const val Okhttp = "4.9.0"
+        const val GoogleGson = "2.8.8"
+        const val JacksonJson = "2.12.4"
         const val SwipeRefreshLayout = "1.1.0"
+        const val FirebaseDatabase = "20.0.1"
     }
 }

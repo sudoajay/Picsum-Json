@@ -93,15 +93,35 @@ class Dependencies {
         const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.Dependencies.SwipeRefreshLayout}"
     }
     object Network {
+//        Retrofit
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.Dependencies.Retrofit}"
-        const val retrofitConverter =
-            "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
-        const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
-        const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.Dependencies.Okhttp}"
+        const val retrofitConverterGson = "com.squareup.retrofit2:converter-gson:${Versions.Dependencies.Retrofit}"
+        const val retrofitConverterJackson = "com.squareup.retrofit2:converter-jackson:${Versions.Dependencies.Retrofit}"
+        const val retrofitMock = "com.squareup.retrofit2:retrofit-mock:${Versions.Dependencies.Retrofit}"
+
+//    Ok HTTP
         const val loggingInterceptor =
             "com.squareup.okhttp3:logging-interceptor:${Versions.Dependencies.Okhttp}"
+        const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.Dependencies.Okhttp}"
         const val mockWebServer =
             "com.squareup.okhttp3:mockwebserver:${Versions.Dependencies.Okhttp}"
+
+// Google gson
+        const val googleGson = "com.google.code.gson:gson:${Versions.Dependencies.GoogleGson}"
+
+//  Jackson json
+        const val jacksonCore = "com.fasterxml.jackson.core:jackson-core:${Versions.Dependencies.JacksonJson}"
+        const val jacksonAnnotation = "com.fasterxml.jackson.core:jackson-annotations:${Versions.Dependencies.JacksonJson}"
+        const val jacksonDataBind = "com.fasterxml.jackson.core:jackson-databind:${Versions.Dependencies.JacksonJson}"
+
+
+        const val retrofitConverter =
+            "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+
+
+        const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+
+
     }
 
     object Storage {
@@ -110,11 +130,10 @@ class Dependencies {
         const val RoomKtx = "androidx.room:room-ktx:${Versions.Dependencies.Room}"
         const val RoomPaging3 = "androidx.room:room-paging:${Versions.Dependencies.RoomPaging3}"
         const val paging ="androidx.paging:paging-runtime:${Versions.Dependencies.Paging}"
+        const val firebaseDatabase = "com.google.firebase:firebase-database-ktx:${Versions.Dependencies.FirebaseDatabase}"
     }
 
-    object Image {
-        const val coil = "dev.chrisbanes.accompanist:accompanist-coil:0.6.0"
-    }
+
 
     object Test {
         const val junit = "junit:junit:4.13.2"
