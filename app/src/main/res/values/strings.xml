@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Picsum</string>
+
+<!--    Main Activity -->
+    <string name="setting_text">Setting</string>
+    <!--  MainActivity  Bottom Toolbar-->
+    <string name="search_optionMenu">Search</string>
+    <string name="refresh_optionMenu">Refresh</string>
+
+    <string name="setting_optionMenu">Setting</string>
 </resources>

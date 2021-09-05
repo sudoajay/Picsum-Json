@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    App Theme Color-->
+    <color name="colorPrimaryDark">#121212</color>
+    <color name="colorPrimary">#121212</color>
+    <color name="colorAccent">#74A0EE</color>
+    <!--    Activity-->
+    <color name="mainBgColor">#121212</color>
+    <color name="bgBoxColor">#171717</color>
+    <color name="swipeSchemeColor">#7DC4EC</color>
+    <color name="swipeBgColor">#121212</color>
+    <color name="headingNormalTextColor">#dae1e7</color>
+
+
+</resources>
