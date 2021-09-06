@@ -17,9 +17,8 @@ import java.io.InputStream
 import java.io.OutputStream
 
 
-class ProtoManger (var context: Context){
+class ProtoManager (var context: Context){
 
-    private val TAG: String = "UserPreferencesRepo"
 
     private val Context.stateDataStore: DataStore<StatePreferences> by dataStore(
         fileName = DATA_STORE_FILE_NAME,
@@ -29,7 +28,7 @@ class ProtoManger (var context: Context){
 
 
 
-    suspend fun getDatabase(): Flow<Boolean> {
+    fun getDatabase(): Flow<Boolean> {
         return  dataStoreStatePreferences.data.map { protoBuilder ->
             protoBuilder.database
         }
@@ -37,7 +36,6 @@ class ProtoManger (var context: Context){
 
     suspend fun setDatabase(isDarkMode: Boolean?) {
         val value =isDarkMode ?: false
-
         dataStoreStatePreferences.updateData { preferences ->
             preferences.toBuilder()
                 .setDatabase(value)
@@ -45,18 +43,18 @@ class ProtoManger (var context: Context){
         }
     }
 
-    suspend fun getJsonConverter(): Flow<String> {
+    fun getJsonConverter(): Flow<String> {
         return  dataStoreStatePreferences.data.map { protoBuilder ->
             protoBuilder.jsonConverter
         }
     }
 
     suspend fun setJsonConverter(jsonConverter: String?) {
-        val value =jsonConverter ?: false
+        val value =jsonConverter ?: context.getString(R.string.jacksonJson_text)
 
         dataStoreStatePreferences.updateData { preferences ->
             preferences.toBuilder()
-                .setJsonConverter(jsonConverter)
+                .setJsonConverter(value)
                 .build()
         }
     }

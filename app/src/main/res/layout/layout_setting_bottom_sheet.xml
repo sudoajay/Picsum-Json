@@ -5,8 +5,10 @@
 
     <data>
 
-        <import type="android.os.Build.VERSION"/>
         <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.sudoajay.picsum.main.MainViewModel" />
         <variable
             name="bottomSheet"
             type="com.sudoajay.picsum.setting.SettingBottomSheet" />
@@ -51,7 +53,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue()}"
+            android:onClick="@{() -> bottomSheet.setValue(true)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
+                android:visibility="@{viewModel.isDatabase ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/off_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/off_TextView"
@@ -99,7 +102,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue()}"
+            android:onClick="@{() -> bottomSheet.setValue(false)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,6 +135,7 @@
                 android:layout_marginRight="20dp"
                 app:layout_constraintBottom_toBottomOf="@+id/on_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="@{viewModel.isDatabase ?  View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toTopOf="@+id/on_TextView"
                 app:layout_constraintVertical_bias="0.261"
                 app:srcCompat="@drawable/ic_tick"
@@ -161,7 +165,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue()}"
+            android:onClick="@{() -> bottomSheet.setJsonValue(@string/jacksonJson_text)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -192,6 +196,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
+                android:visibility="@{(viewModel.getJsonConverter.equals(@string/jacksonJson_text))   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/automatic_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/automatic_TextView"
@@ -208,9 +213,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
-            android:visibility="@{VERSION.SDK_INT >= 21 ? View.VISIBLE : View.GONE}"
             android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue()}"
+            android:onClick="@{() -> bottomSheet.setJsonValue(@string/gsonJson_text)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -240,6 +244,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
+                android:visibility="@{(viewModel.getJsonConverter.equals(@string/gsonJson_text))   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/batterySave_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/batterySave_TextView"

@@ -2,13 +2,16 @@ package com.sudoajay.picsum.main
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.picsum.BaseActivity
@@ -75,6 +78,19 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         setReference()
         super.onResume()
+
+        viewModel.protoManager.getDatabase().asLiveData().observe(this) {
+            Log.e(TAG, "onResume:getDatabase $it" )
+            viewModel.isDatabase = it
+        }
+
+        viewModel.protoManager.getJsonConverter().asLiveData().observe(this) {
+            Log.e(TAG, "onResume:getJsonConverter $it" )
+
+
+            viewModel.getJsonConverter = it
+
+        }
     }
 
     private fun setReference() {
@@ -194,7 +210,7 @@ class MainActivity : BaseActivity() {
 
 
     fun openSetting() {
-        val darkModeBottomSheet = SettingBottomSheet()
+        val darkModeBottomSheet = SettingBottomSheet(this)
         darkModeBottomSheet.show(
             supportFragmentManager.beginTransaction(),
             darkModeBottomSheet.tag
