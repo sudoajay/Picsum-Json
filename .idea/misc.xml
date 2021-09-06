@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bottom_sheet_top_effect.xml" value="0.36875" />
+        <entry key="app/src/main/res/drawable/ic_rate_us.xml" value="0.36875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="app/src/main/res/layout/layout_navigation_drawer_bottom_sheet.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/layout/layout_person.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/layout_setting_bottom_sheet.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/menu/bottom_toolbar_menu.xml" value="0.35260416666666666" />
       </map>
     </option>

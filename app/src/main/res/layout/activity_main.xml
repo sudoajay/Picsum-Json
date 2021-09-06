@@ -8,6 +8,9 @@
         <variable
             name="viewmodel"
             type="com.sudoajay.picsum.main.MainViewModel" />
+        <variable
+            name="activity"
+            type="com.sudoajay.picsum.main.MainActivity" />
     </data>
 
 
@@ -83,6 +86,7 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_settings"
             app:backgroundTint="@color/bgBoxColor"
+            android:onClick="@{() -> activity.openSetting()}"
             app:fabSize="normal"
             app:layout_anchor="@id/bottomAppBar"
             app:tint="@color/colorAccent"

@@ -1,9 +1,7 @@
 package com.sudoajay.picsum.main
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
@@ -13,17 +11,12 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.sudoajay.picsum.BaseActivity
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.ActivityMainBinding
 import com.sudoajay.picsum.helper.InsetDivider
-import com.sudoajay.picsum.main.api.PicsumInterfaceBuilder
-import com.sudoajay.picsum.main.model.Person
+import com.sudoajay.picsum.setting.SettingBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 
@@ -51,6 +44,8 @@ class MainActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.viewmodel = viewModel
+        binding.activity = this
+        binding.lifecycleOwner = this
 
 
 //        val apiInterface = PicsumInterfaceBuilder.getApiInterface()
@@ -149,11 +144,12 @@ class MainActivity : BaseActivity() {
     private fun manageFabOnSearchItemStatus(searchItem: MenuItem) {
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                binding.deleteFloatingActionButton.hide()
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-
+                binding.deleteFloatingActionButton.show()
                 return true
             }
         })
@@ -166,7 +162,7 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                val query: String = newText.toLowerCase(Locale.ROOT).trim { it <= ' ' }
+                val query: String = newText.lowercase(Locale.ROOT).trim { it <= ' ' }
 
                 return true
             }
@@ -186,13 +182,19 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showNavigationDrawer() {
-//        val navigationDrawerBottomSheet = NavigationDrawerBottomSheet()
-//        navigationDrawerBottomSheet.show(supportFragmentManager, navigationDrawerBottomSheet.tag)
+        val navigationDrawerBottomSheet = NavigationDrawerBottomSheet()
+        navigationDrawerBottomSheet.show(supportFragmentManager, navigationDrawerBottomSheet.tag)
     }
 
 
-    private fun openSetting() {
 
+
+    fun openSetting() {
+        val darkModeBottomSheet = SettingBottomSheet()
+        darkModeBottomSheet.show(
+            supportFragmentManager.beginTransaction(),
+            darkModeBottomSheet.tag
+        )
     }
 
     private fun refreshActivity(){

@@ -6,6 +6,25 @@
     <!--  MainActivity  Bottom Toolbar-->
     <string name="search_optionMenu">Search</string>
     <string name="refresh_optionMenu">Refresh</string>
-
     <string name="setting_optionMenu">Setting</string>
+
+<!--    Setting bottom Sheet-->
+    <string name="dataBase_text">DataBase</string>
+    <string name="room_dataBase_text">Room DataBase</string>
+    <string name="no_dataBase_text">No DataBase</string>
+
+    <string name="converter_text">Converter</string>
+    <string name="jacksonJson_text">Jackson Json </string>
+    <string name="gsonJson_text">Gson Json</string>
+
+<!--    Navigation Drawer Bottom Sheet-->
+    <string name="developer_name">Created by Sudo Ajay</string>
+    <string name="send_feedback_text">Send Feedback</string>
+    <string name="rate_use_text">Rate-Us</string>
+    <string name="more_app_text">More App</string>
+    <string name="share_app_text">Share Apk</string>
+    <string name="app_version_text">App Version : </string>
+    <string name="workOnProgress_text">Work On Progress</string>
+
+
 </resources>

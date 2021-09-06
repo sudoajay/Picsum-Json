@@ -10,7 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import com.sudoajay.monami.R
+import com.sudoajay.picsum.R
 import kotlin.math.roundToInt
 
 open class InsetDivider private constructor() : ItemDecoration() {
