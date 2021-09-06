@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFragment() {
-    @Inject
     lateinit var protoManager: ProtoManager
     private var  TAG:String = "SettingBottomSheetTag"
 
@@ -35,6 +34,7 @@ class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFrag
         binding.bottomSheet = this
         binding.viewModel = mainActivity.viewModel
         binding.lifecycleOwner = this
+        protoManager = mainActivity.viewModel.protoManager
 
         return binding.root
     }

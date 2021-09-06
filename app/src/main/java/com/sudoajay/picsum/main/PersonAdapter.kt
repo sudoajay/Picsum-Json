@@ -30,9 +30,8 @@ class PersonAdapter @Inject constructor() :
         RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(person: Person) = with(binding) {
+        fun bind(person: Person) {
             binding.person = person
-
         }
     }
 

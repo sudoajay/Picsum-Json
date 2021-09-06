@@ -13,14 +13,14 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class MainViewModel @Inject constructor(application: Application): ViewModel() {
     private var _application = application
-    @Inject
 
-    lateinit var protoManager: ProtoManager
+    var protoManager: ProtoManager = ProtoManager(application)
     var getJsonConverter: String = application.getString(R.string.jacksonJson_text)
     var isDatabase: Boolean = false
 

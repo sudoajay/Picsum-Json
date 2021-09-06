@@ -9,6 +9,7 @@ import androidx.datastore.dataStore
 import com.google.protobuf.InvalidProtocolBufferException
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.StatePreferences
+import dagger.Provides
 import kotlinx.coroutines.flow.catch
 import java.io.IOException
 import kotlinx.coroutines.flow.Flow
@@ -17,8 +18,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject
 
-
-class ProtoManager @Inject constructor (var context: Context){
+class ProtoManager constructor (var context: Context){
 
 
     private val Context.stateDataStore: DataStore<StatePreferences> by dataStore(

@@ -119,9 +119,9 @@ class MainActivity : BaseActivity() {
         val apiInterface = PicsumInterfaceBuilder.getApiInterface(applicationContext,viewModel.getJsonConverter)
         val call = apiInterface?.getPerson()
 
-        call?.enqueue(object : Callback<PagingData<Person>> {
+        call?.enqueue(object : Callback<List<Person>?> {
 
-            override fun onResponse(call: Call<PagingData<Person>>, response: Response<PagingData<Person>>) {
+            override fun onResponse(call: Call<List<Person>?>, response: Response<List<Person>?>) {
 //                Log.e("$TAG+Response", Gson().toJson(response))
                 Log.e("$TAG+Response", response.message())
                 Log.e("$TAG+Response", " Start ")
@@ -131,7 +131,7 @@ class MainActivity : BaseActivity() {
                     personAdapter.submitData(response.body()?: PagingData.empty())
                 }
             }
-            override fun onFailure(call: Call<PagingData<Person>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Person>?>, t: Throwable) {
                 Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
             }
         })

@@ -22,6 +22,6 @@ interface PicsumApiInterface {
      * you change the return type appropriately
     </T> */
     @GET("list")
-    fun getPerson(): Call<PagingData<Person>>
+    fun getPerson(): Call<List<Person>?>?
 
 }
