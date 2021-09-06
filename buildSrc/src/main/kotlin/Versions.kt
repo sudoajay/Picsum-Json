@@ -39,6 +39,11 @@ object Versions {
         const val GoogleGson = "2.8.8"
         const val JacksonJson = "2.12.4"
         const val SwipeRefreshLayout = "1.1.0"
+
+        const val  PreferencesDataStore = "1.0.0"
+        const val Protobuf ="3.17.3"
+        const val ProtoDataStore = "1.0.0"
+
         const val FirebaseDatabase = "20.0.1"
     }
 }

@@ -1,3 +1,4 @@
+import com.google.protobuf.gradle.*
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -6,6 +7,8 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-android")
     id ("kotlin-parcelize")
+//    ProtoBuf
+    id ("com.google.protobuf" ) version "0.8.17"
 }
 android {
     compileSdk =AppConfig.compileSdkVersion
@@ -32,6 +35,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility =  JavaVersion.VERSION_1_8
         targetCompatibility =  JavaVersion.VERSION_1_8
@@ -50,12 +54,29 @@ android {
         dataBinding = true
 
     }
+
 }
 
 dependencies {
     implementBasicAndroid()
     implementAndroidX()
+    implementDataBase()
     implementNetwork()
     implementTest()
     implementAndroidTest()
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.17.3"
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.plugins{
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

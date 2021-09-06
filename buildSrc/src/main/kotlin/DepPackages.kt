@@ -20,12 +20,22 @@ fun DependencyHandler.implementAndroidX(){
     add("implementation",Dependencies.Coroutine.coroutineCore)
     add("implementation",Dependencies.Coroutine.coroutineAndroid)
     add("implementation",Dependencies.SwipeRefreshLayout.swiperefreshlayout)
+
+}
+
+fun DependencyHandler.implementDataBase(){
     add("implementation",Dependencies.Storage.RoomRuntime)
     add("kapt", Dependencies.Storage.RoomCompiler)
     add("implementation",Dependencies.Storage.RoomKtx)
     add("implementation",Dependencies.Storage.RoomPaging3)
     add("implementation", Dependencies.Storage.paging)
     add("implementation", Dependencies.Storage.firebaseDatabase)
+
+    add("implementation", Dependencies.Storage.preferenceDataStore)
+    add("implementation", Dependencies.Storage.protoDataStore)
+    add("implementation", Dependencies.Storage.protobuf)
+
+
 }
 
 fun DependencyHandler.implementTest() {
@@ -48,10 +58,6 @@ fun DependencyHandler.implementNetwork(){
     add("implementation", Dependencies.Network.jacksonCore)
     add("implementation", Dependencies.Network.jacksonAnnotation)
     add("implementation", Dependencies.Network.jacksonDataBind)
-
-
-
-
 }
 
 

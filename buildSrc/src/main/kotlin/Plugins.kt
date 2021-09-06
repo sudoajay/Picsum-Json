@@ -10,6 +10,7 @@ object Plugins {
         "com.google.dagger:hilt-android-gradle-plugin:${Versions.Dependencies.Dagger_Hilt}"
 
 
+
 //    const val pluginSafeArgs =
 //        "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.Dependencies.Navigation_Plugin_version}"
 //    const val pluginDaggerHilt =

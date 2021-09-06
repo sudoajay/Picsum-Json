@@ -131,6 +131,11 @@ class Dependencies {
         const val RoomPaging3 = "androidx.room:room-paging:${Versions.Dependencies.RoomPaging3}"
         const val paging ="androidx.paging:paging-runtime:${Versions.Dependencies.Paging}"
         const val firebaseDatabase = "com.google.firebase:firebase-database-ktx:${Versions.Dependencies.FirebaseDatabase}"
+
+        const val preferenceDataStore = "androidx.datastore:datastore-preferences:${Versions.Dependencies.PreferencesDataStore}"
+        const val protoDataStore = "androidx.datastore:datastore-core:${Versions.Dependencies.ProtoDataStore}"
+        const val protobuf = "com.google.protobuf:protobuf-javalite:${Versions.Dependencies.Protobuf}"
+
     }
 
 

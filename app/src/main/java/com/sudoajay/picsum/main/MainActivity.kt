@@ -15,6 +15,7 @@ import com.sudoajay.picsum.BaseActivity
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.ActivityMainBinding
 import com.sudoajay.picsum.helper.InsetDivider
+import com.sudoajay.picsum.navigation.NavigationDrawerBottomSheet
 import com.sudoajay.picsum.setting.SettingBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -183,7 +184,10 @@ class MainActivity : BaseActivity() {
 
     private fun showNavigationDrawer() {
         val navigationDrawerBottomSheet = NavigationDrawerBottomSheet()
-        navigationDrawerBottomSheet.show(supportFragmentManager, navigationDrawerBottomSheet.tag)
+        navigationDrawerBottomSheet.show(
+            supportFragmentManager.beginTransaction(),
+            navigationDrawerBottomSheet.tag
+        )
     }
 
 
