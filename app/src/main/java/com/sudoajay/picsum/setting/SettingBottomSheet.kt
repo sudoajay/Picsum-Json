@@ -12,9 +12,11 @@ import com.sudoajay.picsum.databinding.LayoutSettingBottomSheetBinding
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.proto.ProtoManager
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFragment() {
-    private lateinit var protoManager: ProtoManager
+    @Inject
+    lateinit var protoManager: ProtoManager
     private var  TAG:String = "SettingBottomSheetTag"
 
     override fun onCreateView(
@@ -33,9 +35,6 @@ class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFrag
         binding.bottomSheet = this
         binding.viewModel = mainActivity.viewModel
         binding.lifecycleOwner = this
-
-
-        protoManager = mainActivity.viewModel.protoManager
 
         return binding.root
     }

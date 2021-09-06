@@ -1,33 +1,28 @@
 package com.sudoajay.picsum.main
 
 import android.app.Application
-import android.util.Log
-import androidx.lifecycle.*
-import com.google.gson.Gson
-import com.sudoajay.picsum.BaseActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sudoajay.picsum.R
-import com.sudoajay.picsum.main.api.PicsumInterfaceBuilder
-import com.sudoajay.picsum.main.model.Person
 import com.sudoajay.picsum.main.proto.ProtoManager
-import dagger.hilt.android.scopes.ViewModelScoped
-import dagger.hilt.internal.processedrootsentinel.codegen._com_sudoajay_picsum_MainApplication
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
-import kotlin.properties.Delegates
 
-
-class MainViewModel @Inject constructor(application: Application): ViewModel(){
+@Module
+@InstallIn(SingletonComponent::class)
+class MainViewModel @Inject constructor(application: Application): ViewModel() {
     private var _application = application
+    @Inject
 
-    var protoManager: ProtoManager = ProtoManager(application)
+    lateinit var protoManager: ProtoManager
     var getJsonConverter: String = application.getString(R.string.jacksonJson_text)
-    var isDatabase:Boolean =false
+    var isDatabase: Boolean = false
 
     var hideProgress: MutableLiveData<Boolean> = MutableLiveData()
 

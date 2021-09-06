@@ -6,21 +6,28 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.picsum.BaseActivity
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.ActivityMainBinding
 import com.sudoajay.picsum.helper.InsetDivider
+import com.sudoajay.picsum.main.api.PicsumInterfaceBuilder
+import com.sudoajay.picsum.main.model.Person
 import com.sudoajay.picsum.navigation.NavigationDrawerBottomSheet
 import com.sudoajay.picsum.setting.SettingBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 
@@ -30,6 +37,8 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
+    @Inject
+    lateinit var personAdapter: PersonAdapter
     private var isDarkTheme: Boolean = false
     private var TAG = "MainActivityTAG"
 
@@ -52,32 +61,12 @@ class MainActivity : BaseActivity() {
         binding.lifecycleOwner = this
 
 
-//        val apiInterface = PicsumInterfaceBuilder.getApiInterface()
-//        val call = apiInterface?.getPerson()
-//
-//        call?.enqueue(object : Callback<List<Person>> {
-//
-//            override fun onResponse(call: Call<List<Person>>, response: Response<List<Person>>) {
-////                Log.e("$TAG+Response", Gson().toJson(response))
-//                Log.e("$TAG+Response", response.message())
-//                Log.e("$TAG+Response"," Start ")
-//                response.body()?.forEach {
-//                    Log.e("$TAG + Response", it.toString())
-//                }
-//                Log.e("$TAG+Response","End")
-//
-//            }
-//            override fun onFailure(call: Call<List<Person>>, t: Throwable)
-//            {
-//                Log.e("$TAG +onFailure",t.printStackTrace().toString() + " -- ${t.toString()}")
-//            }
-//        })
-
     }
 
     override fun onResume() {
         setReference()
         super.onResume()
+
 
         viewModel.protoManager.getDatabase().asLiveData().observe(this) {
             Log.e(TAG, "onResume:getDatabase $it" )
@@ -86,8 +75,6 @@ class MainActivity : BaseActivity() {
 
         viewModel.protoManager.getJsonConverter().asLiveData().observe(this) {
             Log.e(TAG, "onResume:getJsonConverter $it" )
-
-
             viewModel.getJsonConverter = it
 
         }
@@ -113,19 +100,43 @@ class MainActivity : BaseActivity() {
 
         setSupportActionBar(binding.bottomAppBar)
 
-
         setRecyclerView()
+        getDataFromApi()
     }
 
     private fun setRecyclerView() {
-
         val recyclerView = binding.recyclerView
         val divider = getInsertDivider()
         recyclerView.addItemDecoration(divider)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
-
+        recyclerView.adapter = personAdapter
     }
+
+
+
+    private fun getDataFromApi() {
+        val apiInterface = PicsumInterfaceBuilder.getApiInterface(applicationContext,viewModel.getJsonConverter)
+        val call = apiInterface?.getPerson()
+
+        call?.enqueue(object : Callback<PagingData<Person>> {
+
+            override fun onResponse(call: Call<PagingData<Person>>, response: Response<PagingData<Person>>) {
+//                Log.e("$TAG+Response", Gson().toJson(response))
+                Log.e("$TAG+Response", response.message())
+                Log.e("$TAG+Response", " Start ")
+
+                Log.e("$TAG+Response", "End")
+                lifecycleScope.launch {
+                    personAdapter.submitData(response.body()?: PagingData.empty())
+                }
+            }
+            override fun onFailure(call: Call<PagingData<Person>>, t: Throwable) {
+                Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
+            }
+        })
+    }
+
 
     private fun getInsertDivider(): RecyclerView.ItemDecoration {
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
@@ -217,7 +228,7 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    private fun refreshActivity(){
+    private fun refreshActivity() {
 
     }
 

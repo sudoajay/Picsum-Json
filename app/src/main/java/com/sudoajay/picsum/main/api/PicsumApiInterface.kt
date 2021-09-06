@@ -1,5 +1,7 @@
 package com.sudoajay.picsum.main.api
 
+import androidx.paging.PagedList
+import androidx.paging.PagingData
 import com.sudoajay.picsum.main.model.Person
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -20,6 +22,6 @@ interface PicsumApiInterface {
      * you change the return type appropriately
     </T> */
     @GET("list")
-    fun getPerson(): Call<List<Person>>
+    fun getPerson(): Call<PagingData<Person>>
 
 }

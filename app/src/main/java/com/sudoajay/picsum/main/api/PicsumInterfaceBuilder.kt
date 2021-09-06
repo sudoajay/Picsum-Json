@@ -1,9 +1,13 @@
 package com.sudoajay.picsum.main.api
 
+import android.content.Context
 import android.util.Log
+import com.google.gson.Gson
+import com.sudoajay.picsum.R
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -15,7 +19,7 @@ class PicsumInterfaceBuilder {
         var okHttpClient: OkHttpClient? = null
 
 
-        fun getApiInterface(): PicsumApiInterface? {
+        fun getApiInterface(context: Context,json:String): PicsumApiInterface? {
             if (picsumApiInterface == null) {
 
                 Log.e(TAG,  "picsumApiInterface is not null ")
@@ -33,7 +37,10 @@ class PicsumInterfaceBuilder {
 
                 val retrofit = Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(JacksonConverterFactory.create())
+                    .addConverterFactory(if (json == context.getString(R.string.jacksonJson_text))
+                        JacksonConverterFactory.create()
+                    else GsonConverterFactory.create()
+                    )
                     .client(okHttpClient!!)
                     .build()
                 picsumApiInterface = retrofit.create(PicsumApiInterface::class.java)
