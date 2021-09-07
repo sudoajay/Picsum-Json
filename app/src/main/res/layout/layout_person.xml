@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable
-            name="person"
-            type="com.sudoajay.picsum.main.model.Person" />
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,7 +37,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:fontFamily="@font/lato"
-            android:text="@{person.name}"
             android:textColor="@color/headingNormalTextColor"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"

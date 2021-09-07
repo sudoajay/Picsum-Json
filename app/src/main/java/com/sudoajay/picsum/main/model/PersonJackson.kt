@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-data class Person(
+data class PersonJackson(
     @JsonProperty("id") val id: Int,
     @JsonProperty("author")val name: String,
     @JsonProperty("width")val width: Int,

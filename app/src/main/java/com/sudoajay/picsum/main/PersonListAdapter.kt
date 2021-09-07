@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.LayoutPersonBinding
-import com.sudoajay.picsum.main.model.Person
+import com.sudoajay.picsum.main.model.PersonGson
+import com.sudoajay.picsum.main.model.PersonJackson
 
-class PersonListAdapter (var person:List<Person>) : RecyclerView.Adapter<PersonListAdapter.PersonViewHolder>() {
-
+class PersonListAdapter(var personJacksons: List<PersonJackson>, var personGson: List<PersonGson>) :
+    RecyclerView.Adapter<PersonListAdapter.PersonViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -26,27 +27,46 @@ class PersonListAdapter (var person:List<Person>) : RecyclerView.Adapter<PersonL
 
 
         @SuppressLint("SetTextI18n")
-        fun bind(person: Person) {
-            binding.person = person
-
+        fun bind(personJackson: PersonJackson) {
             Picasso.get()
-                .load(person.downloadUrl)
+                .load(personJackson.downloadUrl)
                 .resize(100, 100)
                 .error(R.drawable.ic_me)
                 .centerCrop()
                 .into(binding.personImageImageView)
 
-            binding.personSizeTextView.text = "(${person.width} * ${person.height})"
+            binding.personNameTextView.text = personJackson.name
+
+            binding.personSizeTextView.text = "(${personJackson.width} * ${personJackson.height})"
+        }
+
+        @SuppressLint("SetTextI18n")
+        fun bind(personGson: PersonGson) {
+            Picasso.get()
+                .load(personGson.downloadUrl)
+                .resize(100, 100)
+                .error(R.drawable.ic_me)
+                .centerCrop()
+                .into(binding.personImageImageView)
+            binding.personNameTextView.text = personGson.name
+
+            binding.personSizeTextView.text = "(${personGson.width} * ${personGson.height})"
         }
     }
 
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
-        val paymentBean: Person= person[position]
-        holder.bind(paymentBean)
+        if (personJacksons.isNotEmpty()) {
+            val paymentBean: PersonJackson = personJacksons[position]
+            holder.bind(paymentBean)
+        } else {
+            val paymentBean: PersonGson = personGson[position]
+            holder.bind(paymentBean)
+        }
     }
 
-    override fun getItemCount(): Int = person.size
+    override fun getItemCount(): Int =
+        if (personJacksons.isNotEmpty()) personJacksons.size else personGson.size
 
 
 }

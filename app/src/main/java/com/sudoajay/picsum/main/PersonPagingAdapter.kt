@@ -6,12 +6,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.picsum.databinding.LayoutPersonBinding
-import com.sudoajay.picsum.main.model.Person
+import com.sudoajay.picsum.main.model.PersonJackson
 import javax.inject.Inject
 
 
 class PersonPagingAdapter @Inject constructor() :
-    PagingDataAdapter<Person, PersonPagingAdapter.PersonViewHolder>(Person_COMPARATOR) {
+    PagingDataAdapter<PersonJackson, PersonPagingAdapter.PersonViewHolder>(Person_COMPARATOR) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -27,17 +27,17 @@ class PersonPagingAdapter @Inject constructor() :
 
     inner class PersonViewHolder(private val binding: LayoutPersonBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(person: Person) {
-            binding.person = person
+        fun bind(personJackson: PersonJackson) {
+
         }
     }
 
     companion object {
-        private val Person_COMPARATOR = object : DiffUtil.ItemCallback<Person>() {
-            override fun areItemsTheSame(oldItem: Person, newItem: Person): Boolean =
+        private val Person_COMPARATOR = object : DiffUtil.ItemCallback<PersonJackson>() {
+            override fun areItemsTheSame(oldItem: PersonJackson, newItem: PersonJackson): Boolean =
                 oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: Person, newItem: Person): Boolean =
+            override fun areContentsTheSame(oldItem: PersonJackson, newItem: PersonJackson): Boolean =
                 oldItem == newItem
         }
     }

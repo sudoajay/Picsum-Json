@@ -19,8 +19,11 @@ import com.sudoajay.picsum.BaseActivity
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.ActivityMainBinding
 import com.sudoajay.picsum.helper.InsetDivider
-import com.sudoajay.picsum.main.api.PicsumInterfaceBuilder
-import com.sudoajay.picsum.main.model.Person
+import com.sudoajay.picsum.main.api.PicsumApiInterface
+import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJackson
+import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJson
+import com.sudoajay.picsum.main.model.PersonGson
+import com.sudoajay.picsum.main.model.PersonJackson
 import com.sudoajay.picsum.navigation.NavigationDrawerBottomSheet
 import com.sudoajay.picsum.setting.SettingBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +44,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var personPagingAdapter: PersonPagingAdapter
     lateinit var personListAdapter: PersonListAdapter
+    var picsumApiInterface: PicsumApiInterface? = null
     private var isDarkTheme: Boolean = false
     private var TAG = "MainActivityTAG"
 
@@ -69,12 +73,11 @@ class MainActivity : BaseActivity() {
         setReference()
         super.onResume()
         viewModel.protoManager.getDatabase().asLiveData().observe(this) {
-            viewModel.isDatabase = it
             refreshData()
         }
 
         viewModel.protoManager.getJsonConverter().asLiveData().observe(this) {
-            viewModel.getJsonConverter = it
+
             refreshData()
         }
     }
@@ -113,7 +116,7 @@ class MainActivity : BaseActivity() {
         binding.recyclerView.addItemDecoration(divider)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        personListAdapter = PersonListAdapter(listOf())
+        personListAdapter = PersonListAdapter(listOf(), listOf())
 
 
     }
@@ -121,23 +124,37 @@ class MainActivity : BaseActivity() {
 
 
     private fun getDataFromApi() {
-        val apiInterface = PicsumInterfaceBuilder.getApiInterface(applicationContext,viewModel.getJsonConverter)
-        val call = apiInterface?.getPerson()
+        Log.e(TAG, "viewModel.getJsonConverter -  ${viewModel.getJsonConverter}" )
+        if (viewModel.getJsonConverter == getString(R.string.jacksonJson_text)) {
+            val apiInterface =
+                PicsumInterfaceBuilderJackson.getApiInterface()
+            getJacksonAPI(apiInterface?.getPersonJackson())
+        } else {
+            val apiInterface =
+                PicsumInterfaceBuilderJson.getApiInterface()
+            getGsonApi(apiInterface?.getPersonGson())
+        }
 
-        call?.enqueue(object : Callback<List<Person>?> {
+        if (binding.swipeRefresh.isRefreshing)
+            binding.swipeRefresh.isRefreshing = false
+        viewModel.hideProgress.value = true
+    }
 
-            override fun onResponse(call: Call<List<Person>?>, response: Response<List<Person>?>) {
+    private fun getJacksonAPI(call: Call<List<PersonJackson>?>?) {
+        call?.enqueue(object : Callback<List<PersonJackson>?> {
 
+            override fun onResponse(
+                call: Call<List<PersonJackson>?>,
+                response: Response<List<PersonJackson>?>
+            ) {
                 lifecycleScope.launch {
-                    if (binding.swipeRefresh.isRefreshing)
-                        binding.swipeRefresh.isRefreshing = false
-                    personListAdapter.person = response.body() ?: listOf()
+                    personListAdapter.personJacksons = response.body() ?: listOf()
                     binding.recyclerView.adapter = personListAdapter
-                    viewModel.hideProgress.postValue(true)
 
                 }
             }
-            override fun onFailure(call: Call<List<Person>?>, t: Throwable) {
+
+            override fun onFailure(call: Call<List<PersonJackson>?>, t: Throwable) {
                 Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
                 viewModel.hideProgress.value = true
                 Toast.makeText(
@@ -147,7 +164,31 @@ class MainActivity : BaseActivity() {
                 ).show()
             }
         })
+    }
 
+    private fun getGsonApi(call: Call<List<PersonGson>?>?) {
+        call?.enqueue(object : Callback<List<PersonGson>?> {
+
+            override fun onResponse(
+                call: Call<List<PersonGson>?>,
+                response: Response<List<PersonGson>?>
+            ) {
+                lifecycleScope.launch {
+                    personListAdapter.personGson = response.body() ?: listOf()
+                    binding.recyclerView.adapter = personListAdapter
+                }
+            }
+
+            override fun onFailure(call: Call<List<PersonGson>?>, t: Throwable) {
+                Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
+                viewModel.hideProgress.value = true
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.noDataFound_text),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        })
     }
 
 
@@ -241,6 +282,7 @@ class MainActivity : BaseActivity() {
 
     private fun refreshData() {
         getDataFromApi()
+        picsumApiInterface = null
     }
 
 
