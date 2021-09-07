@@ -45,5 +45,6 @@ object Versions {
         const val ProtoDataStore = "1.0.0"
 
         const val FirebaseDatabase = "20.0.1"
+        const val Picasso = "2.71828"
     }
 }

@@ -6,13 +6,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.picsum.BaseActivity
@@ -37,8 +37,10 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
+
     @Inject
-    lateinit var personAdapter: PersonAdapter
+    lateinit var personPagingAdapter: PersonPagingAdapter
+    lateinit var personListAdapter: PersonListAdapter
     private var isDarkTheme: Boolean = false
     private var TAG = "MainActivityTAG"
 
@@ -66,17 +68,14 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         setReference()
         super.onResume()
-
-
         viewModel.protoManager.getDatabase().asLiveData().observe(this) {
-            Log.e(TAG, "onResume:getDatabase $it" )
             viewModel.isDatabase = it
+            refreshData()
         }
 
         viewModel.protoManager.getJsonConverter().asLiveData().observe(this) {
-            Log.e(TAG, "onResume:getJsonConverter $it" )
             viewModel.getJsonConverter = it
-
+            refreshData()
         }
     }
 
@@ -87,6 +86,11 @@ class MainActivity : BaseActivity() {
         binding.swipeRefresh.setProgressBackgroundColorSchemeColor(
             ContextCompat.getColor(applicationContext, R.color.swipeBgColor)
         )
+
+        binding.swipeRefresh.setOnRefreshListener {
+            refreshData()
+        }
+
 
         //         Setup BottomAppBar Navigation Setup
         binding.bottomAppBar.navigationIcon?.mutate()?.let {
@@ -105,12 +109,13 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setRecyclerView() {
-        val recyclerView = binding.recyclerView
         val divider = getInsertDivider()
-        recyclerView.addItemDecoration(divider)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = personAdapter
+        binding.recyclerView.addItemDecoration(divider)
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        personListAdapter = PersonListAdapter(listOf())
+
+
     }
 
 
@@ -122,19 +127,27 @@ class MainActivity : BaseActivity() {
         call?.enqueue(object : Callback<List<Person>?> {
 
             override fun onResponse(call: Call<List<Person>?>, response: Response<List<Person>?>) {
-//                Log.e("$TAG+Response", Gson().toJson(response))
-                Log.e("$TAG+Response", response.message())
-                Log.e("$TAG+Response", " Start ")
 
-                Log.e("$TAG+Response", "End")
                 lifecycleScope.launch {
-                    personAdapter.submitData(response.body()?: PagingData.empty())
+                    if (binding.swipeRefresh.isRefreshing)
+                        binding.swipeRefresh.isRefreshing = false
+                    personListAdapter.person = response.body() ?: listOf()
+                    binding.recyclerView.adapter = personListAdapter
+                    viewModel.hideProgress.postValue(true)
+
                 }
             }
             override fun onFailure(call: Call<List<Person>?>, t: Throwable) {
                 Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
+                viewModel.hideProgress.value = true
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.noDataFound_text),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         })
+
     }
 
 
@@ -201,7 +214,7 @@ class MainActivity : BaseActivity() {
         when (item.itemId) {
             android.R.id.home -> showNavigationDrawer()
             R.id.setting_optionMenu -> openSetting()
-            R.id.refresh_optionMenu->refreshActivity()
+            R.id.refresh_optionMenu -> refreshData()
 
             else -> return super.onOptionsItemSelected(item)
         }
@@ -218,8 +231,6 @@ class MainActivity : BaseActivity() {
     }
 
 
-
-
     fun openSetting() {
         val darkModeBottomSheet = SettingBottomSheet(this)
         darkModeBottomSheet.show(
@@ -228,8 +239,8 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    private fun refreshActivity() {
-
+    private fun refreshData() {
+        getDataFromApi()
     }
 
 

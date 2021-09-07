@@ -58,6 +58,8 @@ fun DependencyHandler.implementNetwork(){
     add("implementation", Dependencies.Network.jacksonCore)
     add("implementation", Dependencies.Network.jacksonAnnotation)
     add("implementation", Dependencies.Network.jacksonDataBind)
+    add("implementation", Dependencies.Network.picasso)
+
 }
 
 

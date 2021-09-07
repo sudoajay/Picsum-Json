@@ -6,13 +6,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.picsum.databinding.LayoutPersonBinding
-import com.sudoajay.picsum.main.model.Item
 import com.sudoajay.picsum.main.model.Person
 import javax.inject.Inject
 
 
-class PersonAdapter @Inject constructor() :
-    PagingDataAdapter<Person, PersonAdapter.PersonViewHolder>(Person_COMPARATOR) {
+class PersonPagingAdapter @Inject constructor() :
+    PagingDataAdapter<Person, PersonPagingAdapter.PersonViewHolder>(Person_COMPARATOR) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -28,8 +27,6 @@ class PersonAdapter @Inject constructor() :
 
     inner class PersonViewHolder(private val binding: LayoutPersonBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-
         fun bind(person: Person) {
             binding.person = person
         }

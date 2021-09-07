@@ -15,3 +15,4 @@ data class Person(
     @JsonProperty("url")val openUrl: String,
     @JsonProperty("download_url")val downloadUrl: String,
 ): Parcelable
+

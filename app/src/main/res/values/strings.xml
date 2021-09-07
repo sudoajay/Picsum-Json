@@ -7,6 +7,7 @@
     <string name="search_optionMenu">Search</string>
     <string name="refresh_optionMenu">Refresh</string>
     <string name="setting_optionMenu">Setting</string>
+    <string name="noDataFound_text">No Data Found</string>
 
 <!--    Setting bottom Sheet-->
     <string name="dataBase_text">DataBase</string>
@@ -25,6 +26,8 @@
     <string name="share_app_text">Share Apk</string>
     <string name="app_version_text">App Version : </string>
     <string name="workOnProgress_text">Work On Progress</string>
+
+
 
 
 </resources>

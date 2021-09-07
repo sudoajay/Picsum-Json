@@ -115,6 +115,11 @@ class Dependencies {
         const val jacksonDataBind = "com.fasterxml.jackson.core:jackson-databind:${Versions.Dependencies.JacksonJson}"
 
 
+//        Picasso
+
+        const val picasso = "com.squareup.picasso:picasso:${Versions.Dependencies.Picasso}"
+
+
         const val retrofitConverter =
             "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 
