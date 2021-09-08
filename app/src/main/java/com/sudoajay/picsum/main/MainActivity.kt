@@ -2,35 +2,23 @@ package com.sudoajay.picsum.main
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.picsum.BaseActivity
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.ActivityMainBinding
 import com.sudoajay.picsum.helper.InsetDivider
-import com.sudoajay.picsum.main.api.PicsumApiInterface
-import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJackson
-import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJson
-import com.sudoajay.picsum.main.model.PersonGson
-import com.sudoajay.picsum.main.model.PersonJackson
 import com.sudoajay.picsum.navigation.NavigationDrawerBottomSheet
 import com.sudoajay.picsum.setting.SettingBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 
@@ -39,12 +27,13 @@ class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModel: MainViewModel
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     @Inject
     lateinit var personPagingAdapter: PersonPagingAdapter
     lateinit var personListAdapter: PersonListAdapter
-    var picsumApiInterface: PicsumApiInterface? = null
+
+    var apiRepository:ApiRepository = ApiRepository(this)
     private var isDarkTheme: Boolean = false
     private var TAG = "MainActivityTAG"
 
@@ -108,7 +97,9 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(binding.bottomAppBar)
 
         setRecyclerView()
-        getDataFromApi()
+        apiRepository.getDataFromApi()
+        hideProgressAndRefresh()
+
     }
 
     private fun setRecyclerView() {
@@ -121,76 +112,7 @@ class MainActivity : BaseActivity() {
 
     }
 
-
-
-    private fun getDataFromApi() {
-        Log.e(TAG, "viewModel.getJsonConverter -  ${viewModel.getJsonConverter}" )
-        if (viewModel.getJsonConverter == getString(R.string.jacksonJson_text)) {
-            val apiInterface =
-                PicsumInterfaceBuilderJackson.getApiInterface()
-            getJacksonAPI(apiInterface?.getPersonJackson())
-        } else {
-            val apiInterface =
-                PicsumInterfaceBuilderJson.getApiInterface()
-            getGsonApi(apiInterface?.getPersonGson())
-        }
-
-        if (binding.swipeRefresh.isRefreshing)
-            binding.swipeRefresh.isRefreshing = false
-        viewModel.hideProgress.value = true
-    }
-
-    private fun getJacksonAPI(call: Call<List<PersonJackson>?>?) {
-        call?.enqueue(object : Callback<List<PersonJackson>?> {
-
-            override fun onResponse(
-                call: Call<List<PersonJackson>?>,
-                response: Response<List<PersonJackson>?>
-            ) {
-                lifecycleScope.launch {
-                    personListAdapter.personJacksons = response.body() ?: listOf()
-                    binding.recyclerView.adapter = personListAdapter
-
-                }
-            }
-
-            override fun onFailure(call: Call<List<PersonJackson>?>, t: Throwable) {
-                Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
-                viewModel.hideProgress.value = true
-                Toast.makeText(
-                    applicationContext,
-                    getString(R.string.noDataFound_text),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        })
-    }
-
-    private fun getGsonApi(call: Call<List<PersonGson>?>?) {
-        call?.enqueue(object : Callback<List<PersonGson>?> {
-
-            override fun onResponse(
-                call: Call<List<PersonGson>?>,
-                response: Response<List<PersonGson>?>
-            ) {
-                lifecycleScope.launch {
-                    personListAdapter.personGson = response.body() ?: listOf()
-                    binding.recyclerView.adapter = personListAdapter
-                }
-            }
-
-            override fun onFailure(call: Call<List<PersonGson>?>, t: Throwable) {
-                Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
-                viewModel.hideProgress.value = true
-                Toast.makeText(
-                    applicationContext,
-                    getString(R.string.noDataFound_text),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        })
-    }
-
+    
 
     private fun getInsertDivider(): RecyclerView.ItemDecoration {
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
@@ -281,8 +203,14 @@ class MainActivity : BaseActivity() {
     }
 
     private fun refreshData() {
-        getDataFromApi()
-        picsumApiInterface = null
+        apiRepository.getDataFromApi()
+        hideProgressAndRefresh()
+    }
+
+    private fun hideProgressAndRefresh(){
+        if (binding.swipeRefresh.isRefreshing)
+            binding.swipeRefresh.isRefreshing = false
+        viewModel.hideProgress.value = true
     }
 
 
