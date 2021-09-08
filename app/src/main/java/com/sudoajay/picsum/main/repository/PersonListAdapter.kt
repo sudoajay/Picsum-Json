@@ -1,16 +1,22 @@
-package com.sudoajay.picsum.main
+package com.sudoajay.picsum.main.repository
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.LayoutPersonBinding
+import com.sudoajay.picsum.main.MainActivity
+import com.sudoajay.picsum.main.bottomsheet.LongPressBottomSheet
 import com.sudoajay.picsum.main.model.PersonGson
 import com.sudoajay.picsum.main.model.PersonJackson
 
-class PersonListAdapter(var personJacksons: List<PersonJackson>, var personGson: List<PersonGson>) :
+
+class PersonListAdapter(
+    private var mainActivity: MainActivity,
+    var personJacksons: List<PersonJackson>,
+    var personGson: List<PersonGson>
+) :
     RecyclerView.Adapter<PersonListAdapter.PersonViewHolder>() {
 
 
@@ -26,7 +32,6 @@ class PersonListAdapter(var personJacksons: List<PersonJackson>, var personGson:
         RecyclerView.ViewHolder(binding.root) {
 
 
-        @SuppressLint("SetTextI18n")
         fun bind(personJackson: PersonJackson) {
             Picasso.get()
                 .load(personJackson.downloadUrl)
@@ -37,10 +42,15 @@ class PersonListAdapter(var personJacksons: List<PersonJackson>, var personGson:
 
             binding.personNameTextView.text = personJackson.name
 
-            binding.personSizeTextView.text = "(${personJackson.width} * ${personJackson.height})"
+            binding.personSizeTextView.text = getSize(personJackson.width, personJackson.height)
+
+            binding.boxConstraintLayout.setOnLongClickListener {
+                openMoreSetting()
+                true
+            }
+
         }
 
-        @SuppressLint("SetTextI18n")
         fun bind(personGson: PersonGson) {
             Picasso.get()
                 .load(personGson.downloadUrl)
@@ -50,7 +60,16 @@ class PersonListAdapter(var personJacksons: List<PersonJackson>, var personGson:
                 .into(binding.personImageImageView)
             binding.personNameTextView.text = personGson.name
 
-            binding.personSizeTextView.text = "(${personGson.width} * ${personGson.height})"
+            binding.personSizeTextView.text = getSize(personGson.width, personGson.height)
+
+            binding.boxConstraintLayout.setOnLongClickListener {
+                openMoreSetting()
+                true
+            }
+        }
+
+        private fun getSize(width: Int, heigth: Int): String {
+            return "($width * $heigth)"
         }
     }
 
@@ -68,5 +87,12 @@ class PersonListAdapter(var personJacksons: List<PersonJackson>, var personGson:
     override fun getItemCount(): Int =
         if (personJacksons.isNotEmpty()) personJacksons.size else personGson.size
 
+    fun openMoreSetting() {
+        val longPressBottomSheet = LongPressBottomSheet()
+        longPressBottomSheet.show(
+            mainActivity.supportFragmentManager.beginTransaction(),
+            longPressBottomSheet.tag
+        )
+    }
 
 }

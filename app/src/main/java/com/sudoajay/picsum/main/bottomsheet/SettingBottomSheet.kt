@@ -1,4 +1,4 @@
-package com.sudoajay.picsum.setting
+package com.sudoajay.picsum.main.bottomsheet
 
 import android.os.Bundle
 import android.util.Log

@@ -27,6 +27,11 @@
     <string name="app_version_text">App Version : </string>
     <string name="workOnProgress_text">Work On Progress</string>
 
+<!--    Long Press Bottom Sheet-->
+    <string name="more_option_text">More Option</string>
+    <string name="view_image_text">View Image</string>
+    <string name="download_image_text">Download Image</string>
+
 
 
 

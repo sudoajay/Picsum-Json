@@ -16,8 +16,11 @@ import com.sudoajay.picsum.BaseActivity
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.ActivityMainBinding
 import com.sudoajay.picsum.helper.InsetDivider
-import com.sudoajay.picsum.navigation.NavigationDrawerBottomSheet
-import com.sudoajay.picsum.setting.SettingBottomSheet
+import com.sudoajay.picsum.main.bottomsheet.NavigationDrawerBottomSheet
+import com.sudoajay.picsum.main.bottomsheet.SettingBottomSheet
+import com.sudoajay.picsum.main.repository.ApiRepository
+import com.sudoajay.picsum.main.repository.PersonListAdapter
+import com.sudoajay.picsum.main.repository.PersonPagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -33,7 +36,7 @@ class MainActivity : BaseActivity() {
     lateinit var personPagingAdapter: PersonPagingAdapter
     lateinit var personListAdapter: PersonListAdapter
 
-    var apiRepository:ApiRepository = ApiRepository(this)
+    var apiRepository: ApiRepository = ApiRepository(this)
     private var isDarkTheme: Boolean = false
     private var TAG = "MainActivityTAG"
 
@@ -107,7 +110,7 @@ class MainActivity : BaseActivity() {
         binding.recyclerView.addItemDecoration(divider)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        personListAdapter = PersonListAdapter(listOf(), listOf())
+        personListAdapter = PersonListAdapter(this,listOf(), listOf())
 
 
     }
@@ -195,10 +198,10 @@ class MainActivity : BaseActivity() {
 
 
     fun openSetting() {
-        val darkModeBottomSheet = SettingBottomSheet(this)
-        darkModeBottomSheet.show(
+        val settingBottomSheet = SettingBottomSheet(this)
+        settingBottomSheet.show(
             supportFragmentManager.beginTransaction(),
-            darkModeBottomSheet.tag
+            settingBottomSheet.tag
         )
     }
 

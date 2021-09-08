@@ -1,19 +1,18 @@
-package com.sudoajay.picsum.main
+package com.sudoajay.picsum.main.repository
 
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.sudoajay.picsum.R
+import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJackson
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJson
 import com.sudoajay.picsum.main.model.PersonGson
 import com.sudoajay.picsum.main.model.PersonJackson
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 class ApiRepository(private var activity: MainActivity) {
 

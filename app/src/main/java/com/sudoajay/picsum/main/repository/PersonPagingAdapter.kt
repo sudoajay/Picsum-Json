@@ -1,4 +1,4 @@
-package com.sudoajay.picsum.main
+package com.sudoajay.picsum.main.repository
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

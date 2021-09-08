@@ -9,7 +9,7 @@
 
         <variable
             name="navigation"
-            type="com.sudoajay.picsum.navigation.NavigationDrawerBottomSheet" />
+            type="com.sudoajay.picsum.main.bottomsheet.NavigationDrawerBottomSheet" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

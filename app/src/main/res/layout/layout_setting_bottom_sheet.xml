@@ -11,7 +11,7 @@
             type="com.sudoajay.picsum.main.MainViewModel" />
         <variable
             name="bottomSheet"
-            type="com.sudoajay.picsum.setting.SettingBottomSheet" />
+            type="com.sudoajay.picsum.main.bottomsheet.SettingBottomSheet" />
 
     </data>
 
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/mainBgColor"
-        android:paddingBottom="@dimen/bootom_sheet_padding_bottom">
+        android:paddingBottom="@dimen/bottom_sheet_padding_bottom">
 
         <View
             android:id="@+id/view"
@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/ShowBy_TextView"
+            android:id="@+id/moreOption_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -57,7 +57,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ShowBy_TextView">
+            app:layout_constraintTop_toBottomOf="@+id/moreOption_TextView">
 
             <TextView
                 android:id="@+id/off_TextView"

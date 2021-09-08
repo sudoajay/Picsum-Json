@@ -13,7 +13,7 @@
     <dimen name="divider_inset">72dp</dimen>
 
     <!--    Dark Bottom sheet-->
-    <dimen name="bootom_sheet_padding_bottom">32dp</dimen>
+    <dimen name="bottom_sheet_padding_bottom">32dp</dimen>
 
 
     <!--    Navigation Drawer-->

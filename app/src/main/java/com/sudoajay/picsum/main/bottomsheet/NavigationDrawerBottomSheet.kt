@@ -1,4 +1,4 @@
-package com.sudoajay.picsum.navigation
+package com.sudoajay.picsum.main.bottomsheet
 
 import android.content.Intent
 import android.content.pm.PackageManager
