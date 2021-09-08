@@ -45,7 +45,7 @@ class PersonListAdapter(
             binding.personSizeTextView.text = getSize(personJackson.width, personJackson.height)
 
             binding.boxConstraintLayout.setOnLongClickListener {
-                openMoreSetting()
+                openMoreSetting(personJackson.openUrl,personJackson.downloadUrl)
                 true
             }
 
@@ -63,7 +63,7 @@ class PersonListAdapter(
             binding.personSizeTextView.text = getSize(personGson.width, personGson.height)
 
             binding.boxConstraintLayout.setOnLongClickListener {
-                openMoreSetting()
+                openMoreSetting(personGson.openUrl,personGson.downloadUrl)
                 true
             }
         }
@@ -87,8 +87,8 @@ class PersonListAdapter(
     override fun getItemCount(): Int =
         if (personJacksons.isNotEmpty()) personJacksons.size else personGson.size
 
-    fun openMoreSetting() {
-        val longPressBottomSheet = LongPressBottomSheet()
+    fun openMoreSetting(openUrl :String,downloadUrl :String ) {
+        val longPressBottomSheet = LongPressBottomSheet(openUrl,downloadUrl )
         longPressBottomSheet.show(
             mainActivity.supportFragmentManager.beginTransaction(),
             longPressBottomSheet.tag
