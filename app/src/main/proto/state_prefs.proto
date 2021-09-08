@@ -3,12 +3,7 @@ syntax = "proto3";
 option java_package = "com.sudoajay.picsum";
 option java_multiple_files = true;
 
-
-
 message StatePreferences {
-  // filter for showing / hiding completed tasks
   bool database = 1;
   string jsonConverter = 2;
-
-
 }

@@ -35,7 +35,7 @@ class PersonListAdapter(
         fun bind(personJackson: PersonJackson) {
             Picasso.get()
                 .load(personJackson.downloadUrl)
-                .resize(100, 100)
+                .resize(119, 119)
                 .error(R.drawable.ic_me)
                 .centerCrop()
                 .into(binding.personImageImageView)
@@ -54,7 +54,7 @@ class PersonListAdapter(
         fun bind(personGson: PersonGson) {
             Picasso.get()
                 .load(personGson.downloadUrl)
-                .resize(100, 100)
+                .resize(120, 120)
                 .error(R.drawable.ic_me)
                 .centerCrop()
                 .into(binding.personImageImageView)

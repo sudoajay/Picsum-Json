@@ -1,6 +1,7 @@
 package com.sudoajay.picsum.main
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,18 +11,21 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
+
 class MainViewModel @Inject constructor(application: Application): ViewModel() {
     private var _application = application
+    private var TAG = "MainViewModelTAG"
 
     var protoManager: ProtoManager = ProtoManager(application)
-    var getJsonConverter: String = application.getString(R.string.jacksonJson_text)
+    var getJsonConverter: String = _application.getString(R.string.jacksonJson_text)
     var isDatabase: Boolean = false
 
     var hideProgress: MutableLiveData<Boolean> = MutableLiveData()
@@ -34,17 +38,9 @@ class MainViewModel @Inject constructor(application: Application): ViewModel() {
 
     private fun getDataFromProtoDatastore(){
         viewModelScope.launch {
-            protoManager.getDatabase()
-                .collect {
-                    // Update View with the latest favorite news
-                    isDatabase = it
-                }
-            protoManager.getJsonConverter().collect {
-                getJsonConverter = it
-            }
-            if (getJsonConverter.isEmpty()) {
-                getJsonConverter = _application.getString(R.string.jacksonJson_text)
-                protoManager.setJsonConverter(getJsonConverter)
+            protoManager.dataStoreStatePreferences.data.collectLatest {
+                getJsonConverter = it.jsonConverter
+                isDatabase = it.database
             }
         }
     }

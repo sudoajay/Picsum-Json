@@ -1,5 +1,6 @@
 package com.sudoajay.picsum.main.repository
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -13,11 +14,12 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+@SuppressLint("NotifyDataSetChanged")
 class ApiRepository(private var activity: MainActivity) {
 
     private var TAG = "ApiRepositoryTAG"
     fun getDataFromApi() {
+        Log.e(TAG, "getDataFromApi: ${activity.viewModel.getJsonConverter}" )
         if (activity.viewModel.getJsonConverter == activity.getString(R.string.jacksonJson_text)) {
             val apiInterface =
                 PicsumInterfaceBuilderJackson.getApiInterface()
@@ -27,6 +29,7 @@ class ApiRepository(private var activity: MainActivity) {
                 PicsumInterfaceBuilderJson.getApiInterface()
             getGsonApi(apiInterface?.getPersonGson())
         }
+
 
 
     }
@@ -39,10 +42,9 @@ class ApiRepository(private var activity: MainActivity) {
                 response: Response<List<PersonJackson>?>
             ) {
                 activity.lifecycleScope.launch {
+                    activity.personListAdapter.personGson = listOf()
                     activity.personListAdapter.personJacksons = response.body() ?: listOf()
-                    activity.binding.recyclerView.adapter = activity.personListAdapter
-
-
+                    activity.binding.recyclerView.adapter?.notifyDataSetChanged()
                 }
             }
 
@@ -65,8 +67,9 @@ class ApiRepository(private var activity: MainActivity) {
                 response: Response<List<PersonGson>?>
             ) {
                 activity.lifecycleScope.launch {
+                    activity.personListAdapter.personJacksons = listOf()
                     activity.personListAdapter.personGson = response.body() ?: listOf()
-                    activity.binding.recyclerView.adapter = activity.personListAdapter
+                    activity.binding.recyclerView.adapter?.notifyDataSetChanged()
 
                 }
             }

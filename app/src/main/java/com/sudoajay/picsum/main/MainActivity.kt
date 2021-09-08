@@ -2,6 +2,7 @@ package com.sudoajay.picsum.main
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
@@ -64,12 +65,8 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         setReference()
         super.onResume()
-        viewModel.protoManager.getDatabase().asLiveData().observe(this) {
-            refreshData()
-        }
-
-        viewModel.protoManager.getJsonConverter().asLiveData().observe(this) {
-
+        viewModel.protoManager.
+        dataStoreStatePreferences.data.asLiveData().observe(this) {
             refreshData()
         }
     }
@@ -110,7 +107,8 @@ class MainActivity : BaseActivity() {
         binding.recyclerView.addItemDecoration(divider)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        personListAdapter = PersonListAdapter(this,listOf(), listOf())
+        personListAdapter = PersonListAdapter(this, listOf(), listOf())
+        binding.recyclerView.adapter = personListAdapter
 
 
     }
@@ -206,6 +204,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun refreshData() {
+        Log.e(TAG, "Refresh data call here ")
         apiRepository.getDataFromApi()
         hideProgressAndRefresh()
     }

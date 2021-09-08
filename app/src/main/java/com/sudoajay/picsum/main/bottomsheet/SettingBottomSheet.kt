@@ -50,7 +50,7 @@ class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFrag
 
     fun setValue(boolean: Boolean) {
         lifecycleScope.launch {
-            protoManager.setDatabase(boolean)
+            protoManager.setDataBase(boolean)
         }
         mainActivity.viewModel.isDatabase = boolean
 
