@@ -74,7 +74,6 @@ class MainActivity : BaseActivity() {
         dataStoreStatePreferences.data.asLiveData().observe(this) {
             viewModel.getDatabase = it.database
             viewModel.getJsonConverter = it.jsonConverter
-            Log.e(TAG, "sadas: value change - json - ${viewModel.getDatabase}    databsae - ${viewModel.getJsonConverter}" )
             refreshData()
         }
     }

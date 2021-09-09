@@ -112,6 +112,18 @@ class ApiRepository(private var activity: MainActivity) {
         ).flow
     }
 
+    fun getRemoteMediatorSourceWithNetwork(): Flow<PagingData<PersonGson>> {
+
+        val apiInterface =
+            PicsumInterfaceBuilderGson.getApiInterface()
+        Log.e(TAG, "getPagingSourceWithNetwork: I am here at ", )
+
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            pagingSourceFactory = { PagingSourceNetworkGson(apiInterface!!) }
+        ).flow
+    }
+
     companion object {
         const val NETWORK_PAGE_SIZE = 10
     }

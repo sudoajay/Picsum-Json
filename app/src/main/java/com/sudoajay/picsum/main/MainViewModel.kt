@@ -32,22 +32,8 @@ class MainViewModel @Inject constructor(application: Application): ViewModel() {
             protoManager.dataStoreStatePreferences.data.collectLatest {
                 getJsonConverter = it.jsonConverter
                 getDatabase = it.database
-
-                if (getJsonConverter == "" && getDatabase == "") {
-                    Log.e(
-                        TAG,
-                        "indie: value change - json - $getJsonConverter    databsae - $getDatabase"
-                    )
-                    protoManager.setDefaultValue()
-                }
-
-                Log.e(
-                    TAG,
-                    "getDataFromProtoDatastore: value change - json - $getJsonConverter    databsae - $getDatabase"
-                )
+                if (getJsonConverter == "" && getDatabase == "") protoManager.setDefaultValue()
             }
-
-
         }
     }
 

@@ -1,6 +1,7 @@
 package com.sudoajay.picsum.main.database
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,13 +12,16 @@ import com.sudoajay.picsum.main.model.Item
 @Dao
 interface ItemDoa {
 
-    @Query("Select * FROM ItemTable ")
-    fun getItemList(): LiveData<List<Item>>
 
     @Query("DELETE FROM ItemTable")
     suspend fun deleteAll()
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(item: Item)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(users: List<Item>)
+
+
+    @Query("SELECT * FROM ItemTable ")
+    fun pagingSource(): PagingSource<Int, Item>
+
 
 }
