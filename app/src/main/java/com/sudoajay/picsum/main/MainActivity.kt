@@ -72,8 +72,9 @@ class MainActivity : BaseActivity() {
         super.onResume()
         viewModel.protoManager.
         dataStoreStatePreferences.data.asLiveData().observe(this) {
-            viewModel.isDatabase = it.database
+            viewModel.getDatabase = it.database
             viewModel.getJsonConverter = it.jsonConverter
+            Log.e(TAG, "sadas: value change - json - ${viewModel.getDatabase}    databsae - ${viewModel.getJsonConverter}" )
             refreshData()
         }
     }
@@ -120,30 +121,51 @@ class MainActivity : BaseActivity() {
         personPagingAdapterJackson = PersonPagingAdapterJackson(this)
         personPagingAdapterGson = PersonPagingAdapterGson(this)
 
+        protoDataChange()
+
     }
 
     private fun protoDataChange(){
-        if (viewModel.isDatabase){
 
-        }else{
+        when (viewModel.getDatabase) {
+            getString(R.string.remote_mediator_text) -> {
+                binding.recyclerView.adapter = null
+                if (viewModel.getJsonConverter == getString(R.string.jacksonJson_text)){
 
-        }
+                }
+                else{
 
-            binding.recyclerView.adapter = personPagingAdapterGson
+                }
+            }
+            getString(R.string.paging_source_text) -> {
 
+                if (viewModel.getJsonConverter == getString(R.string.jacksonJson_text)){
+                    binding.recyclerView.adapter = personPagingAdapterJackson
+                    lifecycleScope.launch {
+                        apiRepository.getPagingJacksonSourceWithNetwork().collectLatest { pagingData->
+                            personPagingAdapterJackson.submitData(pagingData)
+                        }
+                    }
 
+                }else{
+                    binding.recyclerView.adapter = personPagingAdapterGson
 
+                    lifecycleScope.launch {
+                        apiRepository.getPagingGsonSourceWithNetwork().collectLatest { pagingData->
+                            personPagingAdapterGson.submitData(pagingData)
+                        }
+                    }
+                }
 
-//        binding.recyclerView.adapter = personListAdapter
-
-        lifecycleScope.launch {
-            apiRepository.getPagingGsonSourceWithNetwork().collectLatest { pagingData->
-                personPagingAdapterGson.submitData(pagingData)
+            }
+            else -> { // Note the block
+                binding.recyclerView.adapter = personListAdapter
+                apiRepository.getDataFromApi()
             }
         }
-    }
 
-    
+
+    }
 
     private fun getInsertDivider(): RecyclerView.ItemDecoration {
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
@@ -235,7 +257,7 @@ class MainActivity : BaseActivity() {
 
     private fun refreshData() {
         Log.e(TAG, "Refresh data call here ")
-//        apiRepository.getDataFromApi()
+       protoDataChange()
         hideProgressAndRefresh()
     }
 

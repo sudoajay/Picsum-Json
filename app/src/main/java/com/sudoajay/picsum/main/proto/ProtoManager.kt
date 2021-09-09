@@ -3,13 +3,14 @@ package com.sudoajay.picsum.main.proto
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
+import androidx.datastore.preferences.preferencesDataStore
+import com.sudoajay.picsum.R
 import com.sudoajay.picsum.StatePreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class ProtoManager constructor (var context: Context){
 
-    private var TAG = "ProtoManagerTAG"
     private val Context.stateDataStore: DataStore<StatePreferences> by dataStore(
         fileName = DATA_STORE_FILE_NAME,
         serializer = StatePreferencesSerializer
@@ -17,10 +18,19 @@ class ProtoManager constructor (var context: Context){
 
     val dataStoreStatePreferences : DataStore<StatePreferences> = context.stateDataStore
 
-    suspend fun setDataBase(isDataBase: Boolean) {
+    suspend fun setDefaultValue(){
+        dataStoreStatePreferences.updateData { preferences->
+            preferences.toBuilder()
+                .setDatabase(context.getString(R.string.no_dataBase_text))
+                .setJsonConverter(context.getString(R.string.jacksonJson_text))
+                .build()
+        }
+    }
+
+    suspend fun setDataBase(database: String) {
         dataStoreStatePreferences.updateData { preferences ->
             preferences.toBuilder()
-                .setDatabase(isDataBase)
+                .setDatabase(database)
                 .build()
         }
     }
@@ -32,6 +42,8 @@ class ProtoManager constructor (var context: Context){
                 .build()
         }
     }
+
+
 
     companion object {
         private const val DATA_STORE_FILE_NAME = "state_prefs.pb"

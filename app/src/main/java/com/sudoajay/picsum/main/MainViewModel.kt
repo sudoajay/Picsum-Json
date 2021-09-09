@@ -5,19 +5,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sudoajay.picsum.R
 import com.sudoajay.picsum.main.proto.ProtoManager
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Singleton
 
 
 class MainViewModel @Inject constructor(application: Application): ViewModel() {
@@ -25,8 +16,8 @@ class MainViewModel @Inject constructor(application: Application): ViewModel() {
     private var TAG = "MainViewModelTAG"
 
     var protoManager: ProtoManager = ProtoManager(application)
-    var getJsonConverter: String = _application.getString(R.string.jacksonJson_text)
-    var isDatabase: Boolean = false
+    var getJsonConverter: String = ""
+    var getDatabase: String = ""
 
     var hideProgress: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -36,12 +27,27 @@ class MainViewModel @Inject constructor(application: Application): ViewModel() {
 
     }
 
-    private fun getDataFromProtoDatastore(){
+    private fun getDataFromProtoDatastore() {
         viewModelScope.launch {
             protoManager.dataStoreStatePreferences.data.collectLatest {
                 getJsonConverter = it.jsonConverter
-                isDatabase = it.database
+                getDatabase = it.database
+
+                if (getJsonConverter == "" && getDatabase == "") {
+                    Log.e(
+                        TAG,
+                        "indie: value change - json - $getJsonConverter    databsae - $getDatabase"
+                    )
+                    protoManager.setDefaultValue()
+                }
+
+                Log.e(
+                    TAG,
+                    "getDataFromProtoDatastore: value change - json - $getJsonConverter    databsae - $getDatabase"
+                )
             }
+
+
         }
     }
 

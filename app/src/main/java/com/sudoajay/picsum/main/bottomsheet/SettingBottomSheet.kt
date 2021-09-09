@@ -1,7 +1,6 @@
 package com.sudoajay.picsum.main.bottomsheet
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.sudoajay.picsum.databinding.LayoutSettingBottomSheetBinding
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.proto.ProtoManager
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFragment() {
     lateinit var protoManager: ProtoManager
@@ -47,9 +45,9 @@ class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFrag
         dismiss()
     }
 
-    fun setValue(boolean: Boolean) {
+    fun setDataBaseValue(database: String) {
         lifecycleScope.launch {
-            protoManager.setDataBase(boolean)
+            protoManager.setDataBase(database)
         }
         dismiss()
     }

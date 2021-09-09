@@ -11,8 +11,8 @@
 
 <!--    Setting bottom Sheet-->
     <string name="dataBase_text">DataBase</string>
-    <string name="room_dataBase_text">Room DataBase</string>
-    <string name=""
+    <string name="remote_mediator_text">Remote Mediator</string>
+    <string name="paging_source_text">Paging Source</string>
     <string name="no_dataBase_text">No DataBase</string>
 
     <string name="converter_text">Converter</string>
