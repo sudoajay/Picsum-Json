@@ -4,19 +4,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-import com.sudoajay.picsum.databinding.LayoutPersonBinding
+import com.sudoajay.picsum.databinding.LayoutPersonListBinding
+import com.sudoajay.picsum.main.MainActivity
+import com.sudoajay.picsum.main.model.PersonGson
 import com.sudoajay.picsum.main.model.PersonJackson
-import javax.inject.Inject
 
 
-class PersonPagingAdapter @Inject constructor() :
-    PagingDataAdapter<PersonJackson, PersonPagingAdapter.PersonViewHolder>(Person_COMPARATOR) {
+class PersonPagingAdapterJackson(
+    private var mainActivity: MainActivity
+
+) :
+    PagingDataAdapter<PersonJackson, PersonViewHolder>(Person_COMPARATOR) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         PersonViewHolder(
-            LayoutPersonBinding.inflate(
+            mainActivity,
+            LayoutPersonListBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -25,12 +29,7 @@ class PersonPagingAdapter @Inject constructor() :
         getItem(position)?.let { holder.bind(it) }
     }
 
-    inner class PersonViewHolder(private val binding: LayoutPersonBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(personJackson: PersonJackson) {
 
-        }
-    }
 
     companion object {
         private val Person_COMPARATOR = object : DiffUtil.ItemCallback<PersonJackson>() {
@@ -41,4 +40,6 @@ class PersonPagingAdapter @Inject constructor() :
                 oldItem == newItem
         }
     }
+
+
 }

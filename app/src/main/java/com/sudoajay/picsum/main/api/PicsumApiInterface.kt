@@ -3,9 +3,9 @@ package com.sudoajay.picsum.main.api
 import com.sudoajay.picsum.main.model.PersonGson
 import com.sudoajay.picsum.main.model.PersonJackson
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
-
-
+import retrofit2.http.Query
 
 
 interface PicsumApiInterface {
@@ -23,5 +23,14 @@ interface PicsumApiInterface {
 
     @GET("list")
     fun getPersonGson(): Call<List<PersonGson>?>?
+
+    @GET("list")
+    suspend fun getPersonJacksonPaging(@Query("page") page: Int, @Query("limit") size: Int): List<PersonJackson>
+
+
+    @GET("list")
+    suspend fun getPersonGsonPaging(@Query("page") page: Int, @Query("limit") size: Int): List<PersonGson>
+
+
 
 }

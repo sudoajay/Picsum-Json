@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class PicsumInterfaceBuilderJson {
+class PicsumInterfaceBuilderGson {
     companion object {
         var TAG = "PicsumInterfaceBuilderTAG"
         var baseUrl = "https://picsum.photos/v2/"
@@ -43,5 +43,7 @@ class PicsumInterfaceBuilderJson {
 
             return picsumApiInterface
         }
+
     }
+
 }

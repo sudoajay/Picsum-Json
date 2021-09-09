@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.picsum.BaseActivity
@@ -21,8 +22,11 @@ import com.sudoajay.picsum.main.bottomsheet.NavigationDrawerBottomSheet
 import com.sudoajay.picsum.main.bottomsheet.SettingBottomSheet
 import com.sudoajay.picsum.main.repository.ApiRepository
 import com.sudoajay.picsum.main.repository.PersonListAdapter
-import com.sudoajay.picsum.main.repository.PersonPagingAdapter
+import com.sudoajay.picsum.main.repository.PersonPagingAdapterGson
+import com.sudoajay.picsum.main.repository.PersonPagingAdapterJackson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -33,8 +37,9 @@ class MainActivity : BaseActivity() {
     lateinit var viewModel: MainViewModel
     lateinit var binding: ActivityMainBinding
 
-    @Inject
-    lateinit var personPagingAdapter: PersonPagingAdapter
+
+    lateinit var personPagingAdapterJackson: PersonPagingAdapterJackson
+    lateinit var personPagingAdapterGson: PersonPagingAdapterGson
     lateinit var personListAdapter: PersonListAdapter
 
     var apiRepository: ApiRepository = ApiRepository(this)
@@ -99,7 +104,7 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(binding.bottomAppBar)
 
         setRecyclerView()
-        apiRepository.getDataFromApi()
+
         hideProgressAndRefresh()
 
     }
@@ -109,10 +114,33 @@ class MainActivity : BaseActivity() {
         binding.recyclerView.addItemDecoration(divider)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
+//        Object created
         personListAdapter = PersonListAdapter(this, listOf(), listOf())
-        binding.recyclerView.adapter = personListAdapter
+        personPagingAdapterJackson = PersonPagingAdapterJackson(this)
+        personPagingAdapterGson = PersonPagingAdapterGson(this)
+
+    }
+
+    private fun protoDataChange(){
+        if (viewModel.isDatabase){
+
+        }else{
+
+        }
+
+            binding.recyclerView.adapter = personPagingAdapterGson
 
 
+
+
+//        binding.recyclerView.adapter = personListAdapter
+
+        lifecycleScope.launch {
+            apiRepository.getPagingGsonSourceWithNetwork().collectLatest { pagingData->
+                personPagingAdapterGson.submitData(pagingData)
+            }
+        }
     }
 
     
@@ -207,7 +235,7 @@ class MainActivity : BaseActivity() {
 
     private fun refreshData() {
         Log.e(TAG, "Refresh data call here ")
-        apiRepository.getDataFromApi()
+//        apiRepository.getDataFromApi()
         hideProgressAndRefresh()
     }
 
