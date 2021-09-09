@@ -67,6 +67,8 @@ class MainActivity : BaseActivity() {
         super.onResume()
         viewModel.protoManager.
         dataStoreStatePreferences.data.asLiveData().observe(this) {
+            viewModel.isDatabase = it.database
+            viewModel.getJsonConverter = it.jsonConverter
             refreshData()
         }
     }

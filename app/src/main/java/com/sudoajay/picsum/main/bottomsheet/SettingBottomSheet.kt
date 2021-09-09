@@ -44,7 +44,6 @@ class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFrag
         lifecycleScope.launch {
             protoManager.setJsonConverter(json)
         }
-        mainActivity.viewModel.getJsonConverter = json
         dismiss()
     }
 
@@ -52,8 +51,6 @@ class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFrag
         lifecycleScope.launch {
             protoManager.setDataBase(boolean)
         }
-        mainActivity.viewModel.isDatabase = boolean
-
         dismiss()
     }
 
