@@ -1,30 +1,30 @@
-package com.sudoajay.picsum.main.database
+package com.sudoajay.picsum.main.database.jackson
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.sudoajay.picsum.main.model.Item
+import com.sudoajay.picsum.main.model.local.PersonLocalJackson
 
-@Database(entities = [Item::class], version = 1 , exportSchema = false)
-abstract class ItemRoomDatabase : RoomDatabase() {
+@Database(entities = [PersonLocalJackson::class], version = 1, exportSchema = false)
+abstract class PersonLocalJacksonDatabase : RoomDatabase() {
 
-    abstract fun itemDoa():ItemDoa
+    abstract fun itemDoa(): PersonLocalJacksonDoa
 
     companion object {
         @Volatile
-        private var INSTANCE: ItemRoomDatabase? = null
+        private var INSTANCE: PersonLocalJacksonDatabase? = null
 
         fun getDatabase(
             context: Context
-        ): ItemRoomDatabase {
+        ): PersonLocalJacksonDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    ItemRoomDatabase::class.java,
-                    "item_database"
+                    PersonLocalJacksonDatabase::class.java,
+                    "PersonJacksonTable_database"
                 )
 
                     .build()

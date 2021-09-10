@@ -1,4 +1,4 @@
-package com.sudoajay.picsum.main.model
+package com.sudoajay.picsum.main.model.remote
 
 import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonProperty

@@ -1,4 +1,4 @@
-package com.sudoajay.picsum.main.repository
+package com.sudoajay.picsum.main.repository.pagingSource
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.sudoajay.picsum.databinding.LayoutPersonListBinding
 import com.sudoajay.picsum.main.MainActivity
-import com.sudoajay.picsum.main.model.PersonGson
+import com.sudoajay.picsum.main.model.remote.PersonGson
+import com.sudoajay.picsum.main.repository.PersonViewHolder
 
 
 class PersonPagingAdapterGson(

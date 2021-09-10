@@ -1,22 +1,20 @@
-package com.sudoajay.picsum.main.background
+package com.sudoajay.picsum.main.background.pagingSource
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sudoajay.picsum.main.api.PicsumApiInterface
-import com.sudoajay.picsum.main.model.PersonGson
-import com.sudoajay.picsum.main.model.PersonJackson
+import com.sudoajay.picsum.main.model.remote.PersonJackson
 import retrofit2.HttpException
 import java.io.IOException
 
-class PagingSourceNetworkGson(
+class PagingSourceNetworkJackson(
     private val picsumApiInterface: PicsumApiInterface
-) : PagingSource<Int, PersonGson>() {
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PersonGson> {
+) : PagingSource<Int, PersonJackson>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PersonJackson> {
         //for first case it will be null, then we can pass some default value, in our case it's 1
         val position = params.key ?: 1
         return try {
-            val response = picsumApiInterface.getPersonGsonPaging(position, params.loadSize)
+            val response = picsumApiInterface.getPersonJacksonPaging(position, params.loadSize)
 
             LoadResult.Page(
                 data = response,
@@ -32,7 +30,7 @@ class PagingSourceNetworkGson(
     }
 
 
-    override fun getRefreshKey(state: PagingState<Int, PersonGson>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, PersonJackson>): Int? {
         // Try to find the page key of the closest page to anchorPosition, from
         // either the prevKey or the nextKey, but you need to handle nullability
         // here:

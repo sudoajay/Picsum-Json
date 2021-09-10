@@ -4,17 +4,23 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import androidx.paging.*
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJackson
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderGson
-import com.sudoajay.picsum.main.background.PagingSourceNetworkGson
-import com.sudoajay.picsum.main.background.PagingSourceNetworkJackson
-import com.sudoajay.picsum.main.model.PersonGson
-import com.sudoajay.picsum.main.model.PersonJackson
+import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkGson
+import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkJackson
+import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorGson
+import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorJackson
+import com.sudoajay.picsum.main.database.gson.PersonLocalGsonRepository
+import com.sudoajay.picsum.main.database.gson.PersonLocalGsonDatabase
+import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonDatabase
+import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonRepository
+import com.sudoajay.picsum.main.model.local.PersonLocalGson
+import com.sudoajay.picsum.main.model.local.PersonLocalJackson
+import com.sudoajay.picsum.main.model.remote.PersonGson
+import com.sudoajay.picsum.main.model.remote.PersonJackson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -111,17 +117,34 @@ class ApiRepository(private var activity: MainActivity) {
             pagingSourceFactory = { PagingSourceNetworkGson(apiInterface!!) }
         ).flow
     }
+    @OptIn(ExperimentalPagingApi::class)
+    fun getRemoteMediatorSourceWithNetworkJackson(): Flow<PagingData<PersonLocalJackson>> {
+        val database = PersonLocalJacksonDatabase.getDatabase(activity.applicationContext)
+        val itemRepository = PersonLocalJacksonRepository(database.itemDoa())
 
-    fun getRemoteMediatorSourceWithNetwork(): Flow<PagingData<PersonGson>> {
+        val apiInterface =
+            PicsumInterfaceBuilderJackson.getApiInterface()
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            remoteMediator = RemoteMediatorJackson(database, itemRepository, apiInterface!!)
+        ) {
+            itemRepository.pagingSource()
+        }.flow
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    fun getRemoteMediatorSourceWithNetworkGson(): Flow<PagingData<PersonLocalGson>> {
+        val database = PersonLocalGsonDatabase.getDatabase(activity.applicationContext)
+        val itemRepository = PersonLocalGsonRepository(database.itemDoa())
 
         val apiInterface =
             PicsumInterfaceBuilderGson.getApiInterface()
-        Log.e(TAG, "getPagingSourceWithNetwork: I am here at ", )
-
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = { PagingSourceNetworkGson(apiInterface!!) }
-        ).flow
+            remoteMediator = RemoteMediatorGson(database, itemRepository, apiInterface!!)
+        ) {
+            itemRepository.pagingSource()
+        }.flow
     }
 
     companion object {

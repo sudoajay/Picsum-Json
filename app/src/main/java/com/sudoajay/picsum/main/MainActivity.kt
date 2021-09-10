@@ -21,9 +21,11 @@ import com.sudoajay.picsum.helper.InsetDivider
 import com.sudoajay.picsum.main.bottomsheet.NavigationDrawerBottomSheet
 import com.sudoajay.picsum.main.bottomsheet.SettingBottomSheet
 import com.sudoajay.picsum.main.repository.ApiRepository
-import com.sudoajay.picsum.main.repository.PersonListAdapter
-import com.sudoajay.picsum.main.repository.PersonPagingAdapterGson
-import com.sudoajay.picsum.main.repository.PersonPagingAdapterJackson
+import com.sudoajay.picsum.main.repository.noDatabase.PersonListAdapter
+import com.sudoajay.picsum.main.repository.pagingSource.PersonPagingAdapterGson
+import com.sudoajay.picsum.main.repository.pagingSource.PersonPagingAdapterJackson
+import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterGson
+import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterJackson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -41,6 +43,8 @@ class MainActivity : BaseActivity() {
     lateinit var personPagingAdapterJackson: PersonPagingAdapterJackson
     lateinit var personPagingAdapterGson: PersonPagingAdapterGson
     lateinit var personListAdapter: PersonListAdapter
+    lateinit var personLocalPagingAdapterGson: PersonLocalPagingAdapterGson
+    lateinit var personLocalPagingAdapterJackson: PersonLocalPagingAdapterJackson
 
     var apiRepository: ApiRepository = ApiRepository(this)
     private var isDarkTheme: Boolean = false
@@ -119,6 +123,8 @@ class MainActivity : BaseActivity() {
         personListAdapter = PersonListAdapter(this, listOf(), listOf())
         personPagingAdapterJackson = PersonPagingAdapterJackson(this)
         personPagingAdapterGson = PersonPagingAdapterGson(this)
+        personLocalPagingAdapterGson = PersonLocalPagingAdapterGson(this)
+        personLocalPagingAdapterJackson = PersonLocalPagingAdapterJackson(this)
 
         protoDataChange()
 
@@ -130,10 +136,31 @@ class MainActivity : BaseActivity() {
             getString(R.string.remote_mediator_text) -> {
                 binding.recyclerView.adapter = null
                 if (viewModel.getJsonConverter == getString(R.string.jacksonJson_text)){
+                    Log.e(TAG, "bind:  I m here Jackson - " )
+                    binding.recyclerView.adapter = personLocalPagingAdapterJackson
+                    lifecycleScope.launch {
+                        Log.e(TAG, "bind:  I m here Jackson -- " )
 
+                        apiRepository.getRemoteMediatorSourceWithNetworkJackson().collectLatest { pagingData->
+                            Log.e(TAG, "bind:  I m here Jackson --- " )
+                            personLocalPagingAdapterJackson.submitData(pagingData)
+
+                        }
+                    }
                 }
                 else{
+                    binding.recyclerView.adapter = personLocalPagingAdapterGson
+                    Log.e(TAG, "bind:  I m here Gson - " )
 
+                    lifecycleScope.launch {
+                        Log.e(TAG, "bind:  I m here Gson -- " )
+
+                        apiRepository.getRemoteMediatorSourceWithNetworkGson().collectLatest { pagingData->
+                            Log.e(TAG, "bind:  I m here Gson --- " )
+                            personLocalPagingAdapterGson.submitData(pagingData)
+
+                        }
+                    }
                 }
             }
             getString(R.string.paging_source_text) -> {
@@ -142,6 +169,7 @@ class MainActivity : BaseActivity() {
                     binding.recyclerView.adapter = personPagingAdapterJackson
                     lifecycleScope.launch {
                         apiRepository.getPagingJacksonSourceWithNetwork().collectLatest { pagingData->
+                            Log.e(TAG, "Paging source:  I m here Jackson --- " )
                             personPagingAdapterJackson.submitData(pagingData)
                         }
                     }
@@ -151,7 +179,9 @@ class MainActivity : BaseActivity() {
 
                     lifecycleScope.launch {
                         apiRepository.getPagingGsonSourceWithNetwork().collectLatest { pagingData->
+                            Log.e(TAG, "Paging source:  I m here Gson --- " )
                             personPagingAdapterGson.submitData(pagingData)
+
                         }
                     }
                 }

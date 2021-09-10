@@ -43,6 +43,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
 
     // You can change the value to override the default behavior.
@@ -55,6 +56,7 @@ android {
         dataBinding = true
 
     }
+
 
 }
 
