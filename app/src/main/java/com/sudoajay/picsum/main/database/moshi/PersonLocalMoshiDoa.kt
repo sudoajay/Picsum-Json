@@ -1,4 +1,4 @@
-package com.sudoajay.picsum.main.database.jackson
+package com.sudoajay.picsum.main.database.moshi
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
@@ -10,16 +10,16 @@ import com.sudoajay.picsum.main.model.local.PersonLocalMoshi
 
 
 @Dao
-interface PersonLocalJacksonDoa {
-    @Query("DELETE FROM PersonJacksonTable")
+interface PersonLocalMoshiDoa {
+    @Query("DELETE FROM PersonMoshiTable")
     suspend fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(users: List<PersonLocalJackson>)
+    suspend fun insertAll(users: List<PersonLocalMoshi>)
 
 
-    @Query("SELECT * FROM PersonJacksonTable")
-    fun pagingSource(): PagingSource<Int, PersonLocalJackson>
+    @Query("SELECT * FROM PersonMoshiTable")
+    fun pagingSource(): PagingSource<Int, PersonLocalMoshi>
 
 
 }

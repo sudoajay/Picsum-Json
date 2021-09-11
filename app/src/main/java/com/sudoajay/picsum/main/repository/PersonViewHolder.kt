@@ -1,6 +1,5 @@
 package com.sudoajay.picsum.main.repository
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.sudoajay.picsum.R
@@ -9,6 +8,7 @@ import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.bottomsheet.LongPressBottomSheet
 import com.sudoajay.picsum.main.model.local.PersonLocalGson
 import com.sudoajay.picsum.main.model.local.PersonLocalJackson
+import com.sudoajay.picsum.main.model.local.PersonLocalMoshi
 import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonJackson
 import com.sudoajay.picsum.main.model.remote.PersonMoshi
@@ -103,6 +103,23 @@ class PersonViewHolder(
 
         binding.boxConstraintLayout.setOnLongClickListener {
             openMoreSetting(personLocalGson.openUrl, personLocalGson.downloadUrl)
+            true
+        }
+    }
+
+    fun bind(personLocalMoshi: PersonLocalMoshi) {
+        Picasso.get()
+            .load(personLocalMoshi.downloadUrl)
+            .resize(120, 120)
+            .error(R.drawable.ic_me)
+            .centerCrop()
+            .into(binding.personImageImageView)
+        binding.personNameTextView.text = personLocalMoshi.name
+
+        binding.personSizeTextView.text = getSize(personLocalMoshi.width, personLocalMoshi.height)
+
+        binding.boxConstraintLayout.setOnLongClickListener {
+            openMoreSetting(personLocalMoshi.openUrl, personLocalMoshi.downloadUrl)
             true
         }
     }

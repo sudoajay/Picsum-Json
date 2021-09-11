@@ -7,7 +7,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-
 data class PersonMoshi(
     @Json(name = "id") val id: Int,
     @Json(name = "author") val name: String,

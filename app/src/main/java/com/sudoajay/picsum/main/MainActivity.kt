@@ -27,6 +27,7 @@ import com.sudoajay.picsum.main.repository.pagingSource.PersonPagingAdapterJacks
 import com.sudoajay.picsum.main.repository.pagingSource.PersonPagingAdapterMoshi
 import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterGson
 import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterJackson
+import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterMoshi
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -44,9 +45,10 @@ class MainActivity : BaseActivity() {
     lateinit var personPagingAdapterJackson: PersonPagingAdapterJackson
     lateinit var personPagingAdapterGson: PersonPagingAdapterGson
     lateinit var personPagingAdapterMoshi: PersonPagingAdapterMoshi
-
     lateinit var personLocalPagingAdapterGson: PersonLocalPagingAdapterGson
     lateinit var personLocalPagingAdapterJackson: PersonLocalPagingAdapterJackson
+    lateinit var personLocalPagingAdapterMoshi: PersonLocalPagingAdapterMoshi
+
 
     var apiRepository: ApiRepository = ApiRepository(this)
     private var isDarkTheme: Boolean = false
@@ -128,6 +130,7 @@ class MainActivity : BaseActivity() {
         personPagingAdapterMoshi = PersonPagingAdapterMoshi(this)
         personLocalPagingAdapterGson = PersonLocalPagingAdapterGson(this)
         personLocalPagingAdapterJackson = PersonLocalPagingAdapterJackson(this)
+        personLocalPagingAdapterMoshi = PersonLocalPagingAdapterMoshi(this)
 
         protoDataChange()
 
@@ -137,66 +140,86 @@ class MainActivity : BaseActivity() {
 
         when (viewModel.getDatabase) {
             getString(R.string.remote_mediator_text) -> {
-                if (viewModel.getJsonConverter == getString(R.string.jacksonJson_text)){
-                    Log.e(TAG, "bind:  I m here Jackson - " )
-                    binding.recyclerView.adapter = personLocalPagingAdapterJackson
-                    lifecycleScope.launch {
-                        Log.e(TAG, "bind:  I m here Jackson -- " )
+                when (viewModel.getJsonConverter) {
+                    getString(R.string.jacksonJson_text) -> {
+                        binding.recyclerView.adapter = personLocalPagingAdapterJackson
+                        lifecycleScope.launch {
 
-                        apiRepository.getRemoteMediatorSourceWithNetworkJackson().collectLatest { pagingData->
-                            Log.e(TAG, "bind:  I m here Jackson --- " )
-                            personLocalPagingAdapterJackson.submitData(pagingData)
+                            apiRepository.getRemoteMediatorSourceWithNetworkJackson()
+                                .collectLatest { pagingData ->
+                                    personLocalPagingAdapterJackson.submitData(pagingData)
 
+                                }
                         }
                     }
-                }
-                else if (viewModel.getJsonConverter == getString(R.string.gsonJson_text)){
-                    binding.recyclerView.adapter = personLocalPagingAdapterGson
-                    Log.e(TAG, "bind:  I m here Gson - " )
+                    getString(R.string.gsonJson_text) -> {
+                        binding.recyclerView.adapter = personLocalPagingAdapterGson
+                        Log.e(TAG, "bind:  I m here Gson - ")
 
-                    lifecycleScope.launch {
-                        Log.e(TAG, "bind:  I m here Gson -- " )
+                        lifecycleScope.launch {
+                            Log.e(TAG, "bind:  I m here Gson -- ")
 
-                        apiRepository.getRemoteMediatorSourceWithNetworkGson().collectLatest { pagingData->
-                            Log.e(TAG, "bind:  I m here Gson --- " )
-                            personLocalPagingAdapterGson.submitData(pagingData)
+                            apiRepository.getRemoteMediatorSourceWithNetworkGson()
+                                .collectLatest { pagingData ->
+                                    Log.e(TAG, "bind:  I m here Gson --- ")
+                                    personLocalPagingAdapterGson.submitData(pagingData)
 
+                                }
                         }
                     }
-                }else{
+                    else -> {
+                        binding.recyclerView.adapter = personLocalPagingAdapterMoshi
+                        Log.e(TAG, "bind:  I m here Gson - ")
 
+                        lifecycleScope.launch {
+                            Log.e(TAG, "bind:  I m here Gson -- ")
+
+                            apiRepository.getRemoteMediatorSourceWithNetworkMoshi()
+                                .collectLatest { pagingData ->
+                                    Log.e(TAG, "bind:  I m here Gson --- ")
+                                    personLocalPagingAdapterMoshi.submitData(pagingData)
+
+                                }
+                        }
+                    }
                 }
             }
             getString(R.string.paging_source_text) -> {
 
-                if (viewModel.getJsonConverter == getString(R.string.jacksonJson_text)){
-                    binding.recyclerView.adapter = personPagingAdapterJackson
-                    lifecycleScope.launch {
-                        apiRepository.getPagingJacksonSourceWithNetwork().collectLatest { pagingData->
-                            Log.e(TAG, "Paging source:  I m here Jackson --- " )
-                            personPagingAdapterJackson.submitData(pagingData)
+                when (viewModel.getJsonConverter) {
+                    getString(R.string.jacksonJson_text) -> {
+                        binding.recyclerView.adapter = personPagingAdapterJackson
+                        lifecycleScope.launch {
+                            apiRepository.getPagingJacksonSourceWithNetwork()
+                                .collectLatest { pagingData ->
+                                    Log.e(TAG, "Paging source:  I m here Jackson --- ")
+                                    personPagingAdapterJackson.submitData(pagingData)
+                                }
+                        }
+
+                    }
+                    getString(R.string.gsonJson_text) -> {
+                        binding.recyclerView.adapter = personPagingAdapterGson
+
+                        lifecycleScope.launch {
+                            apiRepository.getPagingGsonSourceWithNetwork()
+                                .collectLatest { pagingData ->
+                                    Log.e(TAG, "Paging source:  I m here Gson --- ")
+                                    personPagingAdapterGson.submitData(pagingData)
+
+                                }
                         }
                     }
+                    else -> {
+                        binding.recyclerView.adapter = personPagingAdapterMoshi
 
-                }else if (viewModel.getJsonConverter == getString(R.string.gsonJson_text)){
-                    binding.recyclerView.adapter = personPagingAdapterGson
+                        lifecycleScope.launch {
+                            apiRepository.getPagingMoshiSourceWithNetwork()
+                                .collectLatest { pagingData ->
+                                    Log.e(TAG, "Paging source:  I m here Gson --- ")
+                                    personPagingAdapterMoshi.submitData(pagingData)
 
-                    lifecycleScope.launch {
-                        apiRepository.getPagingGsonSourceWithNetwork().collectLatest { pagingData->
-                            Log.e(TAG, "Paging source:  I m here Gson --- " )
-                            personPagingAdapterGson.submitData(pagingData)
-
-                        }
-                    }
-                }
-                else{
-                    binding.recyclerView.adapter = personPagingAdapterMoshi
-
-                    lifecycleScope.launch {
-                        apiRepository.getPagingMoshiSourceWithNetwork().collectLatest { pagingData->
-                            Log.e(TAG, "Paging source:  I m here Gson --- " )
-                            personPagingAdapterMoshi.submitData(pagingData)
-
+                                }
                         }
                     }
                 }

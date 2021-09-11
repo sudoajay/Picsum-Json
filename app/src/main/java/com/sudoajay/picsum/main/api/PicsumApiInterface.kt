@@ -2,6 +2,7 @@ package com.sudoajay.picsum.main.api
 
 import com.sudoajay.picsum.main.model.local.PersonLocalGson
 import com.sudoajay.picsum.main.model.local.PersonLocalJackson
+import com.sudoajay.picsum.main.model.local.PersonLocalMoshi
 import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonJackson
 import com.sudoajay.picsum.main.model.remote.PersonMoshi
@@ -48,6 +49,10 @@ interface PicsumApiInterface {
 
     @GET("list")
     suspend fun getLocalPersonGsonPaging(@Query("page") page: Int, @Query("limit") size: Long?): List<PersonLocalGson>
+
+
+    @GET("list")
+    suspend fun getLocalPersonMoshiPaging(@Query("page") page: Int, @Query("limit") size: Long?): List<PersonLocalMoshi>
 
 
     companion object{

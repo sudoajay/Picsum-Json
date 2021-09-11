@@ -15,12 +15,16 @@ import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkJacks
 import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkMoshi
 import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorGson
 import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorJackson
+import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorMoshi
 import com.sudoajay.picsum.main.database.gson.PersonLocalGsonRepository
 import com.sudoajay.picsum.main.database.gson.PersonLocalGsonDatabase
 import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonDatabase
 import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonRepository
+import com.sudoajay.picsum.main.database.moshi.PersonLocalMoshiDatabase
+import com.sudoajay.picsum.main.database.moshi.PersonLocalMoshiRepository
 import com.sudoajay.picsum.main.model.local.PersonLocalGson
 import com.sudoajay.picsum.main.model.local.PersonLocalJackson
+import com.sudoajay.picsum.main.model.local.PersonLocalMoshi
 import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonJackson
 import com.sudoajay.picsum.main.model.remote.PersonMoshi
@@ -166,7 +170,6 @@ class ApiRepository(private var activity: MainActivity) {
         ).flow
     }
     @OptIn(ExperimentalPagingApi::class)
-
     fun getRemoteMediatorSourceWithNetworkJackson(): Flow<PagingData<PersonLocalJackson>> {
         val database = PersonLocalJacksonDatabase.getDatabase(activity.applicationContext)
         val itemRepository = PersonLocalJacksonRepository(database.itemDoa())
@@ -191,6 +194,21 @@ class ApiRepository(private var activity: MainActivity) {
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
             remoteMediator = RemoteMediatorGson(database, itemRepository, apiInterface!!)
+        ) {
+            itemRepository.pagingSource()
+        }.flow
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    fun getRemoteMediatorSourceWithNetworkMoshi(): Flow<PagingData<PersonLocalMoshi>> {
+        val database = PersonLocalMoshiDatabase.getDatabase(activity.applicationContext)
+        val itemRepository = PersonLocalMoshiRepository(database.itemDoa())
+
+        val apiInterface =
+            PicsumInterfaceBuilderGson.getApiInterface()
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            remoteMediator = RemoteMediatorMoshi(database, itemRepository, apiInterface!!)
         ) {
             itemRepository.pagingSource()
         }.flow

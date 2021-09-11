@@ -7,27 +7,24 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.sudoajay.picsum.main.api.PicsumApiInterface
-import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonDatabase
-import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonRepository
 import com.sudoajay.picsum.main.database.moshi.PersonLocalMoshiDatabase
 import com.sudoajay.picsum.main.database.moshi.PersonLocalMoshiRepository
-import com.sudoajay.picsum.main.model.local.PersonLocalJackson
+import com.sudoajay.picsum.main.model.local.PersonLocalMoshi
 import java.io.IOException
 import java.net.HttpRetryException
 
 //
 @OptIn(ExperimentalPagingApi::class)
-
-class RemoteMediatorJackson(
-    private val database: PersonLocalJacksonDatabase,
-    private val personLocalJacksonRepository: PersonLocalJacksonRepository,
+class RemoteMediatorMoshi(
+    private val database: PersonLocalMoshiDatabase,
+    private val personLocalMoshiRepository: PersonLocalMoshiRepository,
     private val picsumApiInterface: PicsumApiInterface
-) : RemoteMediator<Int, PersonLocalJackson>() {
+) : RemoteMediator<Int, PersonLocalMoshi>() {
 
-    private val TAG = "RemoteMediatorTAG"
+    private var TAG = "RemoteMediatorGsonTAG"
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, PersonLocalJackson>
+        state: PagingState<Int, PersonLocalMoshi>
     ): MediatorResult {
         return try {
             // The network load method takes an optional after=<user.id>
@@ -42,17 +39,11 @@ class RemoteMediatorJackson(
                 LoadType.PREPEND ->
                     return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
+                    Log.e(TAG, "load:  last item")
                     val lastItem = state.lastItemOrNull()
                         ?: return MediatorResult.Success(
                             endOfPaginationReached = true
                         )
-
-                    // You must explicitly check if the last item is null when
-                    // appending, since passing null to networkService is only
-                    // valid for initial load. If lastItem is null it means no
-                    // items were loaded after the initial REFRESH and there are
-                    // no more items to load.
-
                     if (lastItem.id == 1025L)
                         return MediatorResult.Success(
                             endOfPaginationReached = true
@@ -61,32 +52,27 @@ class RemoteMediatorJackson(
                 }
             }
 
+
             // Suspending network load via Retrofit. This doesn't need to be
             // wrapped in a withContext(Dispatcher.IO) { ... } block since
             // Retrofit's Coroutine CallAdapter dispatches on a worker
             // thread.
-            val response = picsumApiInterface.getLocalPersonJacksonPaging(1, 30)
-            Log.e(TAG, "load: repsose here", )
+            val response = picsumApiInterface.getLocalPersonMoshiPaging(1, 30)
+            Log.e(TAG, "resposnse - ")
             database.withTransaction {
-                Log.e(TAG, "load: Data base here", )
 
                 // Insert new users into database, which invalidates the
                 // current PagingData, allowing Paging to present the updates
                 // in the DB.
-                personLocalJacksonRepository.insertAll(response)
+                personLocalMoshiRepository.insertAll(response)
             }
 
             MediatorResult.Success(
                 endOfPaginationReached = false
             )
         } catch (e: IOException) {
-            Log.e(TAG, "load: IOException ${e.message}" )
-            Log.e(TAG, "load: IOException ${e.localizedMessage}" )
-
             MediatorResult.Error(e)
         } catch (e: HttpRetryException) {
-            Log.e(TAG, "load: HttpRetryException ${e.message}" )
-
             MediatorResult.Error(e)
         }
     }
