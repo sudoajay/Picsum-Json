@@ -12,6 +12,7 @@ import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderGson
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderMoshi
 import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkGson
 import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkJackson
+import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkMoshi
 import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorGson
 import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorJackson
 import com.sudoajay.picsum.main.database.gson.PersonLocalGsonRepository
@@ -136,7 +137,6 @@ class ApiRepository(private var activity: MainActivity) {
 
         val apiInterface =
             PicsumInterfaceBuilderJackson.getApiInterface()
-        Log.e(TAG, "getPagingSourceWithNetwork: I am here at ", )
 
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
@@ -148,11 +148,21 @@ class ApiRepository(private var activity: MainActivity) {
 
         val apiInterface =
             PicsumInterfaceBuilderGson.getApiInterface()
-        Log.e(TAG, "getPagingSourceWithNetwork: I am here at ", )
-      
+
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
             pagingSourceFactory = { PagingSourceNetworkGson(apiInterface!!) }
+        ).flow
+    }
+
+    fun getPagingMoshiSourceWithNetwork(): Flow<PagingData<PersonMoshi>> {
+
+        val apiInterface =
+            PicsumInterfaceBuilderMoshi.getApiInterface()
+
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            pagingSourceFactory = { PagingSourceNetworkMoshi(apiInterface!!) }
         ).flow
     }
     @OptIn(ExperimentalPagingApi::class)

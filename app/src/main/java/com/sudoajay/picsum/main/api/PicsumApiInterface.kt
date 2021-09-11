@@ -39,6 +39,10 @@ interface PicsumApiInterface {
     suspend fun getPersonGsonPaging(@Query("page") page: Int, @Query("limit") size: Int): List<PersonGson>
 
     @GET("list")
+    suspend fun getPersonMoshiPaging(@Query("page") page: Int, @Query("limit") size: Int): List<PersonMoshi>
+
+
+    @GET("list")
     suspend fun getLocalPersonJacksonPaging(@Query("page") page: Int, @Query("limit") size: Long?): List<PersonLocalJackson>
 
 

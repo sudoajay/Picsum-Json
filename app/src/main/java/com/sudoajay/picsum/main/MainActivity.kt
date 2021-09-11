@@ -24,6 +24,7 @@ import com.sudoajay.picsum.main.repository.ApiRepository
 import com.sudoajay.picsum.main.repository.noDatabase.PersonListAdapter
 import com.sudoajay.picsum.main.repository.pagingSource.PersonPagingAdapterGson
 import com.sudoajay.picsum.main.repository.pagingSource.PersonPagingAdapterJackson
+import com.sudoajay.picsum.main.repository.pagingSource.PersonPagingAdapterMoshi
 import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterGson
 import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterJackson
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,10 +40,11 @@ class MainActivity : BaseActivity() {
     lateinit var viewModel: MainViewModel
     lateinit var binding: ActivityMainBinding
 
-
+    lateinit var personListAdapter: PersonListAdapter
     lateinit var personPagingAdapterJackson: PersonPagingAdapterJackson
     lateinit var personPagingAdapterGson: PersonPagingAdapterGson
-    lateinit var personListAdapter: PersonListAdapter
+    lateinit var personPagingAdapterMoshi: PersonPagingAdapterMoshi
+
     lateinit var personLocalPagingAdapterGson: PersonLocalPagingAdapterGson
     lateinit var personLocalPagingAdapterJackson: PersonLocalPagingAdapterJackson
 
@@ -123,6 +125,7 @@ class MainActivity : BaseActivity() {
         personListAdapter = PersonListAdapter(this, listOf(), listOf(), listOf())
         personPagingAdapterJackson = PersonPagingAdapterJackson(this)
         personPagingAdapterGson = PersonPagingAdapterGson(this)
+        personPagingAdapterMoshi = PersonPagingAdapterMoshi(this)
         personLocalPagingAdapterGson = PersonLocalPagingAdapterGson(this)
         personLocalPagingAdapterJackson = PersonLocalPagingAdapterJackson(this)
 
@@ -187,7 +190,15 @@ class MainActivity : BaseActivity() {
                     }
                 }
                 else{
+                    binding.recyclerView.adapter = personPagingAdapterMoshi
 
+                    lifecycleScope.launch {
+                        apiRepository.getPagingMoshiSourceWithNetwork().collectLatest { pagingData->
+                            Log.e(TAG, "Paging source:  I m here Gson --- " )
+                            personPagingAdapterMoshi.submitData(pagingData)
+
+                        }
+                    }
                 }
 
             }
