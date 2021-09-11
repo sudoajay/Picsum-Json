@@ -134,7 +134,6 @@ class MainActivity : BaseActivity() {
 
         when (viewModel.getDatabase) {
             getString(R.string.remote_mediator_text) -> {
-                binding.recyclerView.adapter = null
                 if (viewModel.getJsonConverter == getString(R.string.jacksonJson_text)){
                     Log.e(TAG, "bind:  I m here Jackson - " )
                     binding.recyclerView.adapter = personLocalPagingAdapterJackson

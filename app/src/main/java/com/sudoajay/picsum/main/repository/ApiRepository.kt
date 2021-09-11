@@ -118,6 +118,7 @@ class ApiRepository(private var activity: MainActivity) {
         ).flow
     }
     @OptIn(ExperimentalPagingApi::class)
+
     fun getRemoteMediatorSourceWithNetworkJackson(): Flow<PagingData<PersonLocalJackson>> {
         val database = PersonLocalJacksonDatabase.getDatabase(activity.applicationContext)
         val itemRepository = PersonLocalJacksonRepository(database.itemDoa())

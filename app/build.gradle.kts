@@ -65,6 +65,7 @@ dependencies {
     implementAndroidX()
     implementDataBase()
     implementNetwork()
+    implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.5")
     implementTest()
     implementAndroidTest()
 }

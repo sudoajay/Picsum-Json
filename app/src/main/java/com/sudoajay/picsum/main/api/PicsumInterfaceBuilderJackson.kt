@@ -1,6 +1,7 @@
 package com.sudoajay.picsum.main.api
 
 import android.util.Log
+import com.sudoajay.picsum.main.api.PicsumApiInterface.Companion.baseUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,7 +11,6 @@ import java.util.concurrent.TimeUnit
 class PicsumInterfaceBuilderJackson {
     companion object {
         var TAG = "PicsumInterfaceBuilderTAG"
-        var baseUrl = "https://picsum.photos/v2/"
         var picsumApiInterface: PicsumApiInterface? = null
         var okHttpClient: OkHttpClient? = null
 

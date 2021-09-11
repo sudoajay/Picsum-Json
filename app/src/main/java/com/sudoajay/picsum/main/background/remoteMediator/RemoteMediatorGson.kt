@@ -44,24 +44,21 @@ class RemoteMediatorGson(
                         ?: return MediatorResult.Success(
                             endOfPaginationReached = true
                         )
-                    Log.e(TAG, "load:  last item ${lastItem.id}" )
                     if (lastItem.id == 1025L)
                         return MediatorResult.Success(
                             endOfPaginationReached = true
                         )
                     else lastItem.id
-
-
-
-
                 }
             }
+
 
             // Suspending network load via Retrofit. This doesn't need to be
             // wrapped in a withContext(Dispatcher.IO) { ... } block since
             // Retrofit's Coroutine CallAdapter dispatches on a worker
             // thread.
-            val response = picsumApiInterface.getLocalPersonGsonPaging(1, loadKey)
+            val response = picsumApiInterface.getLocalPersonGsonPaging(1, 30)
+            Log.e(TAG , "resposnse - ")
             database.withTransaction {
 
                 // Insert new users into database, which invalidates the

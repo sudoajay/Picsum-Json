@@ -40,6 +40,11 @@ interface PicsumApiInterface {
     suspend fun getLocalPersonGsonPaging(@Query("page") page: Int, @Query("limit") size: Long?): List<PersonLocalGson>
 
 
+    companion object{
+        const val baseUrl = "https://picsum.photos/v2/"
+
+    }
+
 
 
 }

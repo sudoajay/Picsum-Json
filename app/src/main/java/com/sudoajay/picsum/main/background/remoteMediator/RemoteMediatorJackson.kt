@@ -1,5 +1,6 @@
 package com.sudoajay.picsum.main.background.remoteMediator
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -14,13 +15,14 @@ import java.net.HttpRetryException
 
 //
 @OptIn(ExperimentalPagingApi::class)
+
 class RemoteMediatorJackson(
     private val database: PersonLocalJacksonDatabase,
     private val personLocalJacksonRepository: PersonLocalJacksonRepository,
     private val picsumApiInterface: PicsumApiInterface
 ) : RemoteMediator<Int, PersonLocalJackson>() {
 
-
+    private val TAG = "RemoteMediatorTAG"
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, PersonLocalJackson>
@@ -49,7 +51,11 @@ class RemoteMediatorJackson(
                     // items were loaded after the initial REFRESH and there are
                     // no more items to load.
 
-                    lastItem.id
+                    if (lastItem.id == 1025L)
+                        return MediatorResult.Success(
+                            endOfPaginationReached = true
+                        )
+                    else lastItem.id
                 }
             }
 
@@ -57,8 +63,10 @@ class RemoteMediatorJackson(
             // wrapped in a withContext(Dispatcher.IO) { ... } block since
             // Retrofit's Coroutine CallAdapter dispatches on a worker
             // thread.
-            val response = picsumApiInterface.getLocalPersonJacksonPaging(1,  10)
+            val response = picsumApiInterface.getLocalPersonJacksonPaging(1, 30)
+            Log.e(TAG, "load: repsose here", )
             database.withTransaction {
+                Log.e(TAG, "load: Data base here", )
 
                 // Insert new users into database, which invalidates the
                 // current PagingData, allowing Paging to present the updates
@@ -70,8 +78,13 @@ class RemoteMediatorJackson(
                 endOfPaginationReached = false
             )
         } catch (e: IOException) {
+            Log.e(TAG, "load: IOException ${e.message}" )
+            Log.e(TAG, "load: IOException ${e.localizedMessage}" )
+
             MediatorResult.Error(e)
         } catch (e: HttpRetryException) {
+            Log.e(TAG, "load: HttpRetryException ${e.message}" )
+
             MediatorResult.Error(e)
         }
     }

@@ -17,7 +17,7 @@ class PersonViewHolder(
     private val binding: LayoutPersonListBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var TAG= "PersonViewHolderTAG"
+
 
     fun bind(personJackson: PersonJackson) {
         Picasso.get()
@@ -56,7 +56,6 @@ class PersonViewHolder(
 
     fun bind(personLocalJackson: PersonLocalJackson) {
 
-        Log.e(TAG, "bind:  I m here", )
         Picasso.get()
             .load(personLocalJackson.downloadUrl)
             .resize(120, 120)
@@ -75,9 +74,6 @@ class PersonViewHolder(
     }
 
     fun bind(personLocalGson: PersonLocalGson) {
-
-        Log.e(TAG, "bind:  I m here Gson", )
-
         Picasso.get()
             .load(personLocalGson.downloadUrl)
             .resize(120, 120)
