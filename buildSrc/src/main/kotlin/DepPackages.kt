@@ -53,12 +53,16 @@ fun DependencyHandler.implementNetwork(){
     add("implementation", Dependencies.Network.retrofitConverterGson)
     add("implementation", Dependencies.Network.googleGson)
     add("implementation", Dependencies.Network.retrofitConverterJackson)
+    add("implementation", Dependencies.Network.retrofitConverterMoshi)
     add("implementation", Dependencies.Network.okhttp)
     add("implementation", Dependencies.Network.loggingInterceptor)
     add("implementation", Dependencies.Network.jacksonCore)
     add("implementation", Dependencies.Network.jacksonAnnotation)
     add("implementation", Dependencies.Network.jacksonDataBind)
+    add("implementation", Dependencies.Network.moshiCore)
+    add("kapt", Dependencies.Network.moshiCodegen)
     add("implementation", Dependencies.Network.picasso)
+
 
 }
 

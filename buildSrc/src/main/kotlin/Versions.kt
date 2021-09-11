@@ -38,6 +38,7 @@ object Versions {
         const val Okhttp = "4.9.0"
         const val GoogleGson = "2.8.8"
         const val JacksonJson = "2.12.5"
+        const val MoshiJson = "1.12.0"
         const val SwipeRefreshLayout = "1.1.0"
 
         const val  PreferencesDataStore = "1.0.0"

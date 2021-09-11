@@ -97,6 +97,7 @@ class Dependencies {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.Dependencies.Retrofit}"
         const val retrofitConverterGson = "com.squareup.retrofit2:converter-gson:${Versions.Dependencies.Retrofit}"
         const val retrofitConverterJackson = "com.squareup.retrofit2:converter-jackson:${Versions.Dependencies.Retrofit}"
+        const val retrofitConverterMoshi = "com.squareup.retrofit2:converter-moshi:${Versions.Dependencies.Retrofit}"
         const val retrofitMock = "com.squareup.retrofit2:retrofit-mock:${Versions.Dependencies.Retrofit}"
 
 //    Ok HTTP
@@ -113,6 +114,10 @@ class Dependencies {
         const val jacksonCore = "com.fasterxml.jackson.core:jackson-core:${Versions.Dependencies.JacksonJson}"
         const val jacksonAnnotation = "com.fasterxml.jackson.core:jackson-annotations:${Versions.Dependencies.JacksonJson}"
         const val jacksonDataBind = "com.fasterxml.jackson.core:jackson-databind:${Versions.Dependencies.JacksonJson}"
+
+//  Moshi Json
+        const val moshiCore = "com.squareup.moshi:moshi:${Versions.Dependencies.MoshiJson}"
+        const val moshiCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.Dependencies.MoshiJson}"
 
 
 //        Picasso
