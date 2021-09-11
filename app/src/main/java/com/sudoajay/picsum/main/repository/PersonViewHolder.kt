@@ -11,6 +11,7 @@ import com.sudoajay.picsum.main.model.local.PersonLocalGson
 import com.sudoajay.picsum.main.model.local.PersonLocalJackson
 import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonJackson
+import com.sudoajay.picsum.main.model.remote.PersonMoshi
 
 class PersonViewHolder(
     val mainActivity: MainActivity,
@@ -50,6 +51,22 @@ class PersonViewHolder(
 
         binding.boxConstraintLayout.setOnLongClickListener {
             openMoreSetting(personGson.openUrl, personGson.downloadUrl)
+            true
+        }
+    }
+    fun bind(personMoshi: PersonMoshi) {
+        Picasso.get()
+            .load(personMoshi.downloadUrl)
+            .resize(120, 120)
+            .error(R.drawable.ic_me)
+            .centerCrop()
+            .into(binding.personImageImageView)
+        binding.personNameTextView.text = personMoshi.name
+
+        binding.personSizeTextView.text = getSize(personMoshi.width, personMoshi.height)
+
+        binding.boxConstraintLayout.setOnLongClickListener {
+            openMoreSetting(personMoshi.openUrl, personMoshi.downloadUrl)
             true
         }
     }

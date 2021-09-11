@@ -120,7 +120,7 @@ class MainActivity : BaseActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
 //        Object created
-        personListAdapter = PersonListAdapter(this, listOf(), listOf())
+        personListAdapter = PersonListAdapter(this, listOf(), listOf(), listOf())
         personPagingAdapterJackson = PersonPagingAdapterJackson(this)
         personPagingAdapterGson = PersonPagingAdapterGson(this)
         personLocalPagingAdapterGson = PersonLocalPagingAdapterGson(this)
@@ -147,7 +147,7 @@ class MainActivity : BaseActivity() {
                         }
                     }
                 }
-                else{
+                else if (viewModel.getJsonConverter == getString(R.string.gsonJson_text)){
                     binding.recyclerView.adapter = personLocalPagingAdapterGson
                     Log.e(TAG, "bind:  I m here Gson - " )
 
@@ -160,6 +160,8 @@ class MainActivity : BaseActivity() {
 
                         }
                     }
+                }else{
+
                 }
             }
             getString(R.string.paging_source_text) -> {
@@ -173,7 +175,7 @@ class MainActivity : BaseActivity() {
                         }
                     }
 
-                }else{
+                }else if (viewModel.getJsonConverter == getString(R.string.gsonJson_text)){
                     binding.recyclerView.adapter = personPagingAdapterGson
 
                     lifecycleScope.launch {
@@ -183,6 +185,9 @@ class MainActivity : BaseActivity() {
 
                         }
                     }
+                }
+                else{
+
                 }
 
             }

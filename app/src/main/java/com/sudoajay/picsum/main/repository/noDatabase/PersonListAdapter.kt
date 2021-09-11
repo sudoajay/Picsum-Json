@@ -7,13 +7,15 @@ import com.sudoajay.picsum.databinding.LayoutPersonListBinding
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonJackson
+import com.sudoajay.picsum.main.model.remote.PersonMoshi
 import com.sudoajay.picsum.main.repository.PersonViewHolder
 
 
 class PersonListAdapter(
     private var mainActivity: MainActivity,
-    var personJacksons: List<PersonJackson>,
-    var personGson: List<PersonGson>
+    var personJackson: List<PersonJackson>,
+    var personGson: List<PersonGson>,
+    var personMoshi: List<PersonMoshi>
 ) :
     RecyclerView.Adapter<PersonViewHolder>() {
 
@@ -28,17 +30,28 @@ class PersonListAdapter(
 
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
-        if (personJacksons.isNotEmpty()) {
-            val paymentBean: PersonJackson = personJacksons[position]
-            holder.bind(paymentBean)
-        } else {
-            val paymentBean: PersonGson = personGson[position]
-            holder.bind(paymentBean)
+        when {
+            personJackson.isNotEmpty() -> {
+                val paymentBean: PersonJackson = personJackson[position]
+                holder.bind(paymentBean)
+            }
+            personGson.isNotEmpty() -> {
+                val paymentBean: PersonGson = personGson[position]
+                holder.bind(paymentBean)
+            }
+            else -> {
+
+            }
         }
+
     }
 
     override fun getItemCount(): Int =
-        if (personJacksons.isNotEmpty()) personJacksons.size else personGson.size
+        when {
+            personJackson.isNotEmpty() -> personJackson.size
+            personGson.isNotEmpty() -> personGson.size
+            else -> personMoshi.size
+        }
 
 
 

@@ -9,6 +9,7 @@ import com.sudoajay.picsum.R
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJackson
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderGson
+import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderMoshi
 import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkGson
 import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkJackson
 import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorGson
@@ -21,6 +22,7 @@ import com.sudoajay.picsum.main.model.local.PersonLocalGson
 import com.sudoajay.picsum.main.model.local.PersonLocalJackson
 import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonJackson
+import com.sudoajay.picsum.main.model.remote.PersonMoshi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -36,10 +38,15 @@ class ApiRepository(private var activity: MainActivity) {
             val apiInterface =
                 PicsumInterfaceBuilderJackson.getApiInterface()
             getJacksonAPI(apiInterface?.getPersonJackson())
-        } else {
+        } else if (activity.viewModel.getJsonConverter == activity.getString(R.string.gsonJson_text) ){
             val apiInterface =
                 PicsumInterfaceBuilderGson.getApiInterface()
             getGsonApi(apiInterface?.getPersonGson())
+        }
+        else{
+            val apiInterface =
+                PicsumInterfaceBuilderMoshi.getApiInterface()
+            getMoshiApi(apiInterface?.getPersonMoshi())
         }
     }
 
@@ -53,7 +60,9 @@ class ApiRepository(private var activity: MainActivity) {
             ) {
                 activity.lifecycleScope.launch {
                     activity.personListAdapter.personGson = listOf()
-                    activity.personListAdapter.personJacksons = response.body() ?: listOf()
+                    activity.personListAdapter.personMoshi = listOf()
+
+                    activity.personListAdapter.personJackson = response.body() ?: listOf()
                     activity.binding.recyclerView.adapter?.notifyDataSetChanged()
                 }
             }
@@ -77,7 +86,8 @@ class ApiRepository(private var activity: MainActivity) {
                 response: Response<List<PersonGson>?>
             ) {
                 activity.lifecycleScope.launch {
-                    activity.personListAdapter.personJacksons = listOf()
+                    activity.personListAdapter.personJackson = listOf()
+                    activity.personListAdapter.personMoshi = listOf()
                     activity.personListAdapter.personGson = response.body() ?: listOf()
                     activity.binding.recyclerView.adapter?.notifyDataSetChanged()
 
@@ -85,6 +95,34 @@ class ApiRepository(private var activity: MainActivity) {
             }
 
             override fun onFailure(call: Call<List<PersonGson>?>, t: Throwable) {
+                Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
+                Toast.makeText(
+                    activity.applicationContext,
+                    activity.getString(R.string.noDataFound_text),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        })
+    }
+
+    private fun getMoshiApi(call: Call<List<PersonMoshi>?>?) {
+        call?.enqueue(object : Callback<List<PersonMoshi>?> {
+
+            override fun onResponse(
+                call: Call<List<PersonMoshi>?>,
+                response: Response<List<PersonMoshi>?>
+            ) {
+                activity.lifecycleScope.launch {
+                    activity.personListAdapter.personJackson = listOf()
+                    activity.personListAdapter.personGson = listOf()
+
+                    activity.personListAdapter.personMoshi = response.body() ?: listOf()
+                    activity.binding.recyclerView.adapter?.notifyDataSetChanged()
+
+                }
+            }
+
+            override fun onFailure(call: Call<List<PersonMoshi>?>, t: Throwable) {
                 Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
                 Toast.makeText(
                     activity.applicationContext,

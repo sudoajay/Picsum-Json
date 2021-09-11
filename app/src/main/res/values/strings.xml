@@ -18,6 +18,7 @@
     <string name="converter_text">Converter</string>
     <string name="jacksonJson_text">Jackson Json </string>
     <string name="gsonJson_text">Gson Json</string>
+    <string name="moshiJson_text">Moshi Json</string>
 
 <!--    Navigation Drawer Bottom Sheet-->
     <string name="developer_name">Created by Sudo Ajay</string>

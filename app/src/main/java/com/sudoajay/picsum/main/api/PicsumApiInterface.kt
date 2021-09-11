@@ -4,6 +4,7 @@ import com.sudoajay.picsum.main.model.local.PersonLocalGson
 import com.sudoajay.picsum.main.model.local.PersonLocalJackson
 import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonJackson
+import com.sudoajay.picsum.main.model.remote.PersonMoshi
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -24,6 +25,11 @@ interface PicsumApiInterface {
 
     @GET("list")
     fun getPersonGson(): Call<List<PersonGson>?>?
+
+    @GET("list")
+    fun getPersonMoshi(): Call<List<PersonMoshi>?>?
+
+
 
     @GET("list")
     suspend fun getPersonJacksonPaging(@Query("page") page: Int, @Query("limit") size: Int): List<PersonJackson>
