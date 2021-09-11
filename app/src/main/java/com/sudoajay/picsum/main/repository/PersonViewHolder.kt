@@ -126,6 +126,7 @@ class PersonViewHolder(
                     .centerCrop()
                     .override(120, 120)
                     .placeholder(R.drawable.ic_me)
+                    .error(R.drawable.ic_me)
                     .into(binding.personImageImageView);
             }
             else -> {
@@ -135,6 +136,7 @@ class PersonViewHolder(
                     .load(url)
                     .resize(120, 120)
                     .error(R.drawable.ic_me)
+                    .placeholder(R.drawable.ic_me)
                     .centerCrop()
                     .into(binding.personImageImageView)
 
