@@ -41,11 +41,13 @@ object Versions {
         const val MoshiJson = "1.12.0"
         const val SwipeRefreshLayout = "1.1.0"
 
-        const val  PreferencesDataStore = "1.0.0"
-        const val Protobuf ="3.17.3"
+        const val PreferencesDataStore = "1.0.0"
+        const val Protobuf = "3.17.3"
         const val ProtoDataStore = "1.0.0"
 
         const val FirebaseDatabase = "20.0.1"
-        const val Picasso = "2.71828"
+
+        const val glide = "4.12.0"
+        const val Picasso = "2.8"
     }
 }

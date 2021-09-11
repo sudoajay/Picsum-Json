@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.LayoutSettingBottomSheetBinding
@@ -22,12 +24,14 @@ class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFrag
         savedInstanceState: Bundle?
     ): View {
 
+
         val myDrawerView = layoutInflater.inflate(R.layout.layout_setting_bottom_sheet, container, false)
         val binding = LayoutSettingBottomSheetBinding.inflate(
             layoutInflater,
             myDrawerView as ViewGroup,
             false
         )
+
 
         binding.bottomSheet = this
         binding.viewModel = mainActivity.viewModel
@@ -48,6 +52,12 @@ class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFrag
     fun setDataBaseValue(database: String) {
         lifecycleScope.launch {
             protoManager.setDataBase(database)
+        }
+        dismiss()
+    }
+    fun setImageLoader(imageLoader: String) {
+        lifecycleScope.launch {
+            protoManager.setImageLoader(imageLoader)
         }
         dismiss()
     }

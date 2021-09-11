@@ -111,27 +111,33 @@ class Dependencies {
         const val googleGson = "com.google.code.gson:gson:${Versions.Dependencies.GoogleGson}"
 
 //  Jackson json
-        const val jacksonCore = "com.fasterxml.jackson.core:jackson-core:${Versions.Dependencies.JacksonJson}"
-        const val jacksonAnnotation = "com.fasterxml.jackson.core:jackson-annotations:${Versions.Dependencies.JacksonJson}"
-        const val jacksonDataBind = "com.fasterxml.jackson.core:jackson-databind:${Versions.Dependencies.JacksonJson}"
+const val jacksonCore =
+    "com.fasterxml.jackson.core:jackson-core:${Versions.Dependencies.JacksonJson}"
+        const val jacksonAnnotation =
+            "com.fasterxml.jackson.core:jackson-annotations:${Versions.Dependencies.JacksonJson}"
+        const val jacksonDataBind =
+            "com.fasterxml.jackson.core:jackson-databind:${Versions.Dependencies.JacksonJson}"
 
-//  Moshi Json
+        //  Moshi Json
         const val moshiCore = "com.squareup.moshi:moshi:${Versions.Dependencies.MoshiJson}"
-        const val moshiCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.Dependencies.MoshiJson}"
+        const val moshiCodegen =
+            "com.squareup.moshi:moshi-kotlin-codegen:${Versions.Dependencies.MoshiJson}"
 
 
-//        Picasso
+        //        Glide
+        const val glide = "com.github.bumptech.glide:glide:${Versions.Dependencies.glide}"
+        const val glideCompiler =
+            "com.github.bumptech.glide:compiler:${Versions.Dependencies.glide}"
 
+        //        Picasso
         const val picasso = "com.squareup.picasso:picasso:${Versions.Dependencies.Picasso}"
+
+
 
 
         const val retrofitConverter =
             "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
-
-
         const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
-
-
     }
 
     object Storage {

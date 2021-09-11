@@ -6,4 +6,5 @@ option java_multiple_files = true;
 message StatePreferences {
   string database = 1;
   string jsonConverter = 2;
+  string imageLoader = 3;
 }

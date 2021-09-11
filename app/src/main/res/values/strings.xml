@@ -15,12 +15,19 @@
     <string name="paging_source_text">Paging Source</string>
     <string name="no_dataBase_text">No DataBase</string>
 
-    <string name="converter_text">Converter</string>
+    <string name="jsonConverter_text">Json Converter</string>
     <string name="jacksonJson_text">Jackson Json </string>
     <string name="gsonJson_text">Gson Json</string>
     <string name="moshiJson_text">Moshi Json</string>
+    
+    <string name="imageLoader_text">Image Loader</string>
+    <string name="glide_text">Glide Loader</string>
+    <string name="picasso_text">Picasso Loader</string>
+    <string name="fresco_text">Fresco Loader</string>
+    <string name="coil_text">Coil Loader</string>
 
-<!--    Navigation Drawer Bottom Sheet-->
+
+    <!--    Navigation Drawer Bottom Sheet-->
     <string name="developer_name">Created by Sudo Ajay</string>
     <string name="send_feedback_text">Send Feedback</string>
     <string name="rate_use_text">Rate-Us</string>

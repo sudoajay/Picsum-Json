@@ -1,7 +1,6 @@
 package com.sudoajay.picsum.main
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +17,7 @@ class MainViewModel @Inject constructor(application: Application): ViewModel() {
     var protoManager: ProtoManager = ProtoManager(application)
     var getJsonConverter: String = ""
     var getDatabase: String = ""
+    var getImageLoader: String = ""
 
     var hideProgress: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -32,7 +32,9 @@ class MainViewModel @Inject constructor(application: Application): ViewModel() {
             protoManager.dataStoreStatePreferences.data.collectLatest {
                 getJsonConverter = it.jsonConverter
                 getDatabase = it.database
-                if (getJsonConverter == "" && getDatabase == "") protoManager.setDefaultValue()
+                getImageLoader = it.imageLoader
+                if (getJsonConverter == "" && getDatabase == "" && getImageLoader == "")
+                    protoManager.setDefaultValue()
             }
         }
     }

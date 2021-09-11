@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,7 +15,6 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
-
         <ImageView
             android:id="@+id/personImage_ImageView"
             android:layout_width="wrap_content"
@@ -24,8 +24,7 @@
             android:contentDescription="@string/app_name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_me" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/personName_TextView"

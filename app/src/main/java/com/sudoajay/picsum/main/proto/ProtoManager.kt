@@ -23,6 +23,7 @@ class ProtoManager constructor (var context: Context){
             preferences.toBuilder()
                 .setDatabase(context.getString(R.string.no_dataBase_text))
                 .setJsonConverter(context.getString(R.string.jacksonJson_text))
+                .setImageLoader(context.getString(R.string.glide_text))
                 .build()
         }
     }
@@ -39,6 +40,14 @@ class ProtoManager constructor (var context: Context){
         dataStoreStatePreferences.updateData { preferences ->
             preferences.toBuilder()
                 .setJsonConverter(jsonConverter)
+                .build()
+        }
+    }
+
+    suspend fun setImageLoader(imageLoader:String){
+        dataStoreStatePreferences.updateData { preferences ->
+            preferences.toBuilder()
+                .setImageLoader(imageLoader)
                 .build()
         }
     }

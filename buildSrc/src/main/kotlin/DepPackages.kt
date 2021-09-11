@@ -61,7 +61,10 @@ fun DependencyHandler.implementNetwork(){
     add("implementation", Dependencies.Network.jacksonDataBind)
     add("implementation", Dependencies.Network.moshiCore)
     add("kapt", Dependencies.Network.moshiCodegen)
+    add("implementation", Dependencies.Network.glide)
+    add("kapt", Dependencies.Network.glideCompiler)
     add("implementation", Dependencies.Network.picasso)
+
 
 
 }

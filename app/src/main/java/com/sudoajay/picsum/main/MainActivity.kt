@@ -320,6 +320,7 @@ class MainActivity : BaseActivity() {
             supportFragmentManager.beginTransaction(),
             settingBottomSheet.tag
         )
+
     }
 
     private fun refreshData() {
