@@ -17,15 +17,7 @@ import kotlinx.coroutines.launch
 class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFragment() {
     lateinit var protoManager: ProtoManager
     private var  TAG:String = "SettingBottomSheetTag"
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val offsetFromTop = 200
-        (dialog as? BottomSheetDialog)?.behavior?.apply {
-            isFitToContents = false
-            expandedOffset = offsetFromTop
-            state = BottomSheetBehavior.STATE_EXPANDED
-        }
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
