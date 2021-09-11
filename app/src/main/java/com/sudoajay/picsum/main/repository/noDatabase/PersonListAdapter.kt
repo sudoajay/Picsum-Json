@@ -40,7 +40,8 @@ class PersonListAdapter(
                 holder.bind(paymentBean)
             }
             else -> {
-
+                val paymentBean: PersonMoshi = personMoshi[position]
+                holder.bind(paymentBean)
             }
         }
 

@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.sudoajay.picsum.main.model.local.PersonLocalJackson
+import com.sudoajay.picsum.main.model.local.PersonLocalMoshi
 
-@Database(entities = [PersonLocalJackson::class], version = 1, exportSchema = false)
+@Database(entities = [PersonLocalMoshi::class], version = 1, exportSchema = false)
 abstract class PersonLocalMoshiDatabase : RoomDatabase() {
 
     abstract fun itemDoa(): PersonLocalMoshiDoa

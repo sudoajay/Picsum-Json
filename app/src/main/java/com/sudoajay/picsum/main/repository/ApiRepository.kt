@@ -205,7 +205,7 @@ class ApiRepository(private var activity: MainActivity) {
         val itemRepository = PersonLocalMoshiRepository(database.itemDoa())
 
         val apiInterface =
-            PicsumInterfaceBuilderGson.getApiInterface()
+            PicsumInterfaceBuilderMoshi.getApiInterface()
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
             remoteMediator = RemoteMediatorMoshi(database, itemRepository, apiInterface!!)
