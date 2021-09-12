@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sudoajay.picsum.R
+import com.sudoajay.picsum.helper.Toaster
 import com.sudoajay.picsum.main.api.PicsumApiInterface
 import com.sudoajay.picsum.main.model.remote.PersonJackson
 import retrofit2.HttpException
@@ -26,13 +27,15 @@ class PagingSourceNetworkJackson(
             )
 
         } catch (exception: IOException) {
-
+            Toaster.showToast(context,context.getString(R.string.somethingWentWrong_text))
             return LoadResult.Error(exception)
         } catch (exception: HttpException) {
+            Toaster.showToast(context,context.getString(R.string.noInternetConnection_text))
 
             return LoadResult.Error(exception)
         }
     }
+
 
 
     override fun getRefreshKey(state: PagingState<Int, PersonJackson>): Int? {

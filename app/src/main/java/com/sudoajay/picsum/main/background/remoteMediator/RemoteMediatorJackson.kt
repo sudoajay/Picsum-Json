@@ -1,11 +1,14 @@
 package com.sudoajay.picsum.main.background.remoteMediator
 
+import android.content.Context
 import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.sudoajay.picsum.R
+import com.sudoajay.picsum.helper.Toaster
 import com.sudoajay.picsum.main.api.PicsumApiInterface
 import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonDatabase
 import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonRepository
@@ -80,12 +83,9 @@ class RemoteMediatorJackson(
                 endOfPaginationReached = false
             )
         } catch (e: IOException) {
-            Log.e(TAG, "load: IOException ${e.message}" )
-            Log.e(TAG, "load: IOException ${e.localizedMessage}" )
 
             MediatorResult.Error(e)
         } catch (e: HttpRetryException) {
-            Log.e(TAG, "load: HttpRetryException ${e.message}" )
 
             MediatorResult.Error(e)
         }

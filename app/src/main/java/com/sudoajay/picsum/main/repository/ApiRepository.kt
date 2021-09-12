@@ -2,13 +2,13 @@ package com.sudoajay.picsum.main.repository
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.sudoajay.picsum.R
+import com.sudoajay.picsum.helper.Toaster
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderGson
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJackson
@@ -32,7 +32,6 @@ import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonJackson
 import com.sudoajay.picsum.main.model.remote.PersonMoshi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onErrorReturn
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -85,11 +84,8 @@ class ApiRepository(private var activity: MainActivity) {
 
             override fun onFailure(call: Call<List<PersonJackson>?>, t: Throwable) {
                 Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
-                Toast.makeText(
-                    activity.applicationContext,
-                    activity.getString(R.string.somethingWentWrong_text),
-                    Toast.LENGTH_LONG
-                ).show()
+                Toaster.showToast(  activity.applicationContext,
+                    activity.getString(R.string.somethingWentWrong_text))
             }
         })
     }
@@ -115,11 +111,9 @@ class ApiRepository(private var activity: MainActivity) {
 
             override fun onFailure(call: Call<List<PersonGson>?>, t: Throwable) {
                 Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
-                Toast.makeText(
-                    activity.applicationContext,
-                    activity.getString(R.string.somethingWentWrong_text),
-                    Toast.LENGTH_LONG
-                ).show()
+                Toaster.showToast(  activity.applicationContext,
+                    activity.getString(R.string.somethingWentWrong_text))
+
             }
         })
     }
@@ -146,11 +140,8 @@ class ApiRepository(private var activity: MainActivity) {
 
             override fun onFailure(call: Call<List<PersonMoshi>?>, t: Throwable) {
                 Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
-                Toast.makeText(
-                    activity.applicationContext,
-                    activity.getString(R.string.somethingWentWrong_text),
-                    Toast.LENGTH_LONG
-                ).show()
+                Toaster.showToast(  activity.applicationContext,
+                    activity.getString(R.string.somethingWentWrong_text))
             }
         })
     }
@@ -161,7 +152,12 @@ class ApiRepository(private var activity: MainActivity) {
 
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = { PagingSourceNetworkJackson(apiInterface!! ) }
+            pagingSourceFactory = {
+                PagingSourceNetworkJackson(
+                    apiInterface!!,
+                    activity.applicationContext
+                )
+            }
 
         ).flow
 
@@ -174,7 +170,12 @@ class ApiRepository(private var activity: MainActivity) {
 
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = { PagingSourceNetworkGson(apiInterface!!) }
+            pagingSourceFactory = {
+                PagingSourceNetworkGson(
+                    apiInterface!!,
+                    activity.applicationContext
+                )
+            }
         ).flow
     }
 
@@ -185,7 +186,12 @@ class ApiRepository(private var activity: MainActivity) {
 
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = { PagingSourceNetworkMoshi(apiInterface!!) }
+            pagingSourceFactory = {
+                PagingSourceNetworkMoshi(
+                    apiInterface!!,
+                    activity.applicationContext
+                )
+            }
         ).flow
     }
     @OptIn(ExperimentalPagingApi::class)
@@ -197,7 +203,11 @@ class ApiRepository(private var activity: MainActivity) {
             PicsumInterfaceBuilderJackson.getApiInterface()
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-            remoteMediator = RemoteMediatorJackson(database, itemRepository, apiInterface!!)
+            remoteMediator = RemoteMediatorJackson(
+                database,
+                itemRepository,
+                apiInterface!!
+            )
         ) {
             itemRepository.pagingSource("%${activity.viewModel.searchValue}%")
         }.flow
@@ -212,7 +222,11 @@ class ApiRepository(private var activity: MainActivity) {
             PicsumInterfaceBuilderGson.getApiInterface()
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-            remoteMediator = RemoteMediatorGson(database, itemRepository, apiInterface!!)
+            remoteMediator = RemoteMediatorGson(
+                database,
+                itemRepository,
+                apiInterface!!
+            )
         ) {
             itemRepository.pagingSource("%${activity.viewModel.searchValue}%")
         }.flow
@@ -227,7 +241,11 @@ class ApiRepository(private var activity: MainActivity) {
             PicsumInterfaceBuilderMoshi.getApiInterface()
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-            remoteMediator = RemoteMediatorMoshi(database, itemRepository, apiInterface!!)
+            remoteMediator = RemoteMediatorMoshi(
+                database,
+                itemRepository,
+                apiInterface!!
+            )
         ) {
             itemRepository.pagingSource("%${activity.viewModel.searchValue}%")
         }.flow

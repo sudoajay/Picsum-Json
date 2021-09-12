@@ -1,11 +1,14 @@
 package com.sudoajay.picsum.main.background.remoteMediator
 
+import android.content.Context
 import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.sudoajay.picsum.R
+import com.sudoajay.picsum.helper.Toaster
 import com.sudoajay.picsum.main.api.PicsumApiInterface
 import com.sudoajay.picsum.main.database.moshi.PersonLocalMoshiDatabase
 import com.sudoajay.picsum.main.database.moshi.PersonLocalMoshiRepository
@@ -71,8 +74,10 @@ class RemoteMediatorMoshi(
                 endOfPaginationReached = false
             )
         } catch (e: IOException) {
+
             MediatorResult.Error(e)
         } catch (e: HttpRetryException) {
+
             MediatorResult.Error(e)
         }
     }
