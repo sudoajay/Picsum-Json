@@ -17,8 +17,7 @@ interface PersonLocalGsonDoa {
     suspend fun insertAll(users: List<PersonLocalGson>)
 
 
-    @Query("SELECT * FROM PersonGsonTable")
-    fun pagingSource(): PagingSource<Int, PersonLocalGson>
-
+    @Query("SELECT * FROM PersonGsonTable WHERE name LIKE :search ")
+    fun pagingSource(search: String?): PagingSource<Int, PersonLocalGson>
 
 }

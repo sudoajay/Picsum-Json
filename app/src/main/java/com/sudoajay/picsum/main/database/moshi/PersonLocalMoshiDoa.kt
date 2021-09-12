@@ -18,8 +18,8 @@ interface PersonLocalMoshiDoa {
     suspend fun insertAll(users: List<PersonLocalMoshi>)
 
 
-    @Query("SELECT * FROM PersonMoshiTable")
-    fun pagingSource(): PagingSource<Int, PersonLocalMoshi>
+    @Query("SELECT * FROM PersonMoshiTable WHERE name LIKE :search ")
+    fun pagingSource(search: String?): PagingSource<Int, PersonLocalMoshi>
 
 
 }

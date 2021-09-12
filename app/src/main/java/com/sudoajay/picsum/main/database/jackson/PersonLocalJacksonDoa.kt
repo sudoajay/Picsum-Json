@@ -18,8 +18,8 @@ interface PersonLocalJacksonDoa {
     suspend fun insertAll(users: List<PersonLocalJackson>)
 
 
-    @Query("SELECT * FROM PersonJacksonTable")
-    fun pagingSource(): PagingSource<Int, PersonLocalJackson>
+    @Query("SELECT * FROM PersonJacksonTable WHERE name LIKE :search ")
+    fun pagingSource(search: String?): PagingSource<Int, PersonLocalJackson>
 
 
 }

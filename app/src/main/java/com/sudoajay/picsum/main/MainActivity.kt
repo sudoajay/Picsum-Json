@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.filter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.picsum.BaseActivity
@@ -30,6 +31,8 @@ import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapt
 import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterMoshi
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -42,15 +45,16 @@ class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
 
     lateinit var personListAdapter: PersonListAdapter
-    lateinit var personPagingAdapterJackson: PersonPagingAdapterJackson
-    lateinit var personPagingAdapterGson: PersonPagingAdapterGson
-    lateinit var personPagingAdapterMoshi: PersonPagingAdapterMoshi
-    lateinit var personLocalPagingAdapterGson: PersonLocalPagingAdapterGson
-    lateinit var personLocalPagingAdapterJackson: PersonLocalPagingAdapterJackson
-    lateinit var personLocalPagingAdapterMoshi: PersonLocalPagingAdapterMoshi
+    private lateinit var personPagingAdapterJackson: PersonPagingAdapterJackson
+    private lateinit var personPagingAdapterGson: PersonPagingAdapterGson
+    private lateinit var personPagingAdapterMoshi: PersonPagingAdapterMoshi
+    private lateinit var personLocalPagingAdapterGson: PersonLocalPagingAdapterGson
+    private lateinit var personLocalPagingAdapterJackson: PersonLocalPagingAdapterJackson
+    private lateinit var personLocalPagingAdapterMoshi: PersonLocalPagingAdapterMoshi
 
 
-    var apiRepository: ApiRepository = ApiRepository(this)
+    private var apiRepository: ApiRepository = ApiRepository(this)
+    private var searchData = ""
     private var isDarkTheme: Boolean = false
     private var TAG = "MainActivityTAG"
 
@@ -191,8 +195,8 @@ class MainActivity : BaseActivity() {
                         binding.recyclerView.adapter = personPagingAdapterJackson
                         lifecycleScope.launch {
                             apiRepository.getPagingJacksonSourceWithNetwork()
+                                .map { pagingData->pagingData.filter { if (viewModel.searchValue != "") it.name.lowercase().contains(viewModel.searchValue)  else true  } }
                                 .collectLatest { pagingData ->
-                                    Log.e(TAG, "Paging source:  I m here Jackson --- ")
                                     personPagingAdapterJackson.submitData(pagingData)
                                 }
                         }
@@ -203,8 +207,8 @@ class MainActivity : BaseActivity() {
 
                         lifecycleScope.launch {
                             apiRepository.getPagingGsonSourceWithNetwork()
+                                .map { pagingData->pagingData.filter {  if (viewModel.searchValue != "") it.name.lowercase().contains(viewModel.searchValue)  else true  } }
                                 .collectLatest { pagingData ->
-                                    Log.e(TAG, "Paging source:  I m here Gson --- ")
                                     personPagingAdapterGson.submitData(pagingData)
 
                                 }
@@ -215,6 +219,7 @@ class MainActivity : BaseActivity() {
 
                         lifecycleScope.launch {
                             apiRepository.getPagingMoshiSourceWithNetwork()
+                                .map { pagingData->pagingData.filter {  if (viewModel.searchValue != "") it.name.lowercase().contains(viewModel.searchValue)  else true   } }
                                 .collectLatest { pagingData ->
                                     Log.e(TAG, "Paging source:  I m here Gson --- ")
                                     personPagingAdapterMoshi.submitData(pagingData)
@@ -287,7 +292,8 @@ class MainActivity : BaseActivity() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 val query: String = newText.lowercase(Locale.ROOT).trim { it <= ' ' }
-
+                viewModel.searchValue = query
+                refreshData()
                 return true
             }
         })

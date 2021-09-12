@@ -1,14 +1,17 @@
 package com.sudoajay.picsum.main.background.pagingSource
 
+import android.content.Context
+import android.widget.Toast
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.sudoajay.picsum.R
 import com.sudoajay.picsum.main.api.PicsumApiInterface
 import com.sudoajay.picsum.main.model.remote.PersonJackson
 import retrofit2.HttpException
 import java.io.IOException
 
 class PagingSourceNetworkJackson(
-    private val picsumApiInterface: PicsumApiInterface
+    private val picsumApiInterface: PicsumApiInterface,private val context: Context
 ) : PagingSource<Int, PersonJackson>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PersonJackson> {
         //for first case it will be null, then we can pass some default value, in our case it's 1
@@ -23,8 +26,10 @@ class PagingSourceNetworkJackson(
             )
 
         } catch (exception: IOException) {
+
             return LoadResult.Error(exception)
         } catch (exception: HttpException) {
+
             return LoadResult.Error(exception)
         }
     }

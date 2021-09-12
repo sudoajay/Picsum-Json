@@ -7,7 +7,6 @@
     <string name="search_optionMenu">Search</string>
     <string name="refresh_optionMenu">Refresh</string>
     <string name="setting_optionMenu">Setting</string>
-    <string name="noDataFound_text">No Data Found</string>
 
 <!--    Setting bottom Sheet-->
     <string name="dataBase_text">DataBase</string>
@@ -40,6 +39,10 @@
     <string name="more_option_text">More Option</string>
     <string name="view_image_text">View Image</string>
     <string name="download_image_text">Download Image</string>
+
+<!--    Error-->
+    <string name="somethingWentWrong_text">Something Went Wrong</string>
+    <string name="noInternetConnection_text">No Internet Connection</string>
 
 
 

@@ -18,6 +18,7 @@ class MainViewModel @Inject constructor(application: Application): ViewModel() {
     var getJsonConverter: String = ""
     var getDatabase: String = ""
     var getImageLoader: String = ""
+    var searchValue = ""
 
     var hideProgress: MutableLiveData<Boolean> = MutableLiveData()
 

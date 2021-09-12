@@ -7,7 +7,8 @@ import com.sudoajay.picsum.main.model.local.PersonLocalGson
 class PersonLocalGsonRepository(private val personLocalGsonDoa: PersonLocalGsonDoa) {
 
 
-    fun pagingSource(): PagingSource<Int, PersonLocalGson> = personLocalGsonDoa.pagingSource()
+    fun pagingSource(search: String?): PagingSource<Int, PersonLocalGson> =
+        personLocalGsonDoa.pagingSource(search)
 
 
     suspend fun insertAll(list: List<PersonLocalGson>) = personLocalGsonDoa.insertAll(list)

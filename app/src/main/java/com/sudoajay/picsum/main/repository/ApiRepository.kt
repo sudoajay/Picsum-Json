@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.*
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.main.MainActivity
-import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJackson
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderGson
+import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderJackson
 import com.sudoajay.picsum.main.api.PicsumInterfaceBuilderMoshi
 import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkGson
 import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkJackson
@@ -16,8 +19,8 @@ import com.sudoajay.picsum.main.background.pagingSource.PagingSourceNetworkMoshi
 import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorGson
 import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorJackson
 import com.sudoajay.picsum.main.background.remoteMediator.RemoteMediatorMoshi
-import com.sudoajay.picsum.main.database.gson.PersonLocalGsonRepository
 import com.sudoajay.picsum.main.database.gson.PersonLocalGsonDatabase
+import com.sudoajay.picsum.main.database.gson.PersonLocalGsonRepository
 import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonDatabase
 import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonRepository
 import com.sudoajay.picsum.main.database.moshi.PersonLocalMoshiDatabase
@@ -29,29 +32,34 @@ import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonJackson
 import com.sudoajay.picsum.main.model.remote.PersonMoshi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onErrorReturn
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 @SuppressLint("NotifyDataSetChanged")
 class ApiRepository(private var activity: MainActivity) {
 
     private var TAG = "ApiRepositoryTAG"
     fun getDataFromApi() {
-        Log.e(TAG, "getDataFromApi: ${activity.viewModel.getJsonConverter}" )
-        if (activity.viewModel.getJsonConverter == activity.getString(R.string.jacksonJson_text) ) {
-            val apiInterface =
-                PicsumInterfaceBuilderJackson.getApiInterface()
-            getJacksonAPI(apiInterface?.getPersonJackson())
-        } else if (activity.viewModel.getJsonConverter == activity.getString(R.string.gsonJson_text) ){
-            val apiInterface =
-                PicsumInterfaceBuilderGson.getApiInterface()
-            getGsonApi(apiInterface?.getPersonGson())
-        }
-        else{
-            val apiInterface =
-                PicsumInterfaceBuilderMoshi.getApiInterface()
-            getMoshiApi(apiInterface?.getPersonMoshi())
+        Log.e(TAG, "getDataFromApi: ${activity.viewModel.searchValue}")
+        when (activity.viewModel.getJsonConverter) {
+            activity.getString(R.string.jacksonJson_text) -> {
+                val apiInterface =
+                    PicsumInterfaceBuilderJackson.getApiInterface()
+                getJacksonAPI(apiInterface?.getPersonJackson())
+            }
+            activity.getString(R.string.gsonJson_text) -> {
+                val apiInterface =
+                    PicsumInterfaceBuilderGson.getApiInterface()
+                getGsonApi(apiInterface?.getPersonGson())
+            }
+            else -> {
+                val apiInterface =
+                    PicsumInterfaceBuilderMoshi.getApiInterface()
+                getMoshiApi(apiInterface?.getPersonMoshi())
+            }
         }
     }
 
@@ -67,7 +75,10 @@ class ApiRepository(private var activity: MainActivity) {
                     activity.personListAdapter.personGson = listOf()
                     activity.personListAdapter.personMoshi = listOf()
 
-                    activity.personListAdapter.personJackson = response.body() ?: listOf()
+                    activity.personListAdapter.personJackson =
+                        response.body()
+                            ?.filter { if (activity.viewModel.searchValue != "") it.name.lowercase().contains(activity.viewModel.searchValue)  else true }
+                            ?: listOf()
                     activity.binding.recyclerView.adapter?.notifyDataSetChanged()
                 }
             }
@@ -76,7 +87,7 @@ class ApiRepository(private var activity: MainActivity) {
                 Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
                 Toast.makeText(
                     activity.applicationContext,
-                    activity.getString(R.string.noDataFound_text),
+                    activity.getString(R.string.somethingWentWrong_text),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -93,7 +104,10 @@ class ApiRepository(private var activity: MainActivity) {
                 activity.lifecycleScope.launch {
                     activity.personListAdapter.personJackson = listOf()
                     activity.personListAdapter.personMoshi = listOf()
-                    activity.personListAdapter.personGson = response.body() ?: listOf()
+                    activity.personListAdapter.personGson =
+                        response.body()
+                            ?.filter { if (activity.viewModel.searchValue != "") it.name.lowercase().contains(activity.viewModel.searchValue)  else true }
+                            ?: listOf()
                     activity.binding.recyclerView.adapter?.notifyDataSetChanged()
 
                 }
@@ -103,7 +117,7 @@ class ApiRepository(private var activity: MainActivity) {
                 Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
                 Toast.makeText(
                     activity.applicationContext,
-                    activity.getString(R.string.noDataFound_text),
+                    activity.getString(R.string.somethingWentWrong_text),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -121,8 +135,11 @@ class ApiRepository(private var activity: MainActivity) {
                     activity.personListAdapter.personJackson = listOf()
                     activity.personListAdapter.personGson = listOf()
 
-                    activity.personListAdapter.personMoshi = response.body() ?: listOf()
+                    activity.personListAdapter.personMoshi = response.body()
+                        ?.filter { if (activity.viewModel.searchValue != "") it.name.lowercase().contains(activity.viewModel.searchValue)  else true }
+                        ?: listOf()
                     activity.binding.recyclerView.adapter?.notifyDataSetChanged()
+
 
                 }
             }
@@ -131,7 +148,7 @@ class ApiRepository(private var activity: MainActivity) {
                 Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
                 Toast.makeText(
                     activity.applicationContext,
-                    activity.getString(R.string.noDataFound_text),
+                    activity.getString(R.string.somethingWentWrong_text),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -144,8 +161,10 @@ class ApiRepository(private var activity: MainActivity) {
 
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = { PagingSourceNetworkJackson(apiInterface!!) }
+            pagingSourceFactory = { PagingSourceNetworkJackson(apiInterface!! ) }
+
         ).flow
+
     }
 
     fun getPagingGsonSourceWithNetwork(): Flow<PagingData<PersonGson>> {
@@ -180,7 +199,7 @@ class ApiRepository(private var activity: MainActivity) {
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
             remoteMediator = RemoteMediatorJackson(database, itemRepository, apiInterface!!)
         ) {
-            itemRepository.pagingSource()
+            itemRepository.pagingSource("%${activity.viewModel.searchValue}%")
         }.flow
     }
 
@@ -195,7 +214,7 @@ class ApiRepository(private var activity: MainActivity) {
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
             remoteMediator = RemoteMediatorGson(database, itemRepository, apiInterface!!)
         ) {
-            itemRepository.pagingSource()
+            itemRepository.pagingSource("%${activity.viewModel.searchValue}%")
         }.flow
     }
 
@@ -210,7 +229,7 @@ class ApiRepository(private var activity: MainActivity) {
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
             remoteMediator = RemoteMediatorMoshi(database, itemRepository, apiInterface!!)
         ) {
-            itemRepository.pagingSource()
+            itemRepository.pagingSource("%${activity.viewModel.searchValue}%")
         }.flow
     }
 
