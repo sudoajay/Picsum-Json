@@ -30,6 +30,7 @@ import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapt
 import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterJackson
 import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterMoshi
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
@@ -117,7 +118,7 @@ class MainActivity : BaseActivity() {
 
         setRecyclerView()
 
-        hideProgressAndRefresh()
+        showProgressAndHideRefresh()
 
     }
 
@@ -152,8 +153,9 @@ class MainActivity : BaseActivity() {
                             apiRepository.getRemoteMediatorSourceWithNetworkJackson()
                                 .collectLatest { pagingData ->
                                     personLocalPagingAdapterJackson.submitData(pagingData)
-
+                                  setValueHideProgress(true)
                                 }
+                            setValueHideProgress(personPagingAdapterJackson.itemCount !=0 )
                         }
                     }
                     getString(R.string.gsonJson_text) -> {
@@ -167,8 +169,10 @@ class MainActivity : BaseActivity() {
                                 .collectLatest { pagingData ->
                                     Log.e(TAG, "bind:  I m here Gson --- ")
                                     personLocalPagingAdapterGson.submitData(pagingData)
-
+                                    setValueHideProgress(true)
                                 }
+                            setValueHideProgress(personLocalPagingAdapterGson.itemCount !=0 )
+
                         }
                     }
                     else -> {
@@ -182,8 +186,10 @@ class MainActivity : BaseActivity() {
                                 .collectLatest { pagingData ->
                                     Log.e(TAG, "bind:  I m here Gson --- ")
                                     personLocalPagingAdapterMoshi.submitData(pagingData)
-
+                                    setValueHideProgress(true)
                                 }
+                            setValueHideProgress(personLocalPagingAdapterMoshi.itemCount !=0 )
+
                         }
                     }
                 }
@@ -198,7 +204,11 @@ class MainActivity : BaseActivity() {
                                 .map { pagingData->pagingData.filter { if (viewModel.searchValue != "") it.name.lowercase().contains(viewModel.searchValue)  else true  } }
                                 .collectLatest { pagingData ->
                                     personPagingAdapterJackson.submitData(pagingData)
+                                    setValueHideProgress(true)
+
                                 }
+                            setValueHideProgress(personPagingAdapterJackson.itemCount !=0 )
+
                         }
 
                     }
@@ -210,8 +220,10 @@ class MainActivity : BaseActivity() {
                                 .map { pagingData->pagingData.filter {  if (viewModel.searchValue != "") it.name.lowercase().contains(viewModel.searchValue)  else true  } }
                                 .collectLatest { pagingData ->
                                     personPagingAdapterGson.submitData(pagingData)
-
+                                    setValueHideProgress(true)
                                 }
+                            setValueHideProgress(personPagingAdapterGson.itemCount !=0 )
+
                         }
                     }
                     else -> {
@@ -223,8 +235,10 @@ class MainActivity : BaseActivity() {
                                 .collectLatest { pagingData ->
                                     Log.e(TAG, "Paging source:  I m here Gson --- ")
                                     personPagingAdapterMoshi.submitData(pagingData)
-
+                                    setValueHideProgress(true)
                                 }
+                            setValueHideProgress(personPagingAdapterMoshi.itemCount !=0 )
+
                         }
                     }
                 }
@@ -233,10 +247,15 @@ class MainActivity : BaseActivity() {
             else -> { // Note the block
                 binding.recyclerView.adapter = personListAdapter
                 apiRepository.getDataFromApi()
+
             }
         }
 
 
+    }
+
+   suspend fun setValueHideProgress(boolean: Boolean){
+         viewModel.hideProgress.postValue(boolean)
     }
 
     private fun getInsertDivider(): RecyclerView.ItemDecoration {
@@ -332,13 +351,13 @@ class MainActivity : BaseActivity() {
     private fun refreshData() {
         Log.e(TAG, "Refresh data call here ")
        protoDataChange()
-        hideProgressAndRefresh()
+        showProgressAndHideRefresh()
     }
 
-    private fun hideProgressAndRefresh(){
+    private fun showProgressAndHideRefresh(){
         if (binding.swipeRefresh.isRefreshing)
             binding.swipeRefresh.isRefreshing = false
-        viewModel.hideProgress.value = true
+        viewModel.hideProgress.value = false
     }
 
 

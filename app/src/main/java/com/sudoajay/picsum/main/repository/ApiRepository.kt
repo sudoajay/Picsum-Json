@@ -73,12 +73,13 @@ class ApiRepository(private var activity: MainActivity) {
                 activity.lifecycleScope.launch {
                     activity.personListAdapter.personGson = listOf()
                     activity.personListAdapter.personMoshi = listOf()
-
+                    activity.viewModel.hideProgress.postValue(true)
                     activity.personListAdapter.personJackson =
                         response.body()
                             ?.filter { if (activity.viewModel.searchValue != "") it.name.lowercase().contains(activity.viewModel.searchValue)  else true }
                             ?: listOf()
                     activity.binding.recyclerView.adapter?.notifyDataSetChanged()
+
                 }
             }
 
@@ -100,6 +101,8 @@ class ApiRepository(private var activity: MainActivity) {
                 activity.lifecycleScope.launch {
                     activity.personListAdapter.personJackson = listOf()
                     activity.personListAdapter.personMoshi = listOf()
+                    activity.viewModel.hideProgress.postValue(true)
+
                     activity.personListAdapter.personGson =
                         response.body()
                             ?.filter { if (activity.viewModel.searchValue != "") it.name.lowercase().contains(activity.viewModel.searchValue)  else true }
@@ -128,6 +131,7 @@ class ApiRepository(private var activity: MainActivity) {
                 activity.lifecycleScope.launch {
                     activity.personListAdapter.personJackson = listOf()
                     activity.personListAdapter.personGson = listOf()
+                    activity.viewModel.hideProgress.postValue(true)
 
                     activity.personListAdapter.personMoshi = response.body()
                         ?.filter { if (activity.viewModel.searchValue != "") it.name.lowercase().contains(activity.viewModel.searchValue)  else true }
