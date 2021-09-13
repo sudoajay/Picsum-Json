@@ -35,9 +35,9 @@ class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFrag
 
 
         binding.bottomSheet = this
-        binding.viewModel = mainActivity.viewModel
+        binding.activity = mainActivity
         binding.lifecycleOwner = this
-        protoManager = mainActivity.viewModel.protoManager
+        protoManager = mainActivity.protoManager
 
         return binding.root
     }

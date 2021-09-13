@@ -83,10 +83,10 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         setReference()
         super.onResume()
-        viewModel.protoManager.
+        protoManager.
         dataStoreStatePreferences.data.asLiveData().observe(this) {
-            viewModel.getDatabase = it.database
-            viewModel.getJsonConverter = it.jsonConverter
+            getDatabase = it.database
+            getJsonConverter = it.jsonConverter
             refreshData()
         }
     }
@@ -143,9 +143,9 @@ class MainActivity : BaseActivity() {
 
     private fun protoDataChange(){
 
-        when (viewModel.getDatabase) {
+        when (getDatabase) {
             getString(R.string.remote_mediator_text) -> {
-                when (viewModel.getJsonConverter) {
+                when (getJsonConverter) {
                     getString(R.string.jacksonJson_text) -> {
                         binding.recyclerView.adapter = personLocalPagingAdapterJackson
                         lifecycleScope.launch {
@@ -196,7 +196,7 @@ class MainActivity : BaseActivity() {
             }
             getString(R.string.paging_source_text) -> {
 
-                when (viewModel.getJsonConverter) {
+                when (getJsonConverter) {
                     getString(R.string.jacksonJson_text) -> {
                         binding.recyclerView.adapter = personPagingAdapterJackson
                         lifecycleScope.launch {

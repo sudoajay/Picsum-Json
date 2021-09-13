@@ -43,7 +43,7 @@ class ApiRepository(private var activity: MainActivity) {
     private var TAG = "ApiRepositoryTAG"
     fun getDataFromApi() {
         Log.e(TAG, "getDataFromApi: ${activity.viewModel.searchValue}")
-        when (activity.viewModel.getJsonConverter) {
+        when (activity.getJsonConverter) {
             activity.getString(R.string.jacksonJson_text) -> {
                 val apiInterface =
                     PicsumInterfaceBuilderJackson.getApiInterface()

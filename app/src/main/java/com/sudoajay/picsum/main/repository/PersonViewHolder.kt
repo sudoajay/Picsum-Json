@@ -116,7 +116,7 @@ class PersonViewHolder(
     }
 
     private fun setImageLoader(url: String) {
-        when (mainActivity.viewModel.getImageLoader) {
+        when (mainActivity.getImageLoader) {
             mainActivity.getString(R.string.glide_text) -> {
                 Log.e(TAG, "setImageLoader: At glide")
 

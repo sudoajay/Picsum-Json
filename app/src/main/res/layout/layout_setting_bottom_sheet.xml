@@ -7,8 +7,8 @@
 
         <import type="android.view.View"/>
         <variable
-            name="viewModel"
-            type="com.sudoajay.picsum.main.MainViewModel" />
+            name="activity"
+            type="com.sudoajay.picsum.main.MainActivity" />
         <variable
             name="bottomSheet"
             type="com.sudoajay.picsum.main.bottomsheet.SettingBottomSheet" />
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="@{(viewModel.getDatabase.equals(@string/remote_mediator_text))   ?  View.VISIBLE : View.GONE}"
+                android:visibility="@{(activity.getDatabase.equals(@string/remote_mediator_text))   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/remoteMediator_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/remoteMediator_TextView"
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="@{(viewModel.getDatabase.equals(@string/paging_source_text))   ?  View.VISIBLE : View.GONE}"
+                android:visibility="@{(activity.getDatabase.equals(@string/paging_source_text))   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/pagingSource_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/pagingSource_TextView"
@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="@{(viewModel.getDatabase.equals(@string/no_dataBase_text))   ?  View.VISIBLE : View.GONE}"
+                android:visibility="@{(activity.getDatabase.equals(@string/no_dataBase_text))   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/noDataBase_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/noDataBase_TextView"
@@ -245,7 +245,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="@{(viewModel.getJsonConverter.equals(@string/jacksonJson_text))   ?  View.VISIBLE : View.GONE}"
+                android:visibility="@{(activity.getJsonConverter.equals(@string/jacksonJson_text))   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/jacksonJson_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/jacksonJson_TextView"
@@ -293,7 +293,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:visibility="@{(viewModel.getJsonConverter.equals(@string/gsonJson_text))   ?  View.VISIBLE : View.GONE}"
+                android:visibility="@{(activity.getJsonConverter.equals(@string/gsonJson_text))   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/gsonJson_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/gsonJson_TextView"
@@ -343,7 +343,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="@{(viewModel.getJsonConverter.equals(@string/moshiJson_text))   ?  View.VISIBLE : View.GONE}"
+                android:visibility="@{(activity.getJsonConverter.equals(@string/moshiJson_text))   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/moshiJson_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/moshiJson_TextView"
@@ -407,7 +407,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="@{(viewModel.getImageLoader.equals(@string/glide_text))   ?  View.VISIBLE : View.GONE}"
+                android:visibility="@{(activity.getImageLoader.equals(@string/glide_text))   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/glideLoader_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/glideLoader_TextView"
@@ -457,7 +457,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="@{(viewModel.getImageLoader.equals(@string/picasso_text))   ?  View.VISIBLE : View.GONE}"
+                android:visibility="@{(activity.getImageLoader.equals(@string/picasso_text))   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/picassoLoader_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/picassoLoader_TextView"
