@@ -12,9 +12,17 @@ import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.LayoutSettingBottomSheetBinding
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.proto.ProtoManager
+import dagger.Module
 import kotlinx.coroutines.launch
+import dagger.Provides
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SettingBottomSheet(var mainActivity: MainActivity) : BottomSheetDialogFragment() {
+
+
+class SettingBottomSheet
+    @Inject constructor(var mainActivity: MainActivity) : BottomSheetDialogFragment() {
+
     lateinit var protoManager: ProtoManager
     private var  TAG:String = "SettingBottomSheetTag"
 

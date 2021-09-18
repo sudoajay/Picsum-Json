@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
+import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -37,12 +38,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
+import androidx.fragment.app.activityViewModels
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
-    @Inject
-    lateinit var viewModel: MainViewModel
+
+    val viewModel: MainViewModel by viewModels()
     lateinit var binding: ActivityMainBinding
 
     lateinit var personListAdapter: PersonListAdapter
@@ -72,6 +74,7 @@ class MainActivity : BaseActivity() {
 
         }
 
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.viewmodel = viewModel
         binding.activity = this
@@ -79,6 +82,8 @@ class MainActivity : BaseActivity() {
 
 
     }
+
+
 
     override fun onResume() {
         setReference()

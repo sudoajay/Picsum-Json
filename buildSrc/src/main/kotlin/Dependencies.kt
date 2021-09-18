@@ -26,8 +26,8 @@ class Dependencies {
         const val Material = "com.google.android.material:material:${Versions.MainDependencies.Material}"
         const val ConstraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.MainDependencies.ConstraintLayout}"
         const val CoreKtx = "androidx.core:core-ktx:${Versions.MainDependencies.CoreKtx}"
-        const val ActivityKtx = "androidx.activity:activity-ktx:1.2.0-alpha06"
-        const val FragmentKtx = "androidx.fragment:fragment-ktx:1.3.0-alpha06"
+        const val ActivityKtx = "androidx.activity:activity-ktx:${Versions.Dependencies.ActivityKTX}"
+        const val FragmentKtx = "androidx.fragment:fragment-ktx:${Versions.Dependencies.FragmentKTX}"
     }
 
     object Compose {
@@ -125,9 +125,9 @@ const val jacksonCore =
 
 
         //        Glide
-        const val glide = "com.github.bumptech.glide:glide:${Versions.Dependencies.glide}"
+        const val glide = "com.github.bumptech.glide:glide:${Versions.Dependencies.Glide}"
         const val glideCompiler =
-            "com.github.bumptech.glide:compiler:${Versions.Dependencies.glide}"
+            "com.github.bumptech.glide:compiler:${Versions.Dependencies.Glide}"
 
         //        Picasso
         const val picasso = "com.squareup.picasso:picasso:${Versions.Dependencies.Picasso}"

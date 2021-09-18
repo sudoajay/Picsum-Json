@@ -47,7 +47,10 @@ object Versions {
 
         const val FirebaseDatabase = "20.0.1"
 
-        const val glide = "4.12.0"
+        const val Glide = "4.12.0"
         const val Picasso = "2.8"
+
+        const val FragmentKTX = "1.3.6"
+        const val ActivityKTX = "1.3.1"
     }
 }

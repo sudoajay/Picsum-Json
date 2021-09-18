@@ -9,11 +9,18 @@ fun DependencyHandler.implementBasicAndroid(){
     add("implementation", Dependencies.Androidx.Material)
 //    android  ConstraintLayout
     add("implementation", Dependencies.Androidx.ConstraintLayout)
+
 }
 
 fun DependencyHandler.implementAndroidX(){
     add("implementation", Dependencies.DependencyInjection.daggerHilt)
     add("kapt", Dependencies.DependencyInjection.daggerHiltCompiler)
+    add("implementation", Dependencies.DependencyInjection.androidHiltViewModel)
+    add("kapt", Dependencies.DependencyInjection.androidHiltCompiler)
+    add("implementation", Dependencies.Androidx.ActivityKtx)
+    add("implementation", Dependencies.Androidx.FragmentKtx)
+
+
     add("implementation", Dependencies.WebKit.webKit)
     add("implementation", Dependencies.Lifecycle.viewmodelKtx)
     add("implementation", Dependencies.Lifecycle.lifecycleRuntime)
