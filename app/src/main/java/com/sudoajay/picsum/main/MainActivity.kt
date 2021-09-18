@@ -82,13 +82,10 @@ class MainActivity :  BaseActivity() {
             }
 
         }
-
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.viewmodel = viewModel
         binding.activity = this
         binding.lifecycleOwner = this
-
     }
 
 
@@ -140,6 +137,15 @@ class MainActivity :  BaseActivity() {
         binding.recyclerView.addItemDecoration(divider)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
+        personListAdapter.mainActivity = this
+        personPagingAdapterJackson.mainActivity = this
+        personPagingAdapterGson.mainActivity = this
+        personPagingAdapterMoshi.mainActivity = this
+        personLocalPagingAdapterGson.mainActivity = this
+        personLocalPagingAdapterJackson.mainActivity = this
+        personLocalPagingAdapterMoshi.mainActivity = this
+
 
         protoDataChange()
 

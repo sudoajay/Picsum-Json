@@ -12,10 +12,9 @@ import javax.inject.Inject
 
 
 class PersonPagingAdapterGson @Inject constructor(
-    private var mainActivity: MainActivity
-
 ) :
     PagingDataAdapter<PersonGson, PersonViewHolder>(Person_COMPARATOR) {
+    lateinit var mainActivity:MainActivity
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

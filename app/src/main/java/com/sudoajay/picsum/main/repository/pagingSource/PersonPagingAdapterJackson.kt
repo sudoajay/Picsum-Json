@@ -14,9 +14,11 @@ import javax.inject.Singleton
 
 
 class PersonPagingAdapterJackson @Inject constructor(
-    var mainActivity: MainActivity
 ) :
     PagingDataAdapter<PersonJackson, PersonViewHolder>(Person_COMPARATOR) {
+
+    lateinit var mainActivity:MainActivity
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

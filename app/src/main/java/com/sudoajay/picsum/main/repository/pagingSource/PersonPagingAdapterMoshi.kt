@@ -13,11 +13,10 @@ import javax.inject.Inject
 
 
 class PersonPagingAdapterMoshi @Inject constructor(
-    private var mainActivity: MainActivity
-
 ) :
     PagingDataAdapter<PersonMoshi, PersonViewHolder>(Person_COMPARATOR) {
 
+    lateinit var mainActivity:MainActivity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         PersonViewHolder(

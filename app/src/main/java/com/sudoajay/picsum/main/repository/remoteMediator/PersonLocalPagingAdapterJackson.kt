@@ -13,12 +13,11 @@ import com.sudoajay.picsum.main.repository.PersonViewHolder
 import javax.inject.Inject
 
 
-class PersonLocalPagingAdapterJackson @Inject constructor(
-    private var mainActivity: MainActivity
-
-) :
+class PersonLocalPagingAdapterJackson @Inject constructor():
     PagingDataAdapter<PersonLocalJackson, PersonViewHolder>(Person_COMPARATOR) {
     private var TAG= "PersonLocalPagingTAG"
+    lateinit var mainActivity:MainActivity
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         PersonViewHolder(

@@ -1,10 +1,13 @@
 package com.sudoajay.picsum.main.di
 
+import android.content.Context
 import com.sudoajay.picsum.main.MainActivity
+import com.sudoajay.picsum.main.proto.ProtoManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -14,7 +17,7 @@ object ModuleProvides {
 
     @Singleton
     @Provides
-    fun providesMainActivity():MainActivity = MainActivity()
+    fun providesProtoManger( @ApplicationContext appContext: Context):ProtoManager = ProtoManager(appContext)
 
 
 

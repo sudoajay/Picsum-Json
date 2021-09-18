@@ -13,12 +13,13 @@ import javax.inject.Inject
 
 
 class PersonListAdapter @Inject constructor(
-    private var mainActivity: MainActivity
 ) :
     RecyclerView.Adapter<PersonViewHolder>() {
     var personJackson: List<PersonJackson> = listOf()
     var personGson: List<PersonGson> = listOf()
-    var personMoshi: List<PersonMoshi> =  listOf()
+    var personMoshi: List<PersonMoshi> = listOf()
+    lateinit var mainActivity: MainActivity
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         PersonViewHolder(

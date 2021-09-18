@@ -15,12 +15,10 @@ import javax.inject.Inject
 
 
 class PersonLocalPagingAdapterGson @Inject constructor(
-    private var mainActivity: MainActivity
-
 ) :
     PagingDataAdapter<PersonLocalGson, PersonViewHolder>(Person_COMPARATOR) {
     private var TAG= "PersonLocalPagingTAG"
-
+    lateinit var mainActivity:MainActivity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         PersonViewHolder(

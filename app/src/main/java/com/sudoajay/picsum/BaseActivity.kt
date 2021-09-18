@@ -24,7 +24,7 @@ open class BaseActivity :AppCompatActivity() {
     private var TAG = "BaseActivityTAG"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        protoManager.context = applicationContext
+
         setSystemDefaultOn()
         getDataFromProtoDatastore()
     }
