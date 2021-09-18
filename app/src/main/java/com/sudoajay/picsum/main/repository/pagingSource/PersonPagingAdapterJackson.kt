@@ -8,11 +8,13 @@ import com.sudoajay.picsum.databinding.LayoutPersonListBinding
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.model.remote.PersonJackson
 import com.sudoajay.picsum.main.repository.PersonViewHolder
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
-class PersonPagingAdapterJackson(
-    private var mainActivity: MainActivity
-
+class PersonPagingAdapterJackson @Inject constructor(
+    var mainActivity: MainActivity
 ) :
     PagingDataAdapter<PersonJackson, PersonViewHolder>(Person_COMPARATOR) {
 

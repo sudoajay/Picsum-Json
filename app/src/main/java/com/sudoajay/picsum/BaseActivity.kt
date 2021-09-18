@@ -12,10 +12,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
 open class BaseActivity :AppCompatActivity() {
-
+    @Inject
     lateinit var protoManager: ProtoManager
     var getJsonConverter: String = ""
     var getDatabase: String = ""
@@ -23,7 +24,7 @@ open class BaseActivity :AppCompatActivity() {
     private var TAG = "BaseActivityTAG"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        protoManager= ProtoManager(applicationContext)
+        protoManager.context = applicationContext
         setSystemDefaultOn()
         getDataFromProtoDatastore()
     }

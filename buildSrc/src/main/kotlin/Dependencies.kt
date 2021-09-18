@@ -68,7 +68,7 @@ class Dependencies {
     
 
     object DependencyInjection {
-        const val dagger = "com.google.dagger:dagger:${Versions.Dependencies.Dagger}"
+//        const val dagger = "com.google.dagger:dagger:${Versions.Dependencies.Dagger}"
         const val daggerCompiler =
             "com.google.dagger:dagger-compiler:${Versions.Dependencies.Dagger}"
 

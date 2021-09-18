@@ -10,9 +10,10 @@ import com.sudoajay.picsum.databinding.LayoutPersonListBinding
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.model.local.PersonLocalJackson
 import com.sudoajay.picsum.main.repository.PersonViewHolder
+import javax.inject.Inject
 
 
-class PersonLocalPagingAdapterJackson(
+class PersonLocalPagingAdapterJackson @Inject constructor(
     private var mainActivity: MainActivity
 
 ) :

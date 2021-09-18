@@ -9,19 +9,20 @@ import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonJackson
 import com.sudoajay.picsum.main.model.remote.PersonMoshi
 import com.sudoajay.picsum.main.repository.PersonViewHolder
+import javax.inject.Inject
 
 
-class PersonListAdapter(
-    private var mainActivity: MainActivity,
-    var personJackson: List<PersonJackson>,
-    var personGson: List<PersonGson>,
-    var personMoshi: List<PersonMoshi>
+class PersonListAdapter @Inject constructor(
+    private var mainActivity: MainActivity
 ) :
     RecyclerView.Adapter<PersonViewHolder>() {
-
+    var personJackson: List<PersonJackson> = listOf()
+    var personGson: List<PersonGson> = listOf()
+    var personMoshi: List<PersonMoshi> =  listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        PersonViewHolder( mainActivity,
+        PersonViewHolder(
+            mainActivity,
             LayoutPersonListBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )

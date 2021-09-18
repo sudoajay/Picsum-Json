@@ -41,19 +41,28 @@ import javax.inject.Inject
 import androidx.fragment.app.activityViewModels
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
-
+class MainActivity :  BaseActivity() {
 
     val viewModel: MainViewModel by viewModels()
     lateinit var binding: ActivityMainBinding
-
+    @Inject
     lateinit var personListAdapter: PersonListAdapter
-    private lateinit var personPagingAdapterJackson: PersonPagingAdapterJackson
-    private lateinit var personPagingAdapterGson: PersonPagingAdapterGson
-    private lateinit var personPagingAdapterMoshi: PersonPagingAdapterMoshi
-    private lateinit var personLocalPagingAdapterGson: PersonLocalPagingAdapterGson
-    private lateinit var personLocalPagingAdapterJackson: PersonLocalPagingAdapterJackson
-    private lateinit var personLocalPagingAdapterMoshi: PersonLocalPagingAdapterMoshi
+    @Inject
+    lateinit var  personPagingAdapterJackson: PersonPagingAdapterJackson
+    @Inject
+     lateinit var personPagingAdapterGson: PersonPagingAdapterGson
+    @Inject
+     lateinit var personPagingAdapterMoshi: PersonPagingAdapterMoshi
+    @Inject
+     lateinit var personLocalPagingAdapterGson: PersonLocalPagingAdapterGson
+    @Inject
+     lateinit var personLocalPagingAdapterJackson: PersonLocalPagingAdapterJackson
+    @Inject
+    lateinit var personLocalPagingAdapterMoshi: PersonLocalPagingAdapterMoshi
+    @Inject
+    lateinit var navigationDrawerBottomSheet : NavigationDrawerBottomSheet
+    @Inject
+    lateinit var settingBottomSheet:SettingBottomSheet
 
 
     private var apiRepository: ApiRepository = ApiRepository(this)
@@ -79,7 +88,6 @@ class MainActivity : BaseActivity() {
         binding.viewmodel = viewModel
         binding.activity = this
         binding.lifecycleOwner = this
-
 
     }
 
@@ -132,15 +140,6 @@ class MainActivity : BaseActivity() {
         binding.recyclerView.addItemDecoration(divider)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
-//        Object created
-        personListAdapter = PersonListAdapter(this, listOf(), listOf(), listOf())
-        personPagingAdapterJackson = PersonPagingAdapterJackson(this)
-        personPagingAdapterGson = PersonPagingAdapterGson(this)
-        personPagingAdapterMoshi = PersonPagingAdapterMoshi(this)
-        personLocalPagingAdapterGson = PersonLocalPagingAdapterGson(this)
-        personLocalPagingAdapterJackson = PersonLocalPagingAdapterJackson(this)
-        personLocalPagingAdapterMoshi = PersonLocalPagingAdapterMoshi(this)
 
         protoDataChange()
 
@@ -259,7 +258,7 @@ class MainActivity : BaseActivity() {
 
     }
 
-   suspend fun setValueHideProgress(boolean: Boolean){
+   private fun setValueHideProgress(boolean: Boolean){
          viewModel.hideProgress.postValue(boolean)
     }
 
@@ -336,7 +335,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showNavigationDrawer() {
-        val navigationDrawerBottomSheet = NavigationDrawerBottomSheet()
         navigationDrawerBottomSheet.show(
             supportFragmentManager.beginTransaction(),
             navigationDrawerBottomSheet.tag
@@ -345,7 +343,6 @@ class MainActivity : BaseActivity() {
 
 
     fun openSetting() {
-        val settingBottomSheet = SettingBottomSheet(this)
         settingBottomSheet.show(
             supportFragmentManager.beginTransaction(),
             settingBottomSheet.tag

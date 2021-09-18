@@ -5,9 +5,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.StatePreferences
+import javax.inject.Inject
 
-class ProtoManager constructor (var context: Context){
-
+class ProtoManager @Inject constructor (){
+    lateinit var context: Context
     val dataStoreStatePreferences : DataStore<StatePreferences> = context.stateDataStore
 
 

@@ -8,9 +8,10 @@ import com.sudoajay.picsum.databinding.LayoutPersonListBinding
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.repository.PersonViewHolder
+import javax.inject.Inject
 
 
-class PersonPagingAdapterGson(
+class PersonPagingAdapterGson @Inject constructor(
     private var mainActivity: MainActivity
 
 ) :

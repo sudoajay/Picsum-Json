@@ -12,9 +12,10 @@ import com.sudoajay.picsum.main.model.local.PersonLocalGson
 import com.sudoajay.picsum.main.model.local.PersonLocalMoshi
 import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.repository.PersonViewHolder
+import javax.inject.Inject
 
 
-class PersonLocalPagingAdapterMoshi(
+class PersonLocalPagingAdapterMoshi @Inject constructor(
     private var mainActivity: MainActivity
 
 ) :

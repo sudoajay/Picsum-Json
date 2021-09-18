@@ -20,8 +20,8 @@ import javax.inject.Singleton
 
 
 
-class SettingBottomSheet
-    @Inject constructor(var mainActivity: MainActivity) : BottomSheetDialogFragment() {
+class SettingBottomSheet @Inject constructor
+   (var mainActivity: MainActivity) : BottomSheetDialogFragment() {
 
     lateinit var protoManager: ProtoManager
     private var  TAG:String = "SettingBottomSheetTag"

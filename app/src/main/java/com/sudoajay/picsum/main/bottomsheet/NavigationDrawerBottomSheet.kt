@@ -11,8 +11,9 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.LayoutNavigationDrawerBottomSheetBinding
+import javax.inject.Inject
 
-class NavigationDrawerBottomSheet : BottomSheetDialogFragment() {
+class NavigationDrawerBottomSheet @Inject constructor() : BottomSheetDialogFragment() {
 
 
     override fun onCreateView(
