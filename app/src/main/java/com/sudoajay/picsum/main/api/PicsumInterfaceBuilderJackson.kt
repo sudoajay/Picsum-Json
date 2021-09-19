@@ -1,6 +1,5 @@
 package com.sudoajay.picsum.main.api
 
-import android.util.Log
 import com.sudoajay.picsum.main.api.PicsumApiInterface.Companion.baseUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,15 +9,13 @@ import java.util.concurrent.TimeUnit
 
 class PicsumInterfaceBuilderJackson {
     companion object {
-        var TAG = "PicsumInterfaceBuilderTAG"
         var picsumApiInterface: PicsumApiInterface? = null
-        var okHttpClient: OkHttpClient? = null
+        private var okHttpClient: OkHttpClient? = null
 
 
         fun getApiInterface(): PicsumApiInterface? {
             if (picsumApiInterface == null) {
 
-                Log.e(TAG, "picsumApiInterface is not null ")
                 //For printing API url and body in logcat
                 val httpLoggingInterceptor = HttpLoggingInterceptor()
                 httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -38,7 +35,6 @@ class PicsumInterfaceBuilderJackson {
                     .build()
                 picsumApiInterface = retrofit.create(PicsumApiInterface::class.java)
             }
-            Log.e(TAG,  "picsumApiInterface ")
 
             return picsumApiInterface
         }

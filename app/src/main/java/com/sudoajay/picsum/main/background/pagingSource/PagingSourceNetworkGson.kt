@@ -1,7 +1,6 @@
 package com.sudoajay.picsum.main.background.pagingSource
 
 import android.content.Context
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sudoajay.picsum.R

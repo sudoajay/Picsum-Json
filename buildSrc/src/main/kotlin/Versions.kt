@@ -22,14 +22,10 @@ object Versions {
      * Versions of dependencies
      */
     object Dependencies {
-        const val Navigation_Plugin_version = "2.3.3"
-        const val Dagger = "2.33"
         const val Dagger_Hilt = "2.38.1"
         const val Android_Hilt = "1.0.0-alpha03"
         const val Coroutine = "1.5.1"
-        const val Compose = "1.0.0-beta01"
         const val Lifecycle = "2.4.0-alpha03"
-        const val Navigation = "2.3.3"
         const val Room = "2.3.0"
         const val RoomPaging3= "2.4.0-alpha04"
         const val Paging = "3.0.1"

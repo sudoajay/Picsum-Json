@@ -39,10 +39,13 @@
     <string name="more_option_text">More Option</string>
     <string name="view_image_text">View Image</string>
     <string name="download_image_text">Download Image</string>
+    <string name="downloaded_text">Downloaded</string>
 
 <!--    Error-->
     <string name="somethingWentWrong_text">Something Went Wrong</string>
     <string name="noInternetConnection_text">No Internet Connection</string>
+
+
 
 
 

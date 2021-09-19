@@ -6,14 +6,13 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 import androidx.annotation.ColorInt
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.sudoajay.picsum.R
 import kotlin.math.roundToInt
 
-open class InsetDivider private constructor() : ItemDecoration() {
+open class InsetDivider : ItemDecoration() {
     private val mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     // in pixel

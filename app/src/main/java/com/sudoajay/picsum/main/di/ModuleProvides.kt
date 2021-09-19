@@ -1,9 +1,7 @@
 package com.sudoajay.picsum.main.di
 
 import android.content.Context
-import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.proto.ProtoManager
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

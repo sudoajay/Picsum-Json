@@ -1,7 +1,6 @@
 package com.sudoajay.picsum.main.repository.remoteMediator
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -15,7 +14,6 @@ import javax.inject.Inject
 
 class PersonLocalPagingAdapterJackson @Inject constructor():
     PagingDataAdapter<PersonLocalJackson, PersonViewHolder>(Person_COMPARATOR) {
-    private var TAG= "PersonLocalPagingTAG"
     lateinit var mainActivity:MainActivity
 
 
@@ -28,7 +26,6 @@ class PersonLocalPagingAdapterJackson @Inject constructor():
         )
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
-        Log.e(TAG, "bind:  I m here -- post $position" )
 
         getItem(position)?.let { holder.bind(it) }
     }

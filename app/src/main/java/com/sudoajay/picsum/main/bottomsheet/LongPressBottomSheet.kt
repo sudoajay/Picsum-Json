@@ -8,10 +8,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.LayoutLongPressBottomSheetBindingImpl
+import com.sudoajay.picsum.helper.Toaster
 
 
 class LongPressBottomSheet(var openUrl: String, var downloadUrl: String) :
@@ -49,10 +49,8 @@ class LongPressBottomSheet(var openUrl: String, var downloadUrl: String) :
         val request = DownloadManager.Request(uri)
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         downloadManager.enqueue(request)
-        Toast.makeText(
-            requireContext(), "Downloaded",
-            Toast.LENGTH_SHORT
-        ).show()
+        Toaster.showToast(requireContext(), getString(R.string.downloaded_text))
+
         dismiss()
     }
 

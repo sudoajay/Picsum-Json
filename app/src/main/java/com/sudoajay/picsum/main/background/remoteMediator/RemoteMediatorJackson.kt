@@ -1,19 +1,13 @@
 package com.sudoajay.picsum.main.background.remoteMediator
 
-import android.content.Context
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.sudoajay.picsum.R
-import com.sudoajay.picsum.helper.Toaster
 import com.sudoajay.picsum.main.api.PicsumApiInterface
 import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonDatabase
 import com.sudoajay.picsum.main.database.jackson.PersonLocalJacksonRepository
-import com.sudoajay.picsum.main.database.moshi.PersonLocalMoshiDatabase
-import com.sudoajay.picsum.main.database.moshi.PersonLocalMoshiRepository
 import com.sudoajay.picsum.main.model.local.PersonLocalJackson
 import java.io.IOException
 import java.net.HttpRetryException
@@ -27,7 +21,6 @@ class RemoteMediatorJackson(
     private val picsumApiInterface: PicsumApiInterface
 ) : RemoteMediator<Int, PersonLocalJackson>() {
 
-    private val TAG = "RemoteMediatorTAG"
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, PersonLocalJackson>
@@ -69,9 +62,7 @@ class RemoteMediatorJackson(
             // Retrofit's Coroutine CallAdapter dispatches on a worker
             // thread.
             val response = picsumApiInterface.getLocalPersonJacksonPaging(1, 30)
-            Log.e(TAG, "load: repsose here", )
             database.withTransaction {
-                Log.e(TAG, "load: Data base here", )
 
                 // Insert new users into database, which invalidates the
                 // current PagingData, allowing Paging to present the updates

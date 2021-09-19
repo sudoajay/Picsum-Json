@@ -22,7 +22,6 @@ class PersonViewHolder(
     private val binding: LayoutPersonListBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    var TAG = "PersonViewHolderTAG"
 
 
     fun bind(personJackson: PersonJackson) {
@@ -118,7 +117,7 @@ class PersonViewHolder(
     private fun setImageLoader(url: String) {
         when (mainActivity.getImageLoader) {
             mainActivity.getString(R.string.glide_text) -> {
-                Log.e(TAG, "setImageLoader: At glide")
+
 
                 Glide
                     .with(mainActivity)
@@ -130,7 +129,6 @@ class PersonViewHolder(
                     .into(binding.personImageImageView);
             }
             else -> {
-                Log.e(TAG, "setImageLoader: At picasso")
 
                 Picasso.get()
                     .load(url)

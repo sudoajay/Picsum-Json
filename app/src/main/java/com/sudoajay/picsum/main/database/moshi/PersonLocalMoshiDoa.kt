@@ -5,7 +5,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sudoajay.picsum.main.model.local.PersonLocalJackson
 import com.sudoajay.picsum.main.model.local.PersonLocalMoshi
 
 

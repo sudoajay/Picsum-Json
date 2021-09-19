@@ -2,18 +2,13 @@ package com.sudoajay.picsum
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import com.sudoajay.picsum.main.proto.ProtoManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 open class BaseActivity :AppCompatActivity() {
     @Inject
@@ -21,7 +16,6 @@ open class BaseActivity :AppCompatActivity() {
     var getJsonConverter: String = ""
     var getDatabase: String = ""
     var getImageLoader: String = ""
-    private var TAG = "BaseActivityTAG"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,7 +47,6 @@ open class BaseActivity :AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        Log.e(TAG, "onDestroy: ", )
         super.onDestroy()
     }
 }

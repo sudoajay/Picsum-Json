@@ -5,26 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.LayoutSettingBottomSheetBinding
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.proto.ProtoManager
-import dagger.Module
 import kotlinx.coroutines.launch
-import dagger.Provides
 import javax.inject.Inject
-import javax.inject.Singleton
-
 
 
 class SettingBottomSheet @Inject constructor
-   (var mainActivity: MainActivity) : BottomSheetDialogFragment() {
-
+    () : BottomSheetDialogFragment() {
+    @Inject
     lateinit var protoManager: ProtoManager
-    private var  TAG:String = "SettingBottomSheetTag"
+    lateinit var mainActivity: MainActivity
 
 
     override fun onCreateView(
@@ -45,7 +39,6 @@ class SettingBottomSheet @Inject constructor
         binding.bottomSheet = this
         binding.activity = mainActivity
         binding.lifecycleOwner = this
-        protoManager = mainActivity.protoManager
 
         return binding.root
     }

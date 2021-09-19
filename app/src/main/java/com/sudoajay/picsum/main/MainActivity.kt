@@ -2,7 +2,6 @@ package com.sudoajay.picsum.main
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
@@ -31,14 +30,11 @@ import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapt
 import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterJackson
 import com.sudoajay.picsum.main.repository.remoteMediator.PersonLocalPagingAdapterMoshi
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import androidx.fragment.app.activityViewModels
 
 @AndroidEntryPoint
 class MainActivity :  BaseActivity() {
@@ -66,9 +62,7 @@ class MainActivity :  BaseActivity() {
 
 
     private var apiRepository: ApiRepository = ApiRepository(this)
-    private var searchData = ""
     private var isDarkTheme: Boolean = false
-    private var TAG = "MainActivityTAG"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,6 +139,7 @@ class MainActivity :  BaseActivity() {
         personLocalPagingAdapterGson.mainActivity = this
         personLocalPagingAdapterJackson.mainActivity = this
         personLocalPagingAdapterMoshi.mainActivity = this
+        settingBottomSheet.mainActivity = this
 
 
         protoDataChange()
@@ -170,14 +165,12 @@ class MainActivity :  BaseActivity() {
                     }
                     getString(R.string.gsonJson_text) -> {
                         binding.recyclerView.adapter = personLocalPagingAdapterGson
-                        Log.e(TAG, "bind:  I m here Gson - ")
+
 
                         lifecycleScope.launch {
-                            Log.e(TAG, "bind:  I m here Gson -- ")
 
                             apiRepository.getRemoteMediatorSourceWithNetworkGson()
                                 .collectLatest { pagingData ->
-                                    Log.e(TAG, "bind:  I m here Gson --- ")
                                     personLocalPagingAdapterGson.submitData(pagingData)
                                     setValueHideProgress(true)
                                 }
@@ -187,14 +180,11 @@ class MainActivity :  BaseActivity() {
                     }
                     else -> {
                         binding.recyclerView.adapter = personLocalPagingAdapterMoshi
-                        Log.e(TAG, "bind:  I m here Gson - ")
 
                         lifecycleScope.launch {
-                            Log.e(TAG, "bind:  I m here Gson -- ")
 
                             apiRepository.getRemoteMediatorSourceWithNetworkMoshi()
                                 .collectLatest { pagingData ->
-                                    Log.e(TAG, "bind:  I m here Gson --- ")
                                     personLocalPagingAdapterMoshi.submitData(pagingData)
                                     setValueHideProgress(true)
                                 }
@@ -243,7 +233,6 @@ class MainActivity :  BaseActivity() {
                             apiRepository.getPagingMoshiSourceWithNetwork()
                                 .map { pagingData->pagingData.filter {  if (viewModel.searchValue != "") it.name.lowercase().contains(viewModel.searchValue)  else true   } }
                                 .collectLatest { pagingData ->
-                                    Log.e(TAG, "Paging source:  I m here Gson --- ")
                                     personPagingAdapterMoshi.submitData(pagingData)
                                     setValueHideProgress(true)
                                 }
@@ -357,7 +346,6 @@ class MainActivity :  BaseActivity() {
     }
 
     private fun refreshData() {
-        Log.e(TAG, "Refresh data call here ")
        protoDataChange()
         showProgressAndHideRefresh()
     }

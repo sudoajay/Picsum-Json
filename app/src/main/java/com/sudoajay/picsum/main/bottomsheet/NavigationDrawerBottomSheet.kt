@@ -7,10 +7,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.LayoutNavigationDrawerBottomSheetBinding
+import com.sudoajay.picsum.helper.Toaster
 import javax.inject.Inject
 
 class NavigationDrawerBottomSheet @Inject constructor() : BottomSheetDialogFragment() {
@@ -34,11 +34,9 @@ class NavigationDrawerBottomSheet @Inject constructor() : BottomSheetDialogFragm
         return binding.root
     }
 
-    private fun callToast() {
-        Toast.makeText(requireContext(), getString(R.string.workOnProgress_text), Toast.LENGTH_LONG)
-            .show()
+    private fun callToast() =
+        Toaster.showToast(requireContext(), getString(R.string.workOnProgress_text))
 
-    }
 
     fun rateUs() = callToast()
 

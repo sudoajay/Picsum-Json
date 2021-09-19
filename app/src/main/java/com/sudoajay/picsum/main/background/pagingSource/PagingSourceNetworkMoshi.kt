@@ -1,13 +1,11 @@
 package com.sudoajay.picsum.main.background.pagingSource
 
 import android.content.Context
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.helper.Toaster
 import com.sudoajay.picsum.main.api.PicsumApiInterface
-import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.model.remote.PersonMoshi
 import retrofit2.HttpException
 import java.io.IOException

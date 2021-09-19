@@ -2,7 +2,6 @@ package com.sudoajay.picsum.helper
 
 import android.content.Context
 import android.widget.Toast
-import com.sudoajay.picsum.R
 
 object Toaster {
     fun showToast(context: Context ,  message:String){

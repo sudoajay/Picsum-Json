@@ -2,7 +2,6 @@ package com.sudoajay.picsum.main.model.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

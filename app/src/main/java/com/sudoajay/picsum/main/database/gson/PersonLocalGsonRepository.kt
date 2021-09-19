@@ -13,7 +13,5 @@ class PersonLocalGsonRepository(private val personLocalGsonDoa: PersonLocalGsonD
 
     suspend fun insertAll(list: List<PersonLocalGson>) = personLocalGsonDoa.insertAll(list)
 
-    suspend fun deleteAll() = personLocalGsonDoa.deleteAll()
-
 
 }

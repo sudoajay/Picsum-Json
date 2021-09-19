@@ -1,6 +1,5 @@
 package com.sudoajay.picsum.main.repository
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
@@ -37,12 +36,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-@SuppressLint("NotifyDataSetChanged")
 class ApiRepository(private var activity: MainActivity) {
 
-    private var TAG = "ApiRepositoryTAG"
     fun getDataFromApi() {
-        Log.e(TAG, "getDataFromApi: ${activity.viewModel.searchValue}")
         when (activity.getJsonConverter) {
             activity.getString(R.string.jacksonJson_text) -> {
                 val apiInterface =
@@ -78,13 +74,15 @@ class ApiRepository(private var activity: MainActivity) {
                         response.body()
                             ?.filter { if (activity.viewModel.searchValue != "") it.name.lowercase().contains(activity.viewModel.searchValue)  else true }
                             ?: listOf()
-                    activity.binding.recyclerView.adapter?.notifyDataSetChanged()
+                    activity.binding.recyclerView.adapter?.notifyItemRangeChanged(
+                        0,
+                        response.body()?.size ?: 0
+                    )
 
                 }
             }
 
             override fun onFailure(call: Call<List<PersonJackson>?>, t: Throwable) {
-                Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
                 Toaster.showToast(  activity.applicationContext,
                     activity.getString(R.string.somethingWentWrong_text))
             }
@@ -107,13 +105,15 @@ class ApiRepository(private var activity: MainActivity) {
                         response.body()
                             ?.filter { if (activity.viewModel.searchValue != "") it.name.lowercase().contains(activity.viewModel.searchValue)  else true }
                             ?: listOf()
-                    activity.binding.recyclerView.adapter?.notifyDataSetChanged()
+                    activity.binding.recyclerView.adapter?.notifyItemRangeChanged(
+                        0,
+                        response.body()?.size ?: 0
+                    )
 
                 }
             }
 
             override fun onFailure(call: Call<List<PersonGson>?>, t: Throwable) {
-                Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
                 Toaster.showToast(  activity.applicationContext,
                     activity.getString(R.string.somethingWentWrong_text))
 
@@ -136,14 +136,16 @@ class ApiRepository(private var activity: MainActivity) {
                     activity.personListAdapter.personMoshi = response.body()
                         ?.filter { if (activity.viewModel.searchValue != "") it.name.lowercase().contains(activity.viewModel.searchValue)  else true }
                         ?: listOf()
-                    activity.binding.recyclerView.adapter?.notifyDataSetChanged()
+                    activity.binding.recyclerView.adapter?.notifyItemRangeChanged(
+                        0,
+                        response.body()?.size ?: 0
+                    )
 
 
                 }
             }
 
             override fun onFailure(call: Call<List<PersonMoshi>?>, t: Throwable) {
-                Log.e("$TAG +onFailure", t.printStackTrace().toString() + " -- $t")
                 Toaster.showToast(  activity.applicationContext,
                     activity.getString(R.string.somethingWentWrong_text))
             }

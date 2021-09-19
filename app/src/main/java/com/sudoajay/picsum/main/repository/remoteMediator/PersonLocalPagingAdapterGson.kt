@@ -1,7 +1,6 @@
 package com.sudoajay.picsum.main.repository.remoteMediator
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import com.sudoajay.picsum.databinding.LayoutPersonListBinding
 import com.sudoajay.picsum.main.MainActivity
 import com.sudoajay.picsum.main.model.local.PersonLocalGson
-import com.sudoajay.picsum.main.model.remote.PersonGson
 import com.sudoajay.picsum.main.repository.PersonViewHolder
 import javax.inject.Inject
 
@@ -17,7 +15,6 @@ import javax.inject.Inject
 class PersonLocalPagingAdapterGson @Inject constructor(
 ) :
     PagingDataAdapter<PersonLocalGson, PersonViewHolder>(Person_COMPARATOR) {
-    private var TAG= "PersonLocalPagingTAG"
     lateinit var mainActivity:MainActivity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -29,7 +26,6 @@ class PersonLocalPagingAdapterGson @Inject constructor(
         )
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
-        Log.e(TAG, "bind:  I m here Gson  -- post $position" )
 
         getItem(position)?.let { holder.bind(it) }
     }
