@@ -19,4 +19,8 @@
     <!--    Navigation Drawer-->
     <dimen name="text_view_margin_gap">12dp</dimen>
     <dimen name="gap_margin_left_right">16dp</dimen>
+
+    <!--    Splash Screen-->
+    <dimen name="image_header_dimen">100dp</dimen>
+
 </resources>
