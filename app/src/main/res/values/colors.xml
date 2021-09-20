@@ -3,7 +3,7 @@
 
     <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorAccent">#376db6</color>
+    <color name="colorAccent">#41a9e4</color>
 
 <!--Main Activity -->
     <color name="mainBgColor">#59FFFFFF</color>
@@ -17,5 +17,12 @@
 
     <!--   setting bottom sheet-->
     <color name="fadeTextColor">#5C5757</color>
+
+    <!--    Send Feedback-->
+    <color name="boxTextColor">#353131</color>
+    <color name="boxHoverColor">#41a9e4</color>
+    <color name="errorBoxColor">#F44336</color>
+    <color name="feedbackBoxBgColor">#ffffff</color>
+    <color name="dialogBgColorInfo">#2546ABEB</color>
 
 </resources>

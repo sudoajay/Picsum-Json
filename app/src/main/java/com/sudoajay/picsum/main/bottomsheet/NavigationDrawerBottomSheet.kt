@@ -11,6 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.LayoutNavigationDrawerBottomSheetBinding
 import com.sudoajay.picsum.helper.Toaster
+import com.sudoajay.picsum.main.sendFeedback.SendFeedback
 import javax.inject.Inject
 
 class NavigationDrawerBottomSheet @Inject constructor() : BottomSheetDialogFragment() {
@@ -42,7 +43,10 @@ class NavigationDrawerBottomSheet @Inject constructor() : BottomSheetDialogFragm
 
     fun moreApp() = callToast()
 
-    fun sendFeedback() = callToast()
+    fun sendFeedback() {
+        val intent = Intent(requireContext(), SendFeedback::class.java)
+        startActivity(intent)
+    }
 
     fun shareApk() = callToast()
 

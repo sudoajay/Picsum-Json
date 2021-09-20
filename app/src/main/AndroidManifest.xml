@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".splashScreen.Splash"
+            android:name=".main.sendFeedback.SendFeedback"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".BaseActivity"/>
         <activity android:name=".main.MainActivity"/>
-
+        <activity
+            android:name=".splashScreen.Splash"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

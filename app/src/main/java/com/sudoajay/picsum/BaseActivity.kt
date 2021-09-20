@@ -4,12 +4,14 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.sudoajay.picsum.main.proto.ProtoManager
-import kotlinx.coroutines.flow.collectLatest
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 open class BaseActivity :AppCompatActivity() {
     @Inject
     lateinit var protoManager: ProtoManager
@@ -35,18 +37,16 @@ open class BaseActivity :AppCompatActivity() {
     }
 
     private fun getDataFromProtoDatastore() {
-        lifecycleScope.launch {
-            protoManager.dataStoreStatePreferences.data.collectLatest {
-                getJsonConverter = it.jsonConverter
-                getDatabase = it.database
-                getImageLoader = it.imageLoader
+
+        protoManager.dataStoreStatePreferences.data.asLiveData().observe(this) {
+            getJsonConverter = it.jsonConverter
+            getDatabase = it.database
+            getImageLoader = it.imageLoader
+            lifecycleScope.launch {
                 if (getJsonConverter == "" && getDatabase == "" && getImageLoader == "")
                     protoManager.setDefaultValue()
-            }
+            } 
         }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }
