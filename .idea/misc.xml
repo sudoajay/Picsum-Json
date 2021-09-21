@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.36875" />
         <entry key="app/src/main/res/drawable/bottom_sheet_top_effect.xml" value="0.36875" />
+        <entry key="app/src/main/res/drawable/feedback_background_button.xml" value="0.36875" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.36875" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.36875" />
         <entry key="app/src/main/res/drawable/ic_me.xml" value="0.36875" />

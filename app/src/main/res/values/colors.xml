@@ -22,7 +22,7 @@
     <color name="boxTextColor">#353131</color>
     <color name="boxHoverColor">#41a9e4</color>
     <color name="errorBoxColor">#F44336</color>
-    <color name="feedbackBoxBgColor">#ffffff</color>
+    <color name="feedbackBoxBgColor">#BEBEBE</color>
     <color name="dialogBgColorInfo">#2546ABEB</color>
 
 </resources>
