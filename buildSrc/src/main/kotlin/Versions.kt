@@ -48,5 +48,7 @@ object Versions {
 
         const val FragmentKTX = "1.3.6"
         const val ActivityKTX = "1.3.1"
+
+        const val TestCore = "1.4.0"
     }
 }

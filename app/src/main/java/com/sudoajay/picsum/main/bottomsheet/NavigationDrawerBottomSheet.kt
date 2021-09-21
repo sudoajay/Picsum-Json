@@ -1,18 +1,28 @@
 package com.sudoajay.picsum.main.bottomsheet
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.test.core.app.ApplicationProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.picsum.R
 import com.sudoajay.picsum.databinding.LayoutNavigationDrawerBottomSheetBinding
 import com.sudoajay.picsum.helper.Toaster
 import com.sudoajay.picsum.main.sendFeedback.SendFeedback
 import javax.inject.Inject
+
+import java.io.File
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
+
+
+
+
 
 class NavigationDrawerBottomSheet @Inject constructor() : BottomSheetDialogFragment() {
 
@@ -48,7 +58,7 @@ class NavigationDrawerBottomSheet @Inject constructor() : BottomSheetDialogFragm
         startActivity(intent)
     }
 
-    fun shareApk() = callToast()
+    fun shareApk() = shareApplication()
 
 
     fun developerPage() {
@@ -68,5 +78,16 @@ class NavigationDrawerBottomSheet @Inject constructor() : BottomSheetDialogFragm
         }
         return "%s %s".format(getString(R.string.app_version_text), versionName)
     }
+
+
+
+
+    private fun shareApplication() {
+        val page = "https://github.com/SudoAjay"
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(page)
+        startActivity(i)
+    }
+
 }
 

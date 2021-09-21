@@ -28,6 +28,8 @@ fun DependencyHandler.implementAndroidX(){
     add("implementation",Dependencies.Coroutine.coroutineAndroid)
     add("implementation",Dependencies.SwipeRefreshLayout.swiperefreshlayout)
 
+
+
 }
 
 fun DependencyHandler.implementDataBase(){
@@ -50,6 +52,7 @@ fun DependencyHandler.implementTest() {
 }
 
 fun DependencyHandler.implementAndroidTest() {
+    add("implementation",Dependencies.AndroidTest.testCore)
     add("androidTestImplementation", Dependencies.AndroidTest.espresso)
     add("androidTestImplementation", Dependencies.AndroidTest.extJunitKtx)
 

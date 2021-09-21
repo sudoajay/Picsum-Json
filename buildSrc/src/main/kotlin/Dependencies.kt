@@ -106,7 +106,7 @@ const val jacksonCore =
     }
 
     object AndroidTest {
-
+        const val testCore = "androidx.test:core-ktx:${Versions.Dependencies.TestCore}"
         const val espresso = "androidx.test.espresso:espresso-core:3.3.0"
         const val extJunitKtx = "androidx.test.ext:junit-ktx:1.1.2"
 
