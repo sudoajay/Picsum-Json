@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="5dp"
-                    android:background="@color/feedbackBoxBgColor"
+                    android:background="@color/systemInfoBgColor"
                     android:layout_marginRight="5dp"
                     android:paddingTop="40dp"
                     android:paddingBottom="5dp">

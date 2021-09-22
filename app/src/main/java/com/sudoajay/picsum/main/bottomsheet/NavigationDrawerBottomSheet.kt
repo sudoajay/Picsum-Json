@@ -53,10 +53,7 @@ class NavigationDrawerBottomSheet @Inject constructor() : BottomSheetDialogFragm
 
     fun moreApp() = callToast()
 
-    fun sendFeedback() {
-        val intent = Intent(requireContext(), SendFeedback::class.java)
-        startActivity(intent)
-    }
+    fun sendFeedback() =  startActivity(Intent(requireContext(), SendFeedback::class.java))
 
     fun shareApk() = shareApplication()
 

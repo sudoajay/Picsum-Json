@@ -24,5 +24,6 @@
     <color name="errorBoxColor">#F44336</color>
     <color name="feedbackBoxBgColor">#BEBEBE</color>
     <color name="dialogBgColorInfo">#2546ABEB</color>
+    <color name="systemInfoBgColor">#ffffff</color>
 
 </resources>
