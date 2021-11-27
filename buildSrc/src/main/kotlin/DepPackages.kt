@@ -7,29 +7,29 @@ fun DependencyHandler.implementBasicAndroid(){
     add("implementation", Dependencies.Androidx.AppCompat)
 //    android  Material
     add("implementation", Dependencies.Androidx.Material)
-//    android  ConstraintLayout
+//    android  ConstraintLayout        const val WebKit = "1.2.0"
+
     add("implementation", Dependencies.Androidx.ConstraintLayout)
 
 }
 
-fun DependencyHandler.implementAndroidX(){
+fun DependencyHandler.implementDependencyInjection(){
     add("implementation", Dependencies.DependencyInjection.daggerHilt)
     add("kapt", Dependencies.DependencyInjection.daggerHiltCompiler)
     add("implementation", Dependencies.DependencyInjection.androidHiltViewModel)
     add("kapt", Dependencies.DependencyInjection.androidHiltCompiler)
-    add("implementation", Dependencies.Androidx.ActivityKtx)
-    add("implementation", Dependencies.Androidx.FragmentKtx)
+}
 
+fun DependencyHandler.implementAndroidX(){
 
-    add("implementation", Dependencies.WebKit.webKit)
+    add("implementation", Dependencies.Androidx.webKit)
     add("implementation", Dependencies.Lifecycle.viewmodelKtx)
     add("implementation", Dependencies.Lifecycle.lifecycleRuntime)
     add("implementation",Dependencies.Coroutine.coroutineCore)
     add("implementation",Dependencies.Coroutine.coroutineAndroid)
-    add("implementation",Dependencies.SwipeRefreshLayout.swiperefreshlayout)
-
-
-
+    add("implementation",Dependencies.Androidx.swiperefreshlayout)
+    add("implementation", Dependencies.Androidx.ActivityKtx)
+    add("implementation", Dependencies.Androidx.FragmentKtx)
 }
 
 fun DependencyHandler.implementDataBase(){
@@ -39,23 +39,9 @@ fun DependencyHandler.implementDataBase(){
     add("implementation",Dependencies.Storage.RoomPaging3)
     add("implementation", Dependencies.Storage.paging)
     add("implementation", Dependencies.Storage.firebaseDatabase)
-
     add("implementation", Dependencies.Storage.preferenceDataStore)
     add("implementation", Dependencies.Storage.protoDataStore)
     add("implementation", Dependencies.Storage.protobuf)
-
-
-}
-
-fun DependencyHandler.implementTest() {
-    add("testImplementation", Dependencies.Test.junit)
-}
-
-fun DependencyHandler.implementAndroidTest() {
-    add("implementation",Dependencies.AndroidTest.testCore)
-    add("androidTestImplementation", Dependencies.AndroidTest.espresso)
-    add("androidTestImplementation", Dependencies.AndroidTest.extJunitKtx)
-
 }
 
 fun DependencyHandler.implementNetwork(){
@@ -74,9 +60,18 @@ fun DependencyHandler.implementNetwork(){
     add("implementation", Dependencies.Network.glide)
     add("kapt", Dependencies.Network.glideCompiler)
     add("implementation", Dependencies.Network.picasso)
+}
+fun DependencyHandler.implementTest() {
+    add("testImplementation", Dependencies.Test.junit)
+}
 
-
+fun DependencyHandler.implementAndroidTest() {
+    add("implementation",Dependencies.AndroidTest.testCore)
+    add("androidTestImplementation", Dependencies.AndroidTest.espresso)
+    add("androidTestImplementation", Dependencies.AndroidTest.extJunitKtx)
 
 }
+
+
 
 

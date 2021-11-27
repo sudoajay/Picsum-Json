@@ -62,6 +62,7 @@ android {
 
 dependencies {
     implementBasicAndroid()
+    implementDependencyInjection()
     implementAndroidX()
     implementDataBase()
     implementNetwork()

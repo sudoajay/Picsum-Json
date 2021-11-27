@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".BaseActivity"/>
+        <activity android:name=".main.MainActivity"/>
 
         <activity android:name=".main.sendFeedback.SendFeedback"/>
         <meta-data
